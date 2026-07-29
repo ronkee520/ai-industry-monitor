@@ -2,7 +2,7 @@
   "meta": {
     "title": "AI Industry Monitor",
     "subtitle": "AI产业与大模型商业化监测 Dashboard",
-    "generated_at": "2026-07-29T15:39:32+08:00",
+    "generated_at": "2026-07-29T15:49:40+08:00",
     "schedule": "每周一、周五 09:00 (Asia/Shanghai)",
     "data_policy": "公开可引用数据。sample/missing/manual_required 标记明确。",
     "fx": {
@@ -19,7 +19,7 @@
   },
   "overview": {
     "cycle": {
-      "generated_at": "2026-07-29T15:39:32+08:00",
+      "generated_at": "2026-07-29T15:49:40+08:00",
       "stage_id": "infra_expansion",
       "stage_label": "基础设施扩张期",
       "industry_development_score": 50.0,
@@ -945,7 +945,7 @@
   "news": [],
   "health": {
     "status": "partial",
-    "generated_at": "2026-07-29T15:39:32+08:00",
+    "generated_at": "2026-07-29T15:49:40+08:00",
     "sources_ok": 0,
     "sources_total": 0,
     "source_success_rate": "0/0",
