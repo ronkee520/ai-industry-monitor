@@ -4,7 +4,7 @@
 
 > **面向研究人员的公开在线 AI 产业数据终端**
 
-[![Update & Deploy](https://github.com/<your-username>/ai-industry-monitor/actions/workflows/update-deploy.yml/badge.svg)](https://github.com/<your-username>/ai-industry-monitor/actions/workflows/update-deploy.yml)
+[![Update & Deploy](https://github.com/ronkee520/ai-industry-monitor/actions/workflows/update-deploy.yml/badge.svg?branch=main)](https://github.com/ronkee520/ai-industry-monitor/actions/workflows/update-deploy.yml)
 
 ---
 
@@ -62,7 +62,7 @@
 
 ```bash
 # 1. 克隆项目
-git clone https://github.com/<your-username>/ai-industry-monitor.git
+git clone https://github.com/ronkee520/ai-industry-monitor.git
 cd ai-industry-monitor
 
 # 2. 跳过网络采集，仅用本地数据构建
@@ -95,7 +95,7 @@ python -m unittest discover -s tests -v
 ### 第一步：推送到 GitHub
 
 ```bash
-git remote add origin https://github.com/<your-username>/ai-industry-monitor.git
+git remote add origin https://github.com/ronkee520/ai-industry-monitor.git
 git push -u origin main
 ```
 
@@ -117,7 +117,7 @@ git push -u origin main
 部署成功后，站点 URL 为：
 
 ```
-https://<your-username>.github.io/ai-industry-monitor/
+https://ronkee520.github.io/ai-industry-monitor/
 ```
 
 ### 自动更新时间
