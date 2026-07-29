@@ -2,7 +2,7 @@
   "meta": {
     "title": "AI Industry Monitor",
     "subtitle": "AI产业与大模型商业化监测 Dashboard",
-    "generated_at": "2026-07-29T15:49:40+08:00",
+    "generated_at": "2026-07-29T16:12:29+08:00",
     "schedule": "每周一、周五 09:00 (Asia/Shanghai)",
     "data_policy": "公开可引用数据。sample/missing/manual_required 标记明确。",
     "fx": {
@@ -19,7 +19,7 @@
   },
   "overview": {
     "cycle": {
-      "generated_at": "2026-07-29T15:49:40+08:00",
+      "generated_at": "2026-07-29T16:12:29+08:00",
       "stage_id": "infra_expansion",
       "stage_label": "基础设施扩张期",
       "industry_development_score": 50.0,
@@ -90,7 +90,7 @@
       ]
     },
     "kpi_summary": {
-      "total_models_tracked": 16,
+      "total_models_tracked": 17,
       "models_with_real_data": 0,
       "cheapest_model": null,
       "cheapest_cost_usd": null,
@@ -462,6 +462,43 @@
           "js_dynamic"
         ],
         "company_name": "字节豆包",
+        "model_status": "watchlist",
+        "blended_cost_usd": null,
+        "change_pct": null,
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      },
+      {
+        "metric_id": "token_blended_cost::tencent::hunyuan_turbo::standard",
+        "metric_name": "混元 Turbo 标准档混合成本",
+        "metric_category": "token_pricing",
+        "value": null,
+        "input_per_m": null,
+        "output_per_m": null,
+        "cached_input_per_m": null,
+        "unit": "CNY_per_1M_tokens",
+        "currency": "CNY",
+        "company_id": "tencent",
+        "model_id": "hunyuan_turbo",
+        "region": "domestic",
+        "tier": "standard",
+        "period": "2026-07",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "腾讯混元模型定价",
+        "source_url": "https://cloud.tencent.com/product/hunyuan",
+        "source_tier": 1,
+        "evidence_status": "manual_required",
+        "confidence": "manual_required",
+        "note": "waiting for manual verification from official pricing page. 需人工确认具体定价页URL和最新模型名称。",
+        "tags": [
+          "manual_required",
+          "blended",
+          "production_model"
+        ],
+        "company_name": "腾讯混元",
         "model_status": "watchlist",
         "blended_cost_usd": null,
         "change_pct": null,
@@ -945,17 +982,17 @@
   "news": [],
   "health": {
     "status": "partial",
-    "generated_at": "2026-07-29T15:49:40+08:00",
+    "generated_at": "2026-07-29T16:12:29+08:00",
     "sources_ok": 0,
     "sources_total": 0,
     "source_success_rate": "0/0",
-    "pricing_total": 16,
-    "pricing_missing": 16,
+    "pricing_total": 17,
+    "pricing_missing": 17,
     "pricing_sample": 0,
     "business_total": 8,
     "business_missing": 8,
     "warnings": [
-      "16 pricing records have null values"
+      "17 pricing records have null values"
     ]
   },
   "methodology": {

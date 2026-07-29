@@ -14,3 +14,4 @@
 {"date":"2026-07-29","metric_id":"token_blended_cost::mistral::mistral_large::standard","value":null,"currency":"USD","blended_cost_usd":null}
 {"date":"2026-07-29","metric_id":"token_blended_cost::cohere::command_r_plus::standard","value":null,"currency":"USD","blended_cost_usd":null}
 {"date":"2026-07-29","metric_id":"token_blended_cost::amazon::amazon_nova_pro::standard","value":null,"currency":"USD","blended_cost_usd":null}
+{"date":"2026-07-29","metric_id":"token_blended_cost::tencent::hunyuan_turbo::standard","value":null,"currency":"CNY","blended_cost_usd":null}

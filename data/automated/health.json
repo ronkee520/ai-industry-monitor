@@ -1,15 +1,15 @@
 {
   "status": "partial",
-  "generated_at": "2026-07-29T15:49:40+08:00",
+  "generated_at": "2026-07-29T16:12:29+08:00",
   "sources_ok": 0,
   "sources_total": 0,
   "source_success_rate": "0/0",
-  "pricing_total": 16,
-  "pricing_missing": 16,
+  "pricing_total": 17,
+  "pricing_missing": 17,
   "pricing_sample": 0,
   "business_total": 8,
   "business_missing": 8,
   "warnings": [
-    "16 pricing records have null values"
+    "17 pricing records have null values"
   ]
 }
