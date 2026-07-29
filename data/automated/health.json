@@ -1,15 +1,15 @@
 {
   "status": "partial",
-  "generated_at": "2026-07-29T13:58:29+08:00",
+  "generated_at": "2026-07-29T14:24:38+08:00",
   "sources_ok": 0,
   "sources_total": 0,
   "source_success_rate": "0/0",
-  "pricing_total": 9,
-  "pricing_missing": 0,
-  "pricing_sample": 9,
-  "business_total": 4,
-  "business_missing": 4,
+  "pricing_total": 16,
+  "pricing_missing": 16,
+  "pricing_sample": 0,
+  "business_total": 8,
+  "business_missing": 8,
   "warnings": [
-    "9 pricing records are SAMPLES — do not cite as real data"
+    "16 pricing records have null values"
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-29T13:58:29+08:00",
+  "generated_at": "2026-07-29T14:24:38+08:00",
   "stage_id": "infra_expansion",
   "stage_label": "基础设施扩张期",
   "industry_development_score": 50.0,
@@ -24,7 +24,7 @@
   "sample_based": true,
   "missing_factor_count": 2,
   "data_coverage": {
-    "pricing_records": 9,
+    "pricing_records": 0,
     "pricing_real": 0,
     "business_records": 0,
     "business_real": 0,

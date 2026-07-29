@@ -2,3 +2,7 @@
 {"date":"2026-07-29","metric_id":"arr::anthropic","value":null,"unit":"USD_billion"}
 {"date":"2026-07-29","metric_id":"valuation::openai","value":null,"unit":"USD_billion"}
 {"date":"2026-07-29","metric_id":"valuation::anthropic","value":null,"unit":"USD_billion"}
+{"date":"2026-07-29","metric_id":"funding::anthropic","value":null,"unit":"USD_billion"}
+{"date":"2026-07-29","metric_id":"funding::openai","value":null,"unit":"USD_billion"}
+{"date":"2026-07-29","metric_id":"user_count::openai","value":null,"unit":"count"}
+{"date":"2026-07-29","metric_id":"enterprise_customers::openai","value":null,"unit":"count"}

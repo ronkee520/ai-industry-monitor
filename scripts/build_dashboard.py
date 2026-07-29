@@ -258,11 +258,11 @@ def _build_pricing(
 
         # 情况2: 有 input/output 明细 → 用 _shared.blended_cost 计算
         elif cat == "token_pricing" and "input_per_m" in rec:
-            inp = rec.get("input_per_m")
-            out = rec.get("output_per_m")
-            if inp is not None and out is not None:
+            inp_p = rec.get("input_per_m")
+            out_p = rec.get("output_per_m")
+            if inp_p is not None and out_p is not None:
                 rec["blended_cost_usd"] = _shared.blended_cost(
-                    float(inp), float(out),
+                    float(inp_p), float(out_p),
                     input_weight=0.65, output_weight=0.35,
                 )
                 # 如果是 CNY，转换为 USD
