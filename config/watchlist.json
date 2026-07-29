@@ -1,0 +1,32 @@
+{
+  "_description": "AI Industry Monitor — 投资监测标的清单（第二期启用）",
+  "_version": "1.0.0",
+  "_last_updated": "2026-07-29",
+  "_phase": 2,
+  "_note": "第一期不启用此配置。第二期投资研究Tab会使用这些标的进行行情跟踪和估值分析。",
+
+  "foreign": [
+    {"symbol": "NVDA",  "name": "NVIDIA",          "role": "GPU/算力核心"},
+    {"symbol": "AMD",   "name": "AMD",             "role": "GPU/CPU"},
+    {"symbol": "AVGO",  "name": "Broadcom",        "role": "ASIC/网络"},
+    {"symbol": "TSM",   "name": "TSMC",            "role": "先进制程代工"},
+    {"symbol": "ASML",  "name": "ASML",            "role": "光刻设备"},
+    {"symbol": "MSFT",  "name": "Microsoft",       "role": "云/AI平台"},
+    {"symbol": "GOOGL", "name": "Alphabet",        "role": "云/AI模型"},
+    {"symbol": "AMZN",  "name": "Amazon",          "role": "云/AI平台"},
+    {"symbol": "META",  "name": "Meta",            "role": "AI模型/开源"},
+    {"symbol": "SMCI",  "name": "Super Micro",     "role": "AI服务器"},
+    {"symbol": "MRVL",  "name": "Marvell",         "role": "AI网络/ASIC"},
+    {"symbol": "SOXQ",  "name": "SOXQ ETF",        "role": "半导体ETF代理"}
+  ],
+
+  "domestic": [
+    {"symbol": "688256.SS", "name": "寒武纪",      "role": "国产AI芯片"},
+    {"symbol": "688041.SS", "name": "海光信息",    "role": "国产CPU/GPU"},
+    {"symbol": "002230.SZ", "name": "科大讯飞",    "role": "AI模型/应用"},
+    {"symbol": "688111.SS", "name": "金山办公",    "role": "AI应用"},
+    {"symbol": "300474.SZ", "name": "景嘉微",      "role": "国产GPU"},
+    {"symbol": "603019.SS", "name": "中科曙光",    "role": "AI服务器/算力"},
+    {"symbol": "159819.SZ", "name": "AI智能ETF",   "role": "A股AI主题ETF代理"}
+  ]
+}

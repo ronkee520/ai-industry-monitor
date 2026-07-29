@@ -1,0 +1,9 @@
+{"date":"2026-07-29","metric_id":"token_blended_cost::openai::gpt4o::standard","value":3.75,"currency":"USD","blended_cost_usd":3.75}
+{"date":"2026-07-29","metric_id":"token_blended_cost::openai::gpt4o_mini::standard","value":0.3175,"currency":"USD","blended_cost_usd":0.3175}
+{"date":"2026-07-29","metric_id":"token_blended_cost::anthropic::claude_opus4::standard","value":10.5,"currency":"USD","blended_cost_usd":10.5}
+{"date":"2026-07-29","metric_id":"token_blended_cost::anthropic::claude_sonnet4::standard","value":5.25,"currency":"USD","blended_cost_usd":5.25}
+{"date":"2026-07-29","metric_id":"token_blended_cost::google::gemini25_pro::standard","value":3.125,"currency":"USD","blended_cost_usd":3.125}
+{"date":"2026-07-29","metric_id":"token_blended_cost::google::gemini25_flash::standard","value":0.525,"currency":"USD","blended_cost_usd":0.525}
+{"date":"2026-07-29","metric_id":"token_blended_cost::deepseek::deepseek_v3::standard","value":0.4125,"currency":"USD","blended_cost_usd":0.4125}
+{"date":"2026-07-29","metric_id":"token_blended_cost::deepseek::deepseek_r1::standard","value":0.77,"currency":"USD","blended_cost_usd":0.77}
+{"date":"2026-07-29","metric_id":"token_blended_cost::alibaba::qwen3_max::standard","value":2.34,"currency":"USD","blended_cost_usd":2.34}

@@ -1,0 +1,192 @@
+{
+  "_description": "AI Industry Monitor — 指标体系目录",
+  "_version": "1.0.0",
+  "_last_updated": "2026-07-29",
+  "_note": "定义所有监测指标的元数据。每个指标有唯一metric_id、标准化单位、所属分类和Tab。",
+
+  "categories": {
+    "token_pricing": {
+      "label": "Token 定价",
+      "label_zh": "Token 定价",
+      "tab": "token",
+      "phase": 1,
+      "description": "各主要模型的API输入/输出/缓存Token价格及标准化混合成本",
+      "metrics": [
+        {
+          "metric_id": "token_price_input",
+          "name": "输入Token价格",
+          "unit": "USD_per_1M_tokens",
+          "data_type": "number",
+          "source_type": "official_pricing",
+          "comparability": "不同模型的输入Token定义可能不同（是否含system prompt等），标价不直接等于实际账单"
+        },
+        {
+          "metric_id": "token_price_output",
+          "name": "输出Token价格",
+          "unit": "USD_per_1M_tokens",
+          "data_type": "number",
+          "source_type": "official_pricing"
+        },
+        {
+          "metric_id": "token_price_cached_input",
+          "name": "缓存输入价格",
+          "unit": "USD_per_1M_tokens",
+          "data_type": "number",
+          "source_type": "official_pricing"
+        },
+        {
+          "metric_id": "token_blended_cost",
+          "name": "标准化混合成本",
+          "unit": "USD_per_1M_tokens",
+          "data_type": "number",
+          "source_type": "derived",
+          "formula": "input × 0.65 + output × 0.35。CNY定价按fx_rate转USD。不含Batch/缓存/长上下文/工具调用/企业折扣。",
+          "comparability": "假设输入:输出=65:35的典型对话负载比例。实际成本因使用模式不同而差异很大"
+        }
+      ]
+    },
+
+    "business": {
+      "label": "商业化指标",
+      "label_zh": "商业化指标",
+      "tab": "business",
+      "phase": 1,
+      "description": "AI模型公司的ARR/收入/融资/用户规模等商业化数据",
+      "metrics": [
+        {
+          "metric_id": "arr",
+          "name": "年化经常性收入 (ARR)",
+          "unit": "USD_billion",
+          "data_type": "number",
+          "source_type": "company_disclosure_or_media",
+          "comparability": "ARR是最可比的商业化指标，但各公司计算方法不完全一致"
+        },
+        {
+          "metric_id": "annualized_revenue",
+          "name": "年化收入（非ARR口径）",
+          "unit": "USD_billion",
+          "data_type": "number",
+          "source_type": "company_disclosure_or_media",
+          "comparability": "≠ARR。系公司披露的annualized revenue，口径可能不同"
+        },
+        {
+          "metric_id": "annual_revenue",
+          "name": "年度收入（审计/非审计）",
+          "unit": "USD_billion",
+          "data_type": "number",
+          "source_type": "company_disclosure_or_media",
+          "comparability": "≠ARR。可能是自然年或财年的实际收入。不可与ARR直接比较"
+        },
+        {
+          "metric_id": "funding_amount",
+          "name": "融资金额",
+          "unit": "USD_million",
+          "data_type": "number",
+          "source_type": "media_report"
+        },
+        {
+          "metric_id": "valuation",
+          "name": "估值",
+          "unit": "USD_billion",
+          "data_type": "number",
+          "source_type": "media_report",
+          "comparability": "融资估值，不等同于公开市场市值"
+        },
+        {
+          "metric_id": "user_count",
+          "name": "用户数",
+          "unit": "count",
+          "data_type": "number",
+          "source_type": "company_disclosure_or_media",
+          "comparability": "各公司对'用户'的定义不同（MAU/DAU/注册用户/付费用户），不可直接横向比较"
+        },
+        {
+          "metric_id": "enterprise_customers",
+          "name": "企业客户数",
+          "unit": "count",
+          "data_type": "number",
+          "source_type": "company_disclosure_or_media"
+        }
+      ]
+    },
+
+    "gpu_pricing": {
+      "label": "GPU 算力",
+      "label_zh": "GPU 算力",
+      "tab": "compute",
+      "phase": 1,
+      "description": "主流GPU的云租赁按需价格",
+      "metrics": [
+        {
+          "metric_id": "gpu_rental_hourly",
+          "name": "GPU按需租赁价",
+          "unit": "USD_per_GPU_hour",
+          "data_type": "number",
+          "source_type": "official_pricing",
+          "comparability": "不同平台的价格类型不同(按需/预留/竞价)。VRAM、CPU、存储和网络费用不包含在内。不将整机价格当作单卡价格"
+        }
+      ]
+    },
+
+    "capex": {
+      "label": "云厂商 CAPEX",
+      "label_zh": "云厂商 CAPEX",
+      "tab": "compute",
+      "phase": 1,
+      "description": "主要云服务提供商的资本开支（含AI相关投资）",
+      "metrics": [
+        {
+          "metric_id": "capex_total",
+          "name": "资本开支总额",
+          "unit": "USD_billion",
+          "data_type": "number",
+          "source_type": "company_disclosure",
+          "comparability": "各公司CAPEX口径不完全一致。部分包含融资租赁，部分不含"
+        },
+        {
+          "metric_id": "capex_ai_portion",
+          "name": "AI相关投资估算",
+          "unit": "USD_billion",
+          "data_type": "number",
+          "source_type": "company_guidance_or_estimate",
+          "comparability": "通常为公司指引或分析师估计，非精确口径"
+        }
+      ]
+    },
+
+    "cycle": {
+      "label": "产业周期",
+      "label_zh": "AI产业周期",
+      "tab": "overview",
+      "phase": 1,
+      "description": "AI产业周期阶段的综合评分因子",
+      "metrics": [
+        {
+          "metric_id": "industry_development_score",
+          "name": "产业发展强度分数",
+          "unit": "score_0_100",
+          "data_type": "number",
+          "source_type": "derived",
+          "formula": "technology_maturity × 0.30 + commercialization × 0.35 + capital_investment × 0.35"
+        },
+        {
+          "metric_id": "risk_crowding_score",
+          "name": "风险拥挤度分数",
+          "unit": "score_0_100",
+          "data_type": "number",
+          "source_type": "derived",
+          "formula": "valuation_crowding 子因子的加权平均。此分数独立于产业发展强度，高值代表风险而非成熟"
+        },
+        {
+          "metric_id": "cycle_stage",
+          "name": "AI产业周期阶段",
+          "unit": "categorical",
+          "data_type": "string",
+          "source_type": "derived",
+          "enum": ["tech_validation", "infra_expansion", "commercialization", "valuation_crowding", "cyclical_adjustment"],
+          "logic": "由 industry_development_score 和 risk_crowding_score 联合判定，非单一分数线性映射"
+        }
+      ]
+    }
+  }
+}

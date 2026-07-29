@@ -1,0 +1,553 @@
+{
+  "meta": {
+    "title": "AI Industry Monitor",
+    "subtitle": "AI产业与大模型商业化监测 Dashboard",
+    "generated_at": "2026-07-29T13:58:29+08:00",
+    "schedule": "每周一、周五 09:00 (Asia/Shanghai)",
+    "data_policy": "公开可引用数据。sample/missing/manual_required 标记明确。",
+    "fx": {
+      "cny_per_usd": 7.25,
+      "note": "仅用于跨币种横向比较"
+    }
+  },
+  "kpis": {
+    "companies": 21,
+    "models_with_pricing": 9,
+    "source_ok": 0,
+    "source_total": 0,
+    "arr_disclosures": 0
+  },
+  "overview": {
+    "cycle": {
+      "generated_at": "2026-07-29T13:58:29+08:00",
+      "stage_id": "infra_expansion",
+      "stage_label": "基础设施扩张期",
+      "industry_development_score": 50.0,
+      "risk_crowding_score": null,
+      "risk_note": "第一期风险Overlay使用默认中性值(50)。第二期实现自动化后更新。",
+      "factor_scores": {
+        "technology_maturity": {
+          "score": 50.0,
+          "weight": 0.3
+        },
+        "commercialization": {
+          "score": 50.0,
+          "weight": 0.35
+        },
+        "capital_investment": {
+          "score": 50.0,
+          "weight": 0.35
+        }
+      },
+      "confidence": "low",
+      "insufficient_data": false,
+      "sample_based": true,
+      "missing_factor_count": 2,
+      "data_coverage": {
+        "pricing_records": 9,
+        "pricing_real": 0,
+        "business_records": 0,
+        "business_real": 0,
+        "sources_ok": 0,
+        "sources_total": 0
+      },
+      "stages_reference": [
+        {
+          "id": "tech_validation",
+          "label_zh": "技术验证期",
+          "label_en": "Technology Validation",
+          "trigger_rule": "industry_score < 35",
+          "description": "技术路线探索期。Token价格处于高位、商业模式未成形、资本投入相对谨慎。信号特点：少量ARR披露、GPU租赁价格敏感、Capex温和增长。"
+        },
+        {
+          "id": "infra_expansion",
+          "label_zh": "基础设施扩张期",
+          "label_en": "Infrastructure Expansion",
+          "trigger_rule": "35 ≤ industry_score < 55 且 risk_score < 70",
+          "description": "Capex快速增长、GPU供不应求、Token价格开始快速下降。云厂商和GPU供应链持续受益，应用层仍待验证。"
+        },
+        {
+          "id": "commercialization",
+          "label_zh": "商业化兑现期",
+          "label_en": "Commercialization",
+          "trigger_rule": "industry_score ≥ 55 且 risk_score < 70",
+          "description": "ARR加速增长、Token使用量爆发、部分公司实现盈利。技术成熟+商业闭环，是产业最健康的阶段。"
+        },
+        {
+          "id": "valuation_crowding",
+          "label_zh": "估值拥挤期",
+          "label_en": "Valuation Crowding",
+          "trigger_rule": "risk_score ≥ 70 且 industry_score ≥ 55",
+          "description": "⚠️ 估值处于高位、资金拥挤、市场情绪过热。需警惕基本面与价格的背离。注意：这不是产业更成熟的标志，而是风险溢价的警告信号。"
+        },
+        {
+          "id": "cyclical_adjustment",
+          "label_zh": "周期调整期",
+          "label_en": "Cyclical Adjustment",
+          "trigger_rule": "满足 ≥2 个条件: ①capex增速连续两期放缓 ②gpu价格连续两期回落 ③ARR披露miss预期 ④risk_score ≥ 85 ⑤AI相关估值大幅回落",
+          "description": "⚠️ 产能过剩担忧、Capex增速放缓、行业进入出清或再平衡。此阶段由边际恶化信号触发，不是industry_score自然到达的终态。"
+        }
+      ]
+    },
+    "kpi_summary": {
+      "total_models_tracked": 9,
+      "models_with_real_data": 0,
+      "cheapest_model": null,
+      "cheapest_cost_usd": null,
+      "arr_records": 0,
+      "data_freshness": "low"
+    }
+  },
+  "token_pricing": {
+    "records": [
+      {
+        "metric_id": "token_blended_cost::openai::gpt4o_mini::standard",
+        "metric_name": "GPT-4o Mini 标准档混合成本",
+        "metric_category": "token_pricing",
+        "value": 0.3175,
+        "unit": "USD_per_1M_tokens",
+        "currency": "USD",
+        "company_id": "openai",
+        "model_id": "gpt4o_mini",
+        "region": "overseas",
+        "tier": "standard",
+        "period": "2026-07-29",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "OpenAI API Pricing",
+        "source_url": "https://platform.openai.com/docs/pricing",
+        "source_tier": 1,
+        "evidence_status": "manual_required",
+        "confidence": "sample",
+        "note": "⚠️ SAMPLE — 结构示例。实际值需从官方定价页验证",
+        "tags": [
+          "sample",
+          "blended"
+        ],
+        "company_name": "OpenAI",
+        "model_status": "production",
+        "blended_cost_usd": 0.3175,
+        "change_pct": 0.0,
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      },
+      {
+        "metric_id": "token_blended_cost::deepseek::deepseek_v3::standard",
+        "metric_name": "DeepSeek-V3 标准档混合成本",
+        "metric_category": "token_pricing",
+        "value": 0.4125,
+        "unit": "USD_per_1M_tokens",
+        "currency": "USD",
+        "company_id": "deepseek",
+        "model_id": "deepseek_v3",
+        "region": "domestic",
+        "tier": "standard",
+        "period": "2026-07-29",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "DeepSeek API Pricing",
+        "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
+        "source_tier": 1,
+        "evidence_status": "manual_required",
+        "confidence": "sample",
+        "note": "⚠️ SAMPLE — 参考值(非官方价)。DeepSeek以极低API价格闻名。实际值需从官方定价页验证",
+        "tags": [
+          "sample",
+          "blended"
+        ],
+        "company_name": "DeepSeek（深度求索）",
+        "model_status": "production",
+        "blended_cost_usd": 0.4125,
+        "change_pct": 0.0,
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      },
+      {
+        "metric_id": "token_blended_cost::google::gemini25_flash::standard",
+        "metric_name": "Gemini 2.5 Flash 标准档混合成本",
+        "metric_category": "token_pricing",
+        "value": 0.525,
+        "unit": "USD_per_1M_tokens",
+        "currency": "USD",
+        "company_id": "google",
+        "model_id": "gemini25_flash",
+        "region": "overseas",
+        "tier": "standard",
+        "period": "2026-07-29",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "Gemini Developer API Pricing",
+        "source_url": "https://ai.google.dev/pricing",
+        "source_tier": 1,
+        "evidence_status": "manual_required",
+        "confidence": "sample",
+        "note": "⚠️ SAMPLE — 结构示例",
+        "tags": [
+          "sample",
+          "blended"
+        ],
+        "company_name": "Google DeepMind",
+        "model_status": "production",
+        "blended_cost_usd": 0.525,
+        "change_pct": 0.0,
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      },
+      {
+        "metric_id": "token_blended_cost::deepseek::deepseek_r1::standard",
+        "metric_name": "DeepSeek-R1 标准档混合成本",
+        "metric_category": "token_pricing",
+        "value": 0.77,
+        "unit": "USD_per_1M_tokens",
+        "currency": "USD",
+        "company_id": "deepseek",
+        "model_id": "deepseek_r1",
+        "region": "domestic",
+        "tier": "standard",
+        "period": "2026-07-29",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "DeepSeek API Pricing",
+        "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
+        "source_tier": 1,
+        "evidence_status": "manual_required",
+        "confidence": "sample",
+        "note": "⚠️ SAMPLE — 参考值。R1使用推理模型定价(含reasoning tokens)。实际值需验证",
+        "tags": [
+          "sample",
+          "blended"
+        ],
+        "company_name": "DeepSeek（深度求索）",
+        "model_status": "production",
+        "blended_cost_usd": 0.77,
+        "change_pct": 0.0,
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      },
+      {
+        "metric_id": "token_blended_cost::alibaba::qwen3_max::standard",
+        "metric_name": "Qwen3-Max 标准档混合成本",
+        "metric_category": "token_pricing",
+        "value": 2.34,
+        "unit": "USD_per_1M_tokens",
+        "currency": "USD",
+        "company_id": "alibaba",
+        "model_id": "qwen3_max",
+        "region": "domestic",
+        "tier": "standard",
+        "period": "2026-07-29",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "阿里云百炼模型定价",
+        "source_url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+        "source_tier": 1,
+        "evidence_status": "manual_required",
+        "confidence": "sample",
+        "note": "⚠️ SAMPLE — 阿里云模型部分以CNY定价，需按fx_rate转USD。实际值需从官方定价页验证",
+        "tags": [
+          "sample",
+          "blended"
+        ],
+        "company_name": "阿里通义千问",
+        "model_status": "production",
+        "blended_cost_usd": 2.34,
+        "change_pct": 0.0,
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      },
+      {
+        "metric_id": "token_blended_cost::google::gemini25_pro::standard",
+        "metric_name": "Gemini 2.5 Pro 标准档混合成本",
+        "metric_category": "token_pricing",
+        "value": 3.125,
+        "unit": "USD_per_1M_tokens",
+        "currency": "USD",
+        "company_id": "google",
+        "model_id": "gemini25_pro",
+        "region": "overseas",
+        "tier": "standard",
+        "period": "2026-07-29",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "Gemini Developer API Pricing",
+        "source_url": "https://ai.google.dev/pricing",
+        "source_tier": 1,
+        "evidence_status": "manual_required",
+        "confidence": "sample",
+        "note": "⚠️ SAMPLE — 结构示例",
+        "tags": [
+          "sample",
+          "blended"
+        ],
+        "company_name": "Google DeepMind",
+        "model_status": "production",
+        "blended_cost_usd": 3.125,
+        "change_pct": 0.0,
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      },
+      {
+        "metric_id": "token_blended_cost::openai::gpt4o::standard",
+        "metric_name": "GPT-4o 标准档混合成本",
+        "metric_category": "token_pricing",
+        "value": 3.75,
+        "unit": "USD_per_1M_tokens",
+        "currency": "USD",
+        "company_id": "openai",
+        "model_id": "gpt4o",
+        "region": "overseas",
+        "tier": "standard",
+        "period": "2026-07-29",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "OpenAI API Pricing",
+        "source_url": "https://platform.openai.com/docs/pricing",
+        "source_tier": 1,
+        "evidence_status": "manual_required",
+        "confidence": "sample",
+        "note": "⚠️ SAMPLE — 此为结构示例。实际GPT-4o定价(input=$2.50 output=$10.00, blended=$2.50×0.65+$10.00×0.35=$5.125/M)需从官方定价页验证后更新。当前数值仅用于数据格式验证。",
+        "tags": [
+          "sample",
+          "blended"
+        ],
+        "company_name": "OpenAI",
+        "model_status": "production",
+        "blended_cost_usd": 3.75,
+        "change_pct": 0.0,
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      },
+      {
+        "metric_id": "token_blended_cost::anthropic::claude_sonnet4::standard",
+        "metric_name": "Claude Sonnet 4 标准档混合成本",
+        "metric_category": "token_pricing",
+        "value": 5.25,
+        "unit": "USD_per_1M_tokens",
+        "currency": "USD",
+        "company_id": "anthropic",
+        "model_id": "claude_sonnet4",
+        "region": "overseas",
+        "tier": "standard",
+        "period": "2026-07-29",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "Anthropic API Pricing",
+        "source_url": "https://www.anthropic.com/pricing",
+        "source_tier": 1,
+        "evidence_status": "manual_required",
+        "confidence": "sample",
+        "note": "⚠️ SAMPLE — 结构示例",
+        "tags": [
+          "sample",
+          "blended"
+        ],
+        "company_name": "Anthropic",
+        "model_status": "production",
+        "blended_cost_usd": 5.25,
+        "change_pct": 0.0,
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      },
+      {
+        "metric_id": "token_blended_cost::anthropic::claude_opus4::standard",
+        "metric_name": "Claude Opus 4 标准档混合成本",
+        "metric_category": "token_pricing",
+        "value": 10.5,
+        "unit": "USD_per_1M_tokens",
+        "currency": "USD",
+        "company_id": "anthropic",
+        "model_id": "claude_opus4",
+        "region": "overseas",
+        "tier": "standard",
+        "period": "2026-07-29",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "Anthropic API Pricing",
+        "source_url": "https://www.anthropic.com/pricing",
+        "source_tier": 1,
+        "evidence_status": "manual_required",
+        "confidence": "sample",
+        "note": "⚠️ SAMPLE — 结构示例",
+        "tags": [
+          "sample",
+          "blended"
+        ],
+        "company_name": "Anthropic",
+        "model_status": "production",
+        "blended_cost_usd": 10.5,
+        "change_pct": 0.0,
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      }
+    ],
+    "methodology": {
+      "blended_formula": "input × 0.65 + output × 0.35 (USD)",
+      "comparability": "不同币种按fx_rate转USD；Batch/缓存/长上下文/企业折扣不包含在内。"
+    }
+  },
+  "business": {
+    "records": [
+      {
+        "metric_id": "arr::openai",
+        "metric_name": "OpenAI 年化经常性收入",
+        "metric_category": "business",
+        "value": null,
+        "unit": "USD_billion",
+        "currency": "USD",
+        "company_id": "openai",
+        "region": "overseas",
+        "period": "2026-07",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "待确认",
+        "source_url": "",
+        "source_tier": 2,
+        "evidence_status": "missing",
+        "confidence": "missing",
+        "note": "⚠️ 等待可靠来源验证。OpenAI最后一次官方ARR数字需确认。请在使用前从权威来源更新。",
+        "tags": [
+          "missing",
+          "arr"
+        ],
+        "company_name": "OpenAI",
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      },
+      {
+        "metric_id": "arr::anthropic",
+        "metric_name": "Anthropic 年化经常性收入",
+        "metric_category": "business",
+        "value": null,
+        "unit": "USD_billion",
+        "currency": "USD",
+        "company_id": "anthropic",
+        "region": "overseas",
+        "period": "2026-07",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "待确认",
+        "source_url": "",
+        "source_tier": 2,
+        "evidence_status": "missing",
+        "confidence": "missing",
+        "note": "⚠️ 等待可靠来源验证",
+        "tags": [
+          "missing",
+          "arr"
+        ],
+        "company_name": "Anthropic",
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      },
+      {
+        "metric_id": "valuation::openai",
+        "metric_name": "OpenAI 估值",
+        "metric_category": "business",
+        "value": null,
+        "unit": "USD_billion",
+        "currency": "USD",
+        "company_id": "openai",
+        "region": "overseas",
+        "period": "2026-07",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "待确认",
+        "source_url": "",
+        "source_tier": 2,
+        "evidence_status": "missing",
+        "confidence": "missing",
+        "note": "⚠️ 等待可靠来源验证",
+        "tags": [
+          "missing",
+          "valuation"
+        ],
+        "company_name": "OpenAI",
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      },
+      {
+        "metric_id": "valuation::anthropic",
+        "metric_name": "Anthropic 估值",
+        "metric_category": "business",
+        "value": null,
+        "unit": "USD_billion",
+        "currency": "USD",
+        "company_id": "anthropic",
+        "region": "overseas",
+        "period": "2026-07",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "待确认",
+        "source_url": "",
+        "source_tier": 2,
+        "evidence_status": "missing",
+        "confidence": "missing",
+        "note": "⚠️ 等待可靠来源验证",
+        "tags": [
+          "missing",
+          "valuation"
+        ],
+        "company_name": "Anthropic",
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      }
+    ],
+    "methodology": {
+      "note": "ARR、年化收入、年度收入分开展示，不强行合并。未披露≠0。"
+    }
+  },
+  "compute": {
+    "gpu": [],
+    "note": "GPU价格来自公开按需定价页。整机/合约/竞价价格不混排。"
+  },
+  "sources": [],
+  "news": [],
+  "health": {
+    "status": "partial",
+    "generated_at": "2026-07-29T13:58:29+08:00",
+    "sources_ok": 0,
+    "sources_total": 0,
+    "source_success_rate": "0/0",
+    "pricing_total": 9,
+    "pricing_missing": 0,
+    "pricing_sample": 9,
+    "business_total": 4,
+    "business_missing": 4,
+    "warnings": [
+      "9 pricing records are SAMPLES — do not cite as real data"
+    ]
+  },
+  "methodology": {
+    "data_boundary": "T1=官方一手, T2=权威媒体/公开研究, T3=聚合/自媒体",
+    "news_policy": "RSS新闻仅进入待复核池，不自动写入正式指标",
+    "missing_policy": "缺失数据value=null，不写作0",
+    "sample_policy": "示例数据标记confidence=sample，不应被引用",
+    "cycle_note": "双重分数体系：industry_development_score(产业发展强度)判断产业所处位置，risk_crowding_score(风险拥挤度)作为风险Overlay。高分≠好状态。估值拥挤期和周期调整期由risk触发信号判定，不由industry_score线性到达。"
+  }
+}

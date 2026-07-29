@@ -1,0 +1,35 @@
+# 构建产物
+_site/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# 日志
+logs/
+*.log
+
+# 临时文件
+*.tmp
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# 环境变量 (敏感信息)
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 参考项目 (开发阶段保留，上线前删除)
+llm-token-economy-monitor-main/
+
+# 设计文档 (开发阶段保留)
+DESIGN.md

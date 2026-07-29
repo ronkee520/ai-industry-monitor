@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="AI Industry Monitor — AI产业与大模型商业化监测 Dashboard">
+<title>AI Industry Monitor</title>
+<link rel="icon" href="{{ASSET_PREFIX}}favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{{ASSET_PREFIX}}styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <svg class="brand-icon" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="15" fill="none" stroke="var(--accent)" stroke-width="2"/>
+        <circle cx="16" cy="14" r="3" fill="var(--accent)"/>
+        <line x1="16" y1="17" x2="16" y2="26" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="10" y1="22" x2="22" y2="22" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-text">
+        <span class="brand-title">AI Industry Monitor</span>
+        <span class="brand-sub">AI产业与大模型商业化监测 Dashboard</span>
+      </div>
+    </div>
+    <div class="header-meta" id="header-meta">加载数据…</div>
+  </div>
+</header>
+
+<nav class="tabs" id="tab-nav" aria-label="Dashboard tabs">
+  <div class="tabs-inner">
+    <a class="tab" data-tab="overview" href="{{ROOT_PREFIX}}">总览 / AI Cycle</a>
+    <a class="tab" data-tab="token" href="{{ROOT_PREFIX}}token/">Token 经济</a>
+    <a class="tab" data-tab="business" href="{{ROOT_PREFIX}}business/">商业化</a>
+    <a class="tab" data-tab="compute" href="{{ROOT_PREFIX}}compute/">AI算力 & 云CAPEX</a>
+    <a class="tab" data-tab="methodology" href="{{ROOT_PREFIX}}methodology/">方法论与数据</a>
+    <span class="tab-spacer"></span>
+    <a class="api-link" href="{{ROOT_PREFIX}}api/index.json" target="_blank">JSON API ↗</a>
+  </div>
+</nav>
+
+<main class="page" id="app" aria-live="polite">
+  <section class="loading-state">正在读取最新公开快照…</section>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <strong>AI Industry Monitor</strong>
+    <p>公开数据研究终端。数据来源：官方定价页 · 公司披露 · 权威媒体。所有 sample/missing 数据均有明确标记。</p>
+  </div>
+  <div>
+    <strong>重要提示</strong>
+    <p>本 Dashboard 仅用于产业研究参考，不构成投资建议。正式引用前请回到原始来源核验。</p>
+  </div>
+</footer>
+
+<script>
+window.DASHBOARD_ROOT = "{{ROOT_PREFIX}}";
+</script>
+<script src="{{ASSET_PREFIX}}app.js" defer></script>
+</body>
+</html>

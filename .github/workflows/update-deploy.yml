@@ -1,0 +1,142 @@
+name: Update & Deploy AI Industry Monitor
+
+on:
+  schedule:
+    # 北京时间周一 09:00 (UTC+8 → UTC 01:00)
+    - cron: "0 1 * * 1"
+    # 北京时间周五 09:00
+    - cron: "0 1 * * 5"
+
+  workflow_dispatch:
+    inputs:
+      skip_fetch:
+        description: "跳过网络采集（仅用 local/manual 数据构建）"
+        type: boolean
+        default: false
+      verbose:
+        description: "输出详细日志"
+        type: boolean
+        default: false
+
+  push:
+    branches: [main]
+    paths:
+      - "config/**"
+      - "data/manual/**"
+      - "scripts/**"
+      - "web/**"
+      - "tests/**"
+      - ".github/workflows/update-deploy.yml"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      # ── 1. Checkout ──────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      # ── 2. Setup Python ──────────────────────────────────
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      # ── 3. Run tests (no network required) ───────────────
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+
+      # ── 4. Run data pipeline ─────────────────────────────
+      - name: Run data pipeline
+        run: |
+          if [[ "${{ github.event.inputs.skip_fetch }}" == "true" ]]; then
+            echo "skip_fetch=true — 跳过网络采集"
+            python scripts/run_all.py --project-root . --skip-fetch --verbose
+          elif [[ "${{ github.event_name }}" == "push" ]]; then
+            echo "push 触发 — 跳过网络采集以保证 CI 稳定"
+            python scripts/run_all.py --project-root . --skip-fetch --verbose
+          else
+            echo "scheduled/manual — 尝试网络采集"
+            python scripts/run_all.py --project-root . --verbose || {
+              echo "采集部分失败，回退到 --skip-fetch"
+              python scripts/run_all.py --project-root . --skip-fetch --verbose
+            }
+          fi
+
+      # ── 5. Verify build output ───────────────────────────
+      - name: Verify build output
+        run: |
+          echo "检查 _site/ 生成完整性..."
+          required=(
+            "_site/index.html"
+            "_site/token/index.html"
+            "_site/business/index.html"
+            "_site/compute/index.html"
+            "_site/methodology/index.html"
+            "_site/api/index.json"
+            "_site/api/dashboard.json"
+            "_site/api/overview.json"
+            "_site/api/token-pricing.json"
+            "_site/api/business.json"
+            "_site/api/gpu-pricing.json"
+            "_site/api/health.json"
+            "_site/.nojekyll"
+            "_site/app.js"
+            "_site/styles.css"
+          )
+          missing=0
+          for f in "${required[@]}"; do
+            if [ ! -f "$f" ]; then
+              echo "  ✗ 缺失: $f"
+              missing=$((missing + 1))
+            fi
+          done
+          if [ $missing -gt 0 ]; then
+            echo "ERROR: $missing 个必需文件缺失"
+            exit 1
+          fi
+          echo "  全部 ${#required[@]} 个文件检查通过"
+
+          # 检查模板变量
+          echo "检查模板变量替换..."
+          if grep -r '{{ROOT_PREFIX}}\|{{ASSET_PREFIX}}' _site/ -l 2>/dev/null; then
+            echo "ERROR: 存在未替换的模板变量"
+            exit 1
+          fi
+          echo "  模板变量检查通过"
+
+          # 检查外部 CDN
+          echo "检查外部 CDN..."
+          if grep -rP '(?i)cdn\.|fonts\.googleapis\.com|unpkg\.com|jsdelivr\.net' _site/ -l 2>/dev/null; then
+            echo "WARNING: 检测到外部 CDN 引用"
+          else
+            echo "  无外部 CDN"
+          fi
+
+          echo "✓ 构建校验通过"
+
+      # ── 6. Configure Pages ────────────────────────────────
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      # ── 7. Upload artifact ────────────────────────────────
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      # ── 8. Deploy ─────────────────────────────────────────
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

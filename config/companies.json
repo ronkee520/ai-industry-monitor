@@ -1,0 +1,229 @@
+{
+  "_description": "AI Industry Monitor — 监测公司注册表",
+  "_version": "1.0.0",
+  "_last_updated": "2026-07-29",
+  "fx": {
+    "cny_per_usd": 7.25,
+    "note": "仅用于跨币种横向比较，不是财务核算汇率"
+  },
+  "companies": [
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "name_zh": "OpenAI",
+      "region": "overseas",
+      "type": "independent_model",
+      "status": "active",
+      "listed": false,
+      "description": "全球领先的AI模型公司，GPT系列模型的开发者"
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "name_zh": "Anthropic",
+      "region": "overseas",
+      "type": "independent_model",
+      "status": "active",
+      "listed": false,
+      "description": "Claude系列模型的开发者，专注于AI安全研究"
+    },
+    {
+      "id": "google",
+      "name": "Google DeepMind",
+      "name_zh": "Google DeepMind",
+      "region": "overseas",
+      "type": "tech_group",
+      "status": "active",
+      "listed": true,
+      "ticker": "GOOGL",
+      "description": "Alphabet旗下AI研究机构，Gemini系列模型的开发者"
+    },
+    {
+      "id": "xai",
+      "name": "xAI",
+      "name_zh": "xAI",
+      "region": "overseas",
+      "type": "independent_model",
+      "status": "active",
+      "listed": false,
+      "description": "Elon Musk创立的AI公司，Grok系列模型的开发者"
+    },
+    {
+      "id": "meta",
+      "name": "Meta AI",
+      "name_zh": "Meta AI",
+      "region": "overseas",
+      "type": "tech_group",
+      "status": "active",
+      "listed": true,
+      "ticker": "META",
+      "description": "Meta旗下AI研究部门，Llama开源模型系列的发布者"
+    },
+    {
+      "id": "mistral",
+      "name": "Mistral AI",
+      "name_zh": "Mistral AI",
+      "region": "overseas",
+      "type": "independent_model",
+      "status": "active",
+      "listed": false,
+      "description": "法国AI公司，Mistral Large等开源和商业模型的开发者"
+    },
+    {
+      "id": "cohere",
+      "name": "Cohere",
+      "name_zh": "Cohere",
+      "region": "overseas",
+      "type": "independent_model",
+      "status": "active",
+      "listed": false,
+      "description": "加拿大AI公司，专注于企业级大语言模型"
+    },
+    {
+      "id": "amazon",
+      "name": "Amazon AI",
+      "name_zh": "Amazon AI",
+      "region": "overseas",
+      "type": "tech_group",
+      "status": "active",
+      "listed": true,
+      "ticker": "AMZN",
+      "description": "AWS Bedrock平台和Nova系列模型"
+    },
+    {
+      "id": "microsoft",
+      "name": "Microsoft AI",
+      "name_zh": "Microsoft AI",
+      "region": "overseas",
+      "type": "tech_group",
+      "status": "active",
+      "listed": true,
+      "ticker": "MSFT",
+      "description": "Azure AI服务和Copilot/Phi系列模型"
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "name_zh": "DeepSeek（深度求索）",
+      "region": "domestic",
+      "type": "independent_model",
+      "status": "active",
+      "listed": false,
+      "description": "中国AI公司，DeepSeek-V系列模型以极低推理成本闻名"
+    },
+    {
+      "id": "alibaba",
+      "name": "Alibaba Tongyi Qianwen",
+      "name_zh": "阿里通义千问",
+      "region": "domestic",
+      "type": "tech_group",
+      "status": "active",
+      "listed": true,
+      "ticker": "9988.HK",
+      "description": "阿里云旗下的通义千问(Qwen)系列模型"
+    },
+    {
+      "id": "bytedance",
+      "name": "ByteDance Doubao",
+      "name_zh": "字节豆包",
+      "region": "domestic",
+      "type": "tech_group",
+      "status": "active",
+      "listed": false,
+      "description": "字节跳动旗下火山方舟的豆包(Doubao)系列模型，日均Token调用量领先"
+    },
+    {
+      "id": "baidu",
+      "name": "Baidu Wenxin",
+      "name_zh": "百度文心",
+      "region": "domestic",
+      "type": "tech_group",
+      "status": "active",
+      "listed": true,
+      "ticker": "9888.HK",
+      "description": "百度文心(ERNIE)系列大模型"
+    },
+    {
+      "id": "tencent",
+      "name": "Tencent Hunyuan",
+      "name_zh": "腾讯混元",
+      "region": "domestic",
+      "type": "tech_group",
+      "status": "active",
+      "listed": true,
+      "ticker": "0700.HK",
+      "description": "腾讯混元大模型系列"
+    },
+    {
+      "id": "zhipu",
+      "name": "Zhipu AI",
+      "name_zh": "智谱AI",
+      "region": "domestic",
+      "type": "independent_model",
+      "status": "active",
+      "listed": false,
+      "description": "清华系AI公司，GLM系列模型的开发者"
+    },
+    {
+      "id": "moonshot",
+      "name": "Moonshot AI",
+      "name_zh": "月之暗面（Kimi）",
+      "region": "domestic",
+      "type": "independent_model",
+      "status": "active",
+      "listed": false,
+      "description": "Kimi系列模型的开发者，以超长上下文窗口为特色"
+    },
+    {
+      "id": "iflytek",
+      "name": "iFLYTEK Spark",
+      "name_zh": "科大讯飞星火",
+      "region": "domestic",
+      "type": "tech_group",
+      "status": "active",
+      "listed": true,
+      "ticker": "002230.SZ",
+      "description": "科大讯飞星火(Spark)认知大模型"
+    },
+    {
+      "id": "minimax",
+      "name": "MiniMax",
+      "name_zh": "MiniMax（稀宇科技）",
+      "region": "domestic",
+      "type": "independent_model",
+      "status": "active",
+      "listed": false,
+      "description": "中国AI公司，ABAB系列多模态模型"
+    },
+    {
+      "id": "baichuan",
+      "name": "Baichuan Intelligence",
+      "name_zh": "百川智能",
+      "region": "domestic",
+      "type": "independent_model",
+      "status": "active",
+      "listed": false,
+      "description": "前搜狗CEO王小川创立的AI公司"
+    },
+    {
+      "id": "01ai",
+      "name": "01.AI",
+      "name_zh": "零一万物",
+      "region": "domestic",
+      "type": "independent_model",
+      "status": "active",
+      "listed": false,
+      "description": "李开复创立的AI公司，Yi系列开源模型"
+    },
+    {
+      "id": "shanghai_ai",
+      "name": "Shanghai AI Lab",
+      "name_zh": "上海人工智能实验室",
+      "region": "domestic",
+      "type": "research_lab",
+      "status": "active",
+      "listed": false,
+      "description": "上海AI Lab，InternLM系列开源模型的发布者"
+    }
+  ]
+}

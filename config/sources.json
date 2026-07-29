@@ -1,0 +1,260 @@
+{
+  "_description": "AI Industry Monitor — 数据源定义",
+  "_version": "1.0.0",
+  "_last_updated": "2026-07-29",
+
+  "pricing_sources": [
+    {
+      "id": "openai_pricing",
+      "company_id": "openai",
+      "kind": "official_pricing",
+      "name": "OpenAI API Pricing",
+      "url": "https://platform.openai.com/docs/pricing",
+      "tier": 1,
+      "parser": "html_visible_text",
+      "enabled": true,
+      "_note": "HTML静态页面，可直接解析"
+    },
+    {
+      "id": "anthropic_pricing",
+      "company_id": "anthropic",
+      "kind": "official_pricing",
+      "name": "Anthropic API Pricing",
+      "url": "https://www.anthropic.com/pricing",
+      "tier": 1,
+      "parser": "html_visible_text",
+      "enabled": true
+    },
+    {
+      "id": "google_pricing",
+      "company_id": "google",
+      "kind": "official_pricing",
+      "name": "Gemini Developer API Pricing",
+      "url": "https://ai.google.dev/pricing",
+      "tier": 1,
+      "parser": "html_visible_text",
+      "enabled": true
+    },
+    {
+      "id": "xai_pricing",
+      "company_id": "xai",
+      "kind": "official_pricing",
+      "name": "xAI API Pricing",
+      "url": "https://x.ai/pricing",
+      "tier": 1,
+      "parser": "html_visible_text",
+      "enabled": true
+    },
+    {
+      "id": "mistral_pricing",
+      "company_id": "mistral",
+      "kind": "official_pricing",
+      "name": "Mistral API Pricing",
+      "url": "https://mistral.ai/technology/",
+      "tier": 1,
+      "parser": "html_visible_text",
+      "enabled": true
+    },
+    {
+      "id": "cohere_pricing",
+      "company_id": "cohere",
+      "kind": "official_pricing",
+      "name": "Cohere API Pricing",
+      "url": "https://cohere.com/pricing",
+      "tier": 1,
+      "parser": "html_visible_text",
+      "enabled": true
+    },
+    {
+      "id": "amazon_bedrock_pricing",
+      "company_id": "amazon",
+      "kind": "official_pricing",
+      "name": "AWS Bedrock Pricing",
+      "url": "https://aws.amazon.com/bedrock/pricing/",
+      "tier": 1,
+      "parser": "html_visible_text",
+      "enabled": true
+    },
+    {
+      "id": "deepseek_pricing",
+      "company_id": "deepseek",
+      "kind": "official_pricing",
+      "name": "DeepSeek API Pricing",
+      "url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "tier": 1,
+      "parser": "html_visible_text",
+      "enabled": true
+    },
+    {
+      "id": "alibaba_pricing",
+      "company_id": "alibaba",
+      "kind": "official_pricing",
+      "name": "阿里云百炼模型定价",
+      "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "tier": 1,
+      "parser": "html_visible_text",
+      "enabled": true
+    },
+    {
+      "id": "doubao_pricing",
+      "company_id": "bytedance",
+      "kind": "official_pricing",
+      "name": "火山方舟模型服务计费",
+      "url": "https://www.volcengine.com/docs/84458/1585097",
+      "tier": 1,
+      "parser": "js_dynamic",
+      "enabled": true,
+      "_js_dynamic_note": "此页面为JS动态渲染，html_visible_text解析可能失败。失败时回退到data/manual/token_pricing.json中的manual数据"
+    },
+    {
+      "id": "baidu_pricing",
+      "company_id": "baidu",
+      "kind": "official_pricing",
+      "name": "百度千帆模型定价",
+      "url": "https://cloud.baidu.com/product-s/qianfan.html",
+      "tier": 1,
+      "parser": "html_visible_text",
+      "enabled": true,
+      "_note": "百度千帆定价结构复杂（有免费额度、按量计费、包月多种模式），自动解析难度较高"
+    },
+    {
+      "id": "tencent_pricing",
+      "company_id": "tencent",
+      "kind": "official_pricing",
+      "name": "腾讯混元模型定价",
+      "url": "https://cloud.tencent.com/product/hunyuan",
+      "tier": 1,
+      "parser": "html_visible_text",
+      "enabled": true,
+      "_note": "需确认具体定价子页面URL"
+    },
+    {
+      "id": "zhipu_pricing",
+      "company_id": "zhipu",
+      "kind": "official_pricing",
+      "name": "智谱开放平台定价",
+      "url": "https://bigmodel.cn/pricing",
+      "tier": 1,
+      "parser": "js_dynamic",
+      "enabled": true,
+      "_js_dynamic_note": "此页面为JS动态渲染，自动解析可能失败"
+    },
+    {
+      "id": "moonshot_pricing",
+      "company_id": "moonshot",
+      "kind": "official_pricing",
+      "name": "Kimi 开放平台",
+      "url": "https://platform.kimi.com/",
+      "tier": 1,
+      "parser": "html_visible_text",
+      "enabled": true
+    }
+  ],
+
+  "gpu_sources": [
+    {
+      "id": "runpod_pricing",
+      "provider": "RunPod",
+      "kind": "gpu_rental",
+      "name": "RunPod GPU Pricing",
+      "url": "https://www.runpod.io/pricing",
+      "tier": 1,
+      "parser": "html_visible_text",
+      "enabled": true
+    },
+    {
+      "id": "vast_ai",
+      "provider": "Vast.ai",
+      "kind": "gpu_rental",
+      "name": "Vast.ai GPU Pricing",
+      "url": "https://vast.ai/",
+      "tier": 2,
+      "parser": "html_visible_text",
+      "enabled": true,
+      "_note": "市场价格型平台，价格实时波动"
+    },
+    {
+      "id": "aliyun_gpu",
+      "provider": "阿里云 ACS",
+      "kind": "gpu_rental_cloud",
+      "name": "阿里云GPU定价",
+      "url": "https://help.aliyun.com/en/cs/product-overview/product-billing-rules",
+      "tier": 1,
+      "parser": "html_visible_text",
+      "enabled": true
+    }
+  ],
+
+  "news_sources": [
+    {
+      "id": "gnews_ai_commercial",
+      "name": "Google News — AI商业化",
+      "type": "google_news_query",
+      "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
+      "language": "en-US",
+      "region": "US",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "id": "gnews_ai_token",
+      "name": "Google News — Token Economy",
+      "type": "google_news_query",
+      "query": "(API pricing OR token price OR token cost) (LLM OR large language model OR AI model)",
+      "language": "en-US",
+      "region": "US",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "id": "gnews_gpu_capex",
+      "name": "Google News — GPU/Capex",
+      "type": "google_news_query",
+      "query": "(NVIDIA GPU OR AI data center OR cloud capex) (H100 OR H200 OR B200 OR AI investment)",
+      "language": "en-US",
+      "region": "US",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "id": "gnews_cn_ai",
+      "name": "Google News — 国内AI产业",
+      "type": "google_news_query",
+      "query": "(大模型 OR AI模型) (API价格 OR 融资 OR 商业化 OR ARR OR 收入)",
+      "language": "zh-CN",
+      "region": "CN",
+      "tier": 2,
+      "enabled": true
+    }
+  ],
+
+  "source_domain_tiers": {
+    "openai.com": 1,
+    "anthropic.com": 1,
+    "google.com": 1,
+    "ai.google.dev": 1,
+    "x.ai": 1,
+    "mistral.ai": 1,
+    "cohere.com": 1,
+    "aws.amazon.com": 1,
+    "deepseek.com": 1,
+    "aliyun.com": 1,
+    "volcengine.com": 1,
+    "baidu.com": 1,
+    "tencent.com": 1,
+    "bigmodel.cn": 1,
+    "kimi.com": 1,
+    "runpod.io": 1,
+    "reuters.com": 2,
+    "bloomberg.com": 2,
+    "wsj.com": 2,
+    "ft.com": 2,
+    "techcrunch.com": 2,
+    "theinformation.com": 2,
+    "nikkei.com": 2,
+    "finance.sina.com.cn": 2,
+    "cls.cn": 2,
+    "36kr.com": 2,
+    "jiemian.com": 2
+  }
+}

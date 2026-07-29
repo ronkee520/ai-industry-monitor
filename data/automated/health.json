@@ -1,0 +1,15 @@
+{
+  "status": "partial",
+  "generated_at": "2026-07-29T13:58:29+08:00",
+  "sources_ok": 0,
+  "sources_total": 0,
+  "source_success_rate": "0/0",
+  "pricing_total": 9,
+  "pricing_missing": 0,
+  "pricing_sample": 9,
+  "business_total": 4,
+  "business_missing": 4,
+  "warnings": [
+    "9 pricing records are SAMPLES — do not cite as real data"
+  ]
+}
