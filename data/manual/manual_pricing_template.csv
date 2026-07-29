@@ -1,0 +1,18 @@
+company_id,company_name,model_id,model_name,source_url,input_price_per_m,output_price_per_m,cached_input_price_per_m,currency,tier,as_of_date,source_name,note
+openai,OpenAI,gpt4o,GPT-4o,https://platform.openai.com/docs/pricing,,,,USD,standard,,OpenAI API Pricing,打开官方定价页→找到GPT-4o标准档→填入input/output价格
+openai,OpenAI,gpt4o_mini,GPT-4o Mini,https://platform.openai.com/docs/pricing,,,,USD,standard,,OpenAI API Pricing,打开官方定价页→找到GPT-4o Mini标准档→填入input/output价格
+anthropic,Anthropic,claude_opus4,Claude Opus 4,https://www.anthropic.com/pricing,,,,USD,standard,,Anthropic API Pricing,打开定价页→找到Claude Opus 4标准档→填入input/output价格
+anthropic,Anthropic,claude_sonnet4,Claude Sonnet 4,https://www.anthropic.com/pricing,,,,USD,standard,,Anthropic API Pricing,打开定价页→找到Claude Sonnet 4标准档→填入input/output价格
+google,Google DeepMind,gemini25_pro,Gemini 2.5 Pro,https://ai.google.dev/pricing,,,,USD,standard,,Gemini Developer API Pricing,打开定价页→找到Gemini 2.5 Pro→注意阶梯定价(≤200K tokens vs >200K)→填入标准档价格
+google,Google DeepMind,gemini25_flash,Gemini 2.5 Flash,https://ai.google.dev/pricing,,,,USD,standard,,Gemini Developer API Pricing,打开定价页→找到Gemini 2.5 Flash→填入标准档价格
+deepseek,DeepSeek,deepseek_v3,DeepSeek-V3,https://api-docs.deepseek.com/quick_start/pricing,,,,USD,standard,,DeepSeek API Pricing,打开API文档→找到DeepSeek-V3定价→注意缓存命中(cache hit)价格
+deepseek,DeepSeek,deepseek_r1,DeepSeek-R1,https://api-docs.deepseek.com/quick_start/pricing,,,,USD,standard,,DeepSeek API Pricing,打开API文档→找到DeepSeek-R1定价→注意推理模型包含reasoning tokens计费
+alibaba,阿里通义千问,qwen3_max,Qwen3-Max,https://help.aliyun.com/zh/model-studio/model-pricing,,,,CNY,standard,,阿里云百炼模型定价,打开定价页→找到Qwen3-Max→阿里云国内版以CNY计价→填入input/output(元/百万tokens)
+bytedance,字节豆包,doubao_seed20,豆包 Seed 2.0,https://www.volcengine.com/docs/84458/1585097,,,,CNY,standard,,火山方舟模型服务计费,打开火山方舟定价页(JS渲染)→找到豆包2.0→填入input/output(元/百万tokens)
+baidu,百度文心,ernie4,ERNIE 4.0,https://cloud.baidu.com/product-s/qianfan.html,,,,CNY,standard,,百度千帆模型定价,打开千帆定价页→找到ERNIE 4.0→注意百度有免费额度/按量/包月多种模式
+tencent,腾讯混元,hunyuan_turbo,混元 Turbo,https://cloud.tencent.com/product/hunyuan,,,,CNY,standard,,腾讯混元定价,打开混元产品页→确认具体定价页URL→填入input/output价格
+zhipu,智谱AI,glm4,GLM-4,https://bigmodel.cn/pricing,,,,CNY,standard,,智谱开放平台定价,打开智谱定价页(JS渲染)→找到GLM-4→填入input/output(元/百万tokens)
+moonshot,月之暗面,kimi_k2,Kimi K2,https://platform.kimi.com/,,,,CNY,standard,,Kimi开放平台,打开Kimi平台→找到Kimi K2定价→填入input/output价格
+mistral,Mistral AI,mistral_large,Mistral Large 2,https://mistral.ai/technology/,,,,USD,standard,,Mistral API Platform,打开Mistral定价页→找到Mistral Large→填入input/output价格
+cohere,Cohere,command_r_plus,Command R+,https://cohere.com/pricing,,,,USD,standard,,Cohere API Pricing,打开Cohere定价页→找到Command R+→填入input/output价格
+amazon,Amazon AI,amazon_nova_pro,Amazon Nova Pro,https://aws.amazon.com/bedrock/pricing/,,,,USD,standard,,AWS Bedrock Pricing,打开Bedrock定价页→注意按区域和吞吐量分层→填入按需标准档价格
