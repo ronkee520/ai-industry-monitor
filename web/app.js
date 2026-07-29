@@ -8,7 +8,7 @@
   // ── Constants ──────────────────────────────────────────────────
   const ROOT = window.DASHBOARD_ROOT || "./";
   const ROUTES = {
-    overview:    ["", "/", "/index.html"],
+    overview:    ["/", "/index.html"],
     token:       ["/token/", "/token", "/token/index.html"],
     business:    ["/business/", "/business", "/business/index.html"],
     compute:     ["/compute/", "/compute", "/compute/index.html"],
