@@ -6,6 +6,8 @@
 
 [![Update & Deploy](https://github.com/ronkee520/ai-industry-monitor/actions/workflows/update-deploy.yml/badge.svg?branch=main)](https://github.com/ronkee520/ai-industry-monitor/actions/workflows/update-deploy.yml)
 
+> 🌐 **在线访问 Dashboard**：https://ronkee520.github.io/ai-industry-monitor/
+
 ---
 
 ## 项目定位
