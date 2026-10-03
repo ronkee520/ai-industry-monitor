@@ -123,15 +123,7 @@
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       return await resp.json();
     } catch (err) {
-      // file:// CORS fallback
-      if (err.message.includes("Failed to fetch") || err.name === "TypeError") {
-        throw new Error(
-          "无法加载 API 数据。\n\n" +
-          "本地文件预览请运行：\n" +
-          "  cd _site && python -m http.server 8080\n" +
-          "然后访问 http://localhost:8080"
-        );
-      }
+      if (err.message.includes("Failed to fetch") || err.name === "TypeError") throw new Error("暂时无法读取最新数据，请稍后刷新页面。");
       throw err;
     }
   }
@@ -156,7 +148,6 @@
       app.innerHTML = `<section class="error-state">
         <h3>数据加载失败</h3>
         <p>${esc(err.message).replace(/\n/g,"<br>")}</p>
-        <code>python scripts/run_all.py --project-root .</code>
       </section>`;
     }
   }
@@ -189,22 +180,21 @@
     const h = D.health || {};
     const n = D.news || [];
 
-    const isSample = c.insufficient_data || c.sample_based || c.confidence === "low";
+    const isPreliminary = c.insufficient_data || c.sample_based || c.confidence === "low";
     const hasRisk = c.risk_crowding_score != null;
 
     app.innerHTML = `
       ${pageHero("ALLOCATION INTELLIGENCE", "AI 产业景气与风险总览", "把模型经济、商业化、算力资本开支与市场价格信号放进同一研究框架。", "公开数据 · 可追溯 · 每周更新")}
-      ${isSample ? renderSampleWarning(c) : ""}
 
       <!-- Stage Card -->
       <section class="section">
         <article class="card stage-card">
-          <span class="stage-label ${isSample ? 'sample-stage' : ''}">当前阶段 · ${esc(c.stage_label || "—")}</span>
+          <span class="stage-label ${isPreliminary ? 'sample-stage' : ''}">当前阶段 · ${esc(c.stage_label || "—")}</span>
           <h2>AI 产业周期：${esc(c.stage_label || "数据不足")}</h2>
           <p class="lead">${esc(stageDescription(c.stage_id))}</p>
           <div class="stage-scores">
             <div class="score-item"><b>${esc(fmtNum(c.industry_development_score, 1))}</b>产业发展强度 / 100</div>
-            <div class="score-item"><b>${hasRisk ? esc(fmtNum(c.risk_crowding_score, 1)) : "待完善"}</b>风险拥挤度 ${!hasRisk ? "(第一期暂用中性值)" : ""}</div>
+            <div class="score-item"><b>${hasRisk ? esc(fmtNum(c.risk_crowding_score, 1)) : "—"}</b>风险拥挤度</div>
             <div class="score-item"><b>${esc(c.confidence || "—")}</b>评分置信度</div>
             <div class="score-item"><b>${esc(c.missing_factor_count || 0)}</b>缺失因子</div>
           </div>
@@ -213,7 +203,7 @@
 
       <!-- Factor Scores -->
       <section class="section">
-        <div class="section-head"><h2>三项产业因子 + 风险 Overlay</h2><p>${c.confidence === 'low' ? '⚠️ 当前为 proxy_v1 初步信号，不是投资结论' : ''}</p></div>
+        <div class="section-head"><h2>产业周期因子</h2><p>${c.confidence === 'low' ? '当前覆盖有限' : '技术、商业化、资本投入与市场风险联合观察'}</p></div>
         <div class="grid-2">
           ${renderFactorCard("技术成熟度", c.factor_scores?.technology_maturity, "Token降价速度·模型能力·开源生态·多模态")}
           ${renderFactorCard("商业化兑现度", c.factor_scores?.commercialization, "ARR轨迹·Token用量·企业采纳·披露覆盖")}
@@ -228,7 +218,7 @@
                 <div class="bar-value">${hasRisk ? fmtNum(c.risk_crowding_score, 0) + " / 100" : "待数据完善"}</div>
               </div>
             </div>
-            <p style="font-size:11px;color:var(--muted);margin-top:8px">${esc(c.risk_note || "第二期实现自动化风险Overlay。")}</p>
+            ${c.risk_note ? `<p style="font-size:11px;color:var(--muted);margin-top:8px">${esc(c.risk_note)}</p>` : ""}
           </article>
         </div>
       </section>
@@ -241,27 +231,15 @@
           ${kpiCard("有定价模型", k.models_with_pricing)}
           ${kpiCard("数据源健康", h.source_success_rate || "0/0")}
           ${kpiCard("ARR披露数", k.arr_disclosures)}
-          ${kpiCard("Sample记录", h.pricing_sample, "⚠️")}
-          ${kpiCard("Missing记录", (h.pricing_missing || 0) + (h.business_missing || 0))}
-          ${kpiCard("新闻待复核", n.length)}
-          ${kpiCard("数据覆盖", c.data_coverage?.pricing_real + c.data_coverage?.business_real, "条真实记录")}
+          ${kpiCard("GPU价格", h.gpu_records || 0)}
+          ${kpiCard("行情覆盖", h.market_records || 0)}
+          ${kpiCard("产业动态", n.length)}
+          ${kpiCard("数据覆盖", (c.data_coverage?.pricing_real || 0) + (c.data_coverage?.business_real || 0), "条有效记录")}
         </div>
       </section>
 
-      <!-- Alerts -->
-      ${renderHealthWarnings(h)}
       ${renderNewsPreview(n)}
-      ${renderDataBoundary()}
     `;
-  }
-
-  function renderSampleWarning(c) {
-    return `<div class="warning-banner sample-warn">
-      <span class="warning-icon">⚠️</span>
-      <div><b>当前阶段判断为初步代理信号，不代表投资结论。</b>
-      评分方法: ${esc(c.score_method || "proxy_v1")}；置信度: ${esc(c.confidence)}；缺失因子: ${c.missing_factor_count}。
-      ${esc(c.limitations || "缺失数据保持为空，不以估算值伪装为事实。")}</div>
-    </div>`;
   }
 
   function renderFactorCard(title, factor, desc) {
@@ -291,37 +269,15 @@
     </section>`;
   }
 
-  function renderHealthWarnings(h) {
-    if (!h || !h.warnings || !h.warnings.length) return "";
-    return `<section class="section"><div class="warning-banner info">
-      <span class="warning-icon">ℹ️</span>
-      <div>${h.warnings.map(w => esc(w)).join("<br>")}</div>
-    </div></section>`;
-  }
-
   function renderNewsPreview(n) {
     if (!n || !n.length) return "";
-    const items = n.slice(0, 5).map(x => `<div class="news-item">
+    const items = n.slice(0, 6).map(x => `<div class="news-item">
       <div class="news-title">${x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a>` : esc(x.title)}</div>
-      <div class="news-meta">${esc(x.publisher || "—")} · ${esc(fmtDateShort(x.published_at))}<br><span class="tag t3">待复核</span></div>
+      <div class="news-meta">${esc(x.publisher || "—")} · ${esc(fmtDateShort(x.published_at))}</div>
     </div>`).join("");
     return `<section class="section"><div class="card">
-      <h3>最新待复核新闻</h3><div class="news-list">${items}</div>
-      <p class="subtitle" style="margin-top:8px">新闻来自 RSS，仅用于发现，不自动写入正式指标。</p>
+      <h3>AI 产业动态</h3><div class="news-list">${items}</div>
     </div></section>`;
-  }
-
-  function renderDataBoundary() {
-    return `<section class="section"><article class="card">
-      <h3>数据边界</h3>
-      <p>${[
-        "T1 = 公司官网/IR/交易所/监管/官方定价页",
-        "T2 = 权威媒体和公开可引用的行业研究",
-        "T3 = RSS/聚合新闻（仅用于发现，不自动写入正式指标）",
-        "sample = 仅用于开发演示的示例数据，不应被引用",
-        "missing = 数据不可用，value = null"
-      ].map(x => esc(x)).join("<br>")}</p>
-    </article></section>`;
   }
 
   function stageDescription(id) {
@@ -342,36 +298,50 @@
   function renderToken(D) {
     const tp = D.token_pricing || {};
     const records = tp.records || [];
-    const realRecords = records.filter(r => r.confidence !== "sample" && r.value != null);
-    const sampleRecords = records.filter(r => r.confidence === "sample");
+    const validRecords = records.filter(r => r.value != null);
+    const latestModels = tp.latest_models || [];
     const blendedRecords = records.filter(r => r.blended_cost_usd != null);
     const cheapest = blendedRecords.length ? blendedRecords.reduce((a, b) => (a.blended_cost_usd < b.blended_cost_usd ? a : b)) : null;
     const costs = blendedRecords.map(r => r.blended_cost_usd).sort((a, b) => a - b);
     const median = costs.length ? costs[Math.floor(costs.length / 2)] : null;
 
     app.innerHTML = `
-      ${pageHero("MODEL ECONOMICS", "Token 经济", "比较主流模型的输入、输出与标准化混合成本，跟踪推理价格曲线。", `${realRecords.length} 条有效记录`)}
-      ${sampleRecords.length ? `<div class="warning-banner sample-warn"><span class="warning-icon">⚠️</span><div><b>${sampleRecords.length} 条定价记录为 SAMPLE 数据。</b>这些数值是结构示例，不应被引用为真实价格。</div></div>` : ""}
+      ${pageHero("MODEL ECONOMICS", "Token 经济", "比较主流模型的输入、输出与标准化混合成本，跟踪模型发布与推理价格曲线。", `${validRecords.length} 条有效价格`)}
 
       <section class="section">
         <div class="kpi-grid">
           ${kpiCard("价格记录", records.length)}
-          ${kpiCard("真实记录", realRecords.length)}
-          ${kpiCard("Sample记录", sampleRecords.length, sampleRecords.length ? "⚠️ 示例数据" : "")}
-          ${kpiCard("最低混合成本", cheapest ? fmtUSD(cheapest.blended_cost_usd) : "—", cheapest ? esc(cheapest.company_name + " · " + cheapest.metric_name.slice(0,30)) : sampleRecords.length ? "⚠️ sample only" : "")}
-          ${kpiCard("中位混合成本", median ? fmtUSD(median) : "—", sampleRecords.length && !realRecords.length ? "⚠️ sample only" : "")}
+          ${kpiCard("有效价格", validRecords.length)}
+          ${kpiCard("最新模型", latestModels.length, "自动跟踪")}
+          ${kpiCard("最低混合成本", cheapest ? fmtUSD(cheapest.blended_cost_usd) : "—", cheapest ? esc(cheapest.company_name + " · " + cheapest.metric_name.slice(0,30)) : "")}
+          ${kpiCard("中位混合成本", median ? fmtUSD(median) : "—")}
         </div>
       </section>
 
+      ${latestModels.length ? `<section class="section">
+        <div class="section-head"><h2>最新模型动态</h2><p>按公开 API 市场首次收录时间排序</p></div>
+        <div class="card"><div class="table-wrap"><table>
+          <thead><tr><th>厂商</th><th>模型</th><th>收录日期</th><th>输入 / 1M</th><th>输出 / 1M</th><th>上下文</th><th>来源</th></tr></thead>
+          <tbody>${latestModels.map(r => `<tr>
+            <td>${badgeRegion(r.region)} <strong>${esc(r.company_name)}</strong></td>
+            <td>${esc(r.name || r.provider_model_id)}</td>
+            <td>${esc(r.released_at || "—")}</td>
+            <td class="num">${fmtUSD(r.input_per_m)}</td>
+            <td class="num">${fmtUSD(r.output_per_m)}</td>
+            <td class="num">${r.context_window_k ? esc(fmtNum(r.context_window_k, 0)) + "K" : "—"}</td>
+            <td>${sourceLink(r.source_url, r.source_name)}</td>
+          </tr>`).join("")}</tbody>
+        </table></div></div>
+      </section>` : ""}
+
       <!-- Blended Cost Chart -->
       <section class="section">
-        <div class="section-head"><h2>标准化混合成本 (USD / 百万总 Tokens)</h2><p>input×0.65 + output×0.35 · sample 数据用虚线标记</p></div>
+        <div class="section-head"><h2>标准化混合成本 (USD / 百万总 Tokens)</h2><p>input × 0.65 + output × 0.35</p></div>
         <div class="card">
           ${renderBarChart(blendedRecords, "blended_cost_usd", r => `${r.company_name} · ${r.model_id}`, r => {
             if (r.blended_cost_usd == null) return "—";
-            const tag = r.confidence === "sample" ? ' <span class="bar-tag">[SAMPLE]</span>' : "";
-            return fmtUSD(r.blended_cost_usd) + tag;
-          }, r => r.region === "domestic" ? "domestic" : "", r => r.confidence === "sample" ? "sample-bar" : "")}
+            return fmtUSD(r.blended_cost_usd);
+          }, r => r.region === "domestic" ? "domestic" : "")}
           <p class="subtitle">${esc(tp.methodology?.blended_formula || "")}</p>
         </div>
       </section>
@@ -382,7 +352,7 @@
         <div class="card">
           <div class="controls">
             <select id="token-region"><option value="">全部地区</option><option value="domestic">国内</option><option value="overseas">海外</option></select>
-            <select id="token-confidence"><option value="">全部状态</option><option value="sample">⚠️ Sample</option><option value="missing">Missing</option><option value="verified">Verified</option></select>
+            <select id="token-confidence"><option value="">全部状态</option><option value="verified">官方核验</option><option value="inferred">市场快照</option><option value="missing">暂无价格</option></select>
             <input id="token-search" type="search" placeholder="搜索公司或模型…">
           </div>
           <div class="table-wrap"><table id="token-table">
@@ -429,7 +399,7 @@
   }
 
   function renderBarChart(rows, valField, labelFn, fmtFn, cls, barCls) {
-    if (!rows.length) return `<div class="empty-state"><h3>暂无数据</h3><p>等待数据采集或手动填入 data/manual/。</p></div>`;
+    if (!rows.length) return `<div class="empty-state"><h3>当前暂无可用数据</h3></div>`;
     const vals = rows.map(r => Number(r[valField])).filter(v => v != null && Number.isFinite(v));
     const max = Math.max(...vals, 1);
     return `<div class="bar-list">${rows.map(r => {
@@ -470,7 +440,7 @@
         <td class="num ${pctClass(r.change_pct)}">${fmtPct(r.change_pct)}</td>
         <td>${badgeConfidence(r.confidence)} ${badgeEvidence(r.evidence_status)}</td>
         <td>${badgeFreshness(r.freshness)}</td>
-        <td>${sourceLink(r.source_url, r.source_name)}<br><small>${esc(r.note || "").slice(0,80)}</small></td>
+        <td>${sourceLink(r.source_url, r.source_name)}</td>
       </tr>`).join("") : `<tr><td colspan="10" class="empty-state">没有匹配数据</td></tr>`;
     };
     regionSel?.addEventListener("change", render);
@@ -490,7 +460,6 @@
 
     app.innerHTML = `
       ${pageHero("COMMERCIALIZATION", "商业化进程", "分口径观察 ARR、年化收入、融资与估值，避免把不同性质的指标混为一谈。", `${withValue.length}/${records.length} 条已披露`)}
-      ${missing.length ? `<div class="warning-banner missing-data"><span class="warning-icon">📊</span><div><b>${missing.length} 条商业化指标数据缺失(value=null)。</b>请在 data/manual/business_metrics.json 中填入真实数据。</div></div>` : ""}
 
       <section class="section">
         <div class="kpi-grid">
@@ -520,7 +489,7 @@
               <td>${esc(r.period || "—")}</td>
               <td>${badgeConfidence(r.confidence)}</td>
               <td>${badgeFreshness(r.freshness)}</td>
-              <td>${sourceLink(r.source_url, r.source_name)}<br><small>${esc((r.note || "").slice(0,100))}</small></td>
+              <td>${sourceLink(r.source_url, r.source_name)}</td>
             </tr>`).join("")}</tbody>
           </table></div>
         </div>
@@ -545,11 +514,6 @@
       <section class="section">
         <div class="section-head"><h2>GPU 按需价格</h2><p>统一为 USD / GPU·小时；不同实例规模、区域和可用性不能直接等同</p></div>
 
-        <div class="warning-banner info">
-          <span class="warning-icon">📡</span>
-          <div>优先展示可重复解析的官方按需价；无法结构化的页面仍保留状态监控。正式采购成本需核对区域、税费和合约折扣。</div>
-        </div>
-
         ${gpu.length ? `<div class="card" style="margin-bottom:14px">
           <h3>GPU 价格记录 (${gpu.filter(g => g.value != null).length})</h3>
           ${renderBarChart(gpu.filter(g => g.value != null), "value", r => `${r.provider || r.source_name} · ${r.gpu_model || r.metric_name}`, r => fmtUSD(r.value, 2))}
@@ -562,7 +526,7 @@
               <td>${esc(fmtDateShort(g.as_of_date || g.collected_at))}</td><td>${sourceLink(g.source_url, g.source_name)}</td>
             </tr>`).join("")}</tbody>
           </table></div>
-        </div>` : `<div class="empty-state" style="margin-bottom:14px"><h3>暂无 GPU 源状态</h3><p>请先运行 python scripts/collect_gpu_pricing.py --project-root .</p></div>`}
+        </div>` : `<div class="empty-state" style="margin-bottom:14px"><h3>当前暂无 GPU 价格</h3></div>`}
       </section>
 
       <section class="section">
@@ -571,7 +535,7 @@
           ${renderBarChart(capex.slice().sort((a,b)=>(b.value||0)-(a.value||0)), "value", r => `${r.company_name} · ${r.period}`, r => fmtUSD(r.value, 1)+"B")}
           <div class="table-wrap"><table><thead><tr><th>公司</th><th>期间</th><th>CAPEX</th><th>XBRL口径</th><th>截至</th><th>来源</th></tr></thead><tbody>
           ${capex.map(r=>`<tr><td><strong>${esc(r.company_name)}</strong></td><td>${esc(r.period)}</td><td class="num">${fmtUSD(r.value,3)}B</td><td>${esc(r.xbrl_concept||"—")}</td><td>${esc(r.as_of_date)}</td><td>${sourceLink(r.filing_url||r.source_url,"SEC filing")}</td></tr>`).join("")}
-          </tbody></table></div></div>` : `<div class="empty-state"><h3>等待 SEC 数据</h3><p>下一次联网采集将自动补齐四大CSP年度CAPEX。</p></div>`}
+          </tbody></table></div></div>` : `<div class="empty-state"><h3>当前暂无 CAPEX 数据</h3></div>`}
       </section>
 
       <!-- Source Status for GPU-related sources -->
@@ -628,14 +592,12 @@
     const bySymbol = Object.fromEntries(rows.map(r=>[r.symbol,r]));
     app.innerHTML = `
       ${pageHero("MARKET LENS", "投资研究", "用收益、回撤与波动率刻画市场行为，并与产业基本面信号交叉验证。", `${rows.length}/${all.length} 个标的有行情`)}
-      <div class="warning-banner info"><span class="warning-icon">🧭</span><div><b>资产配置信号层。</b>价格趋势只反映市场行为，需与产业周期、盈利和估值共同判断；本页不构成投资建议。</div></div>
       <section class="section"><div class="section-head"><h2>AI 资产观察池</h2><p>免费日线来自 Yahoo Finance；交易前应以持牌行情源复核</p></div>
         <div class="kpi-grid">${kpiCard("观察标的",all.length)}${kpiCard("行情覆盖",rows.length)}${kpiCard("近1月上涨",rows.filter(r=>(r.return_1m_pct||0)>0).length)}${kpiCard("高波动标的",rows.filter(r=>(r.volatility_1y_pct||0)>50).length)}</div>
         <div class="card"><div class="table-wrap"><table id="market-table"><thead><tr><th data-key="symbol">代码</th><th data-key="name">公司/ETF</th><th>产业角色</th><th data-key="close">收盘</th><th data-key="return_1w_pct">1周</th><th data-key="return_1m_pct">1月</th><th data-key="return_3m_pct">3月</th><th data-key="return_ytd_pct">YTD</th><th data-key="drawdown_52w_pct">距52周高点</th><th data-key="volatility_1y_pct">年化波动</th><th>来源</th></tr></thead><tbody>
         ${all.map(w=>{const r=bySymbol[w.symbol]||{}; return `<tr><td><strong>${esc(w.symbol)}</strong></td><td>${esc(w.name)}</td><td>${esc(w.role)}</td><td class="num">${r.close==null?"—":fmtNum(r.close,2)} ${esc(r.currency||"")}</td><td class="num ${pctClass(r.return_1w_pct)}">${fmtPct(r.return_1w_pct)}</td><td class="num ${pctClass(r.return_1m_pct)}">${fmtPct(r.return_1m_pct)}</td><td class="num ${pctClass(r.return_3m_pct)}">${fmtPct(r.return_3m_pct)}</td><td class="num ${pctClass(r.return_ytd_pct)}">${fmtPct(r.return_ytd_pct)}</td><td class="num ${pctClass(r.drawdown_52w_pct)}">${fmtPct(r.drawdown_52w_pct)}</td><td class="num">${r.volatility_1y_pct==null?"—":fmtNum(r.volatility_1y_pct,1)+"%"}</td><td>${r.source_url?sourceLink(r.source_url,"Yahoo Finance"):badgeConfidence("missing")}</td></tr>`}).join("")}
         </tbody></table></div></div>
-      </section>
-      <section class="section"><article class="card"><h3>仍需专业数据接口的字段</h3><p>一致预期盈利、Forward P/E、EV/EBITDA、ETF申赎资金流和机构持仓变化。目前保持缺失，不使用网页猜测值替代。</p></article></section>`;
+      </section>`;
     makeSortable("market-table");
   }
 
@@ -645,40 +607,17 @@
   function renderMethodology(D) {
     const h = D.health || {};
     const m = D.meta || {};
-    const methods = D.methodology || {};
     const o = D.overview || {};
     const c = o.cycle || {};
     const runs = (D.history?.runs || []).slice(-10).reverse();
 
     app.innerHTML = `
-      ${pageHero("RESEARCH GOVERNANCE", "方法论与数据", "披露数据边界、来源层级、评分限制和流水线状态，让每个结论都可核查。", "透明口径 · 审计留痕")}
-      <section class="section">
-        <div class="section-head"><h2>项目说明</h2></div>
-        <div class="method-grid">
-          <article class="method-card">
-            <h3>公开数据研究终端</h3>
-            <p>AI Industry Monitor 是一个开源的 AI 产业监测 Dashboard，以公开网页的形式呈现在 GitHub Pages 上。</p>
-            <p>持续跟踪全球大模型商业化、Token 经济、AI 算力、云厂商资本开支和相关产业链数据。</p>
-            <p><strong>不构成投资建议。</strong></p>
-          </article>
-          <article class="method-card">
-            <h3>数据使用原则</h3>
-            <ul>
-              <li>新闻 ≠ 正式数据 — RSS 仅进入待复核池</li>
-              <li>Sample 数据仅用于开发演示</li>
-              <li>Missing 数据的 value = null，不写作 0</li>
-              <li>ARR、年化收入、年度收入分开展示，不合并</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
+      ${pageHero("DATA & SOURCES", "数据与来源", "查看指标口径、来源层级与自动更新状态。", "可追溯 · 定期更新")}
       <section class="section">
         <div class="section-head"><h2>数据口径</h2></div>
         <div class="method-grid">
           <article class="method-card">
             <h3>Token 混合成本</h3>
-            <p>${esc(methods?.sample_policy || "")}</p>
             <p><code>blended_cost = input × 0.65 + output × 0.35</code></p>
             <p>CNY 定价按 fx_rate 转 USD。不含 Batch/缓存/长上下文/工具调用/企业折扣。</p>
           </article>
@@ -692,78 +631,41 @@
             <ul>
               <li><span class="tag t1">T1</span> 公司官网/IR/交易所/监管/官方定价页</li>
               <li><span class="tag t2">T2</span> 权威媒体和公开可引用的行业研究</li>
-              <li><span class="tag t3">T3</span> RSS/聚合新闻，仅用于发现</li>
+              <li><span class="tag t3">T3</span> 公开聚合目录与新闻源</li>
             </ul>
           </article>
           <article class="method-card">
-            <h3>AI Cycle 评分体系</h3>
-            <p>${esc(methods?.cycle_note || "")}</p>
-            <p>第一阶段: ${esc(c.stages_reference?.map(s => s.label_zh).join(" → ") || "技术验证 → 基础设施扩张 → 商业化兑现 → 估值拥挤 → 周期调整")}</p>
+            <h3>AI Cycle</h3>
+            <p>技术成熟度、商业化兑现度、资本投入强度与市场风险共同构成周期观察框架。</p>
+            <p>${esc(c.stages_reference?.map(s => s.label_zh).join(" → ") || "技术验证 → 基础设施扩张 → 商业化兑现 → 估值拥挤 → 周期调整")}</p>
           </article>
         </div>
       </section>
 
-      <!-- Health -->
       <section class="section">
-        <div class="section-head"><h2>系统健康</h2></div>
+        <div class="section-head"><h2>更新状态</h2><p>${esc(m.schedule || "定期更新")}</p></div>
         <div class="card">
           <div class="grid-3">
             <div>${kpiCard("系统状态", h.status)}</div>
             <div>${kpiCard("数据源成功率", h.source_success_rate || "—")}</div>
-            <div>${kpiCard("生成时间", fmtDate(h.generated_at))}</div>
+            <div>${kpiCard("最新快照", fmtDate(h.generated_at))}</div>
             <div>${kpiCard("定价记录", h.pricing_total)}</div>
-            <div>${kpiCard("Sample 记录", h.pricing_sample, h.pricing_sample ? "⚠️" : "")}</div>
-            <div>${kpiCard("定价缺失", h.pricing_missing)}</div>
             <div>${kpiCard("商业指标", h.business_total)}</div>
-            <div>${kpiCard("商业缺失", h.business_missing)}</div>
             <div>${kpiCard("GPU价格", h.gpu_records)}</div>
             <div>${kpiCard("CAPEX记录", h.capex_records)}</div>
             <div>${kpiCard("产业链财务", h.supply_chain_records)}</div>
             <div>${kpiCard("行情覆盖", h.market_records)}</div>
           </div>
-          ${h.warnings?.length ? `<div class="warning-banner info" style="margin-top:12px"><span class="warning-icon">ℹ️</span><div>${h.warnings.map(w => esc(w)).join("<br>")}</div></div>` : ""}
         </div>
       </section>
 
-      <!-- API Directory -->
       <section class="section">
-        <div class="section-head"><h2>JSON API 目录</h2></div>
+        <div class="section-head"><h2>最近更新</h2></div>
         <div class="card">
-          <table class="api-table">
-            <thead><tr><th>端点</th><th>说明</th></tr></thead>
-            <tbody id="api-tbody">
-              <tr><td colspan="2" class="empty-state">API 目录加载中…</td>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- Run Log -->
-      <section class="section">
-        <div class="section-head"><h2>部署与调度</h2></div>
-        <div class="card">
-          <p><strong>自动更新</strong>: 每周一、周五 09:00 (Asia/Shanghai) · GitHub Actions 定时触发</p>
-          <p><strong>手动更新</strong>: <code>python scripts/run_all.py --project-root .</code></p>
-          <p><strong>本地预览</strong>: <code>cd _site && python -m http.server 8080</code></p>
-          <p><strong>最新快照</strong>: ${esc(m.generated_at)}</p>
-          <p><strong>数据策略</strong>: ${esc(m.data_policy)}</p>
-          ${runs.length ? `<div class="table-wrap" style="margin-top:16px"><table><thead><tr><th>运行时间</th><th>状态</th><th>耗时</th><th>采集阶段</th></tr></thead><tbody>${runs.map(r=>`<tr><td>${esc(fmtDate(r.generated_at))}</td><td>${badgeStatus(r.status)}</td><td>${esc(r.elapsed_seconds)}s</td><td>${esc(Object.entries(r.phases||{}).map(([k,v])=>`${k}:${v}`).join(" · "))}</td></tr>`).join("")}</tbody></table></div>` : `<p class="empty-state">尚无完整网络采集运行日志；下一次定时或手动全量更新后自动生成。</p>`}
+          ${runs.length ? `<div class="table-wrap"><table><thead><tr><th>运行时间</th><th>状态</th><th>耗时</th></tr></thead><tbody>${runs.map(r=>`<tr><td>${esc(fmtDate(r.generated_at))}</td><td>${badgeStatus(r.status)}</td><td>${esc(r.elapsed_seconds)}s</td></tr>`).join("")}</tbody></table></div>` : `<p class="empty-state">暂无更新记录</p>`}
         </div>
       </section>
     `;
-
-    // Load API index
-    fetch(ROOT + "api/index.json").then(r => r.json()).then(api => {
-      const tbody = document.getElementById("api-tbody");
-      if (!tbody) return;
-      tbody.innerHTML = (api.endpoints || []).map(e => `<tr>
-        <td><code>./api/${esc(e.path).replace("./", "")}</code></td>
-        <td>${esc(e.description)}</td>
-      </tr>`).join("") || `<tr><td colspan="2">暂无端点</td></tr>`;
-    }).catch(() => {
-      const tbody = document.getElementById("api-tbody");
-      if (tbody) tbody.innerHTML = `<tr><td colspan="2" class="empty-state">API 目录加载失败</td></tr>`;
-    });
   }
 
   // ═══════════════════════════════════════════════════════════════

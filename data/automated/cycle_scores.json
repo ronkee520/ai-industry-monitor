@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-04T01:03:16+08:00",
+  "generated_at": "2026-10-04T01:35:15+08:00",
   "stage_id": "commercialization",
   "stage_label": "商业化兑现期",
-  "industry_development_score": 76.2,
+  "industry_development_score": 76.4,
   "risk_crowding_score": 58.2,
   "risk_note": "基于观察池3个月动量、上涨广度和距52周高点的价格拥挤代理；不包含Forward P/E或ETF申赎，不能单独作为交易信号。",
   "risk_components": {
@@ -12,7 +12,7 @@
   },
   "factor_scores": {
     "technology_maturity": {
-      "score": 73.2,
+      "score": 73.9,
       "weight": 0.3,
       "available": true
     },
@@ -35,8 +35,8 @@
   "missing_based": false,
   "missing_factor_count": 0,
   "data_coverage": {
-    "pricing_records": 18,
-    "pricing_real": 18,
+    "pricing_records": 30,
+    "pricing_real": 30,
     "business_records": 7,
     "business_real": 7,
     "gpu_real": 10,

@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -78,11 +79,71 @@ def collect_model_market_pricing(root: Path, *, dry_run: bool = False, verbose: 
             "note": "公开路由市场快照；可能包含托管方加价或补贴，不等同于模型厂商直连官方价。",
             "tags": ["automated", "aggregator", "indicative"]
         })
-    payload = {"generated_at": now, "source": cfg.get("url"), "records": records, "unmatched_model_ids": unmatched}
+
+    # Keep a small, automatically refreshed release radar alongside the curated
+    # registry. This lets the product surface newly listed public models without
+    # treating aggregator prices as official vendor prices.
+    discovery_records = []
+    excluded_tokens = (":free", ":batch", "image", "audio", "embedding", "moderation")
+    for company_id, prefix in cfg.get("discovery_prefixes", {}).items():
+        company = companies.get(company_id, {})
+        candidates = []
+        for item in catalog.values():
+            provider_id = str(item.get("id", ""))
+            if not provider_id.startswith(prefix) or any(token in provider_id.lower() for token in excluded_tokens):
+                continue
+            pricing = item.get("pricing", {})
+            try:
+                inp = float(pricing["prompt"]) * 1_000_000
+                out = float(pricing["completion"]) * 1_000_000
+            except (KeyError, TypeError, ValueError):
+                continue
+            if inp < 0 or out < 0:
+                continue
+            candidates.append((int(item.get("created") or 0), item, inp, out))
+
+        for created, item, inp, out in sorted(candidates, key=lambda row: row[0], reverse=True)[:2]:
+            pricing = item.get("pricing", {})
+            cached = pricing.get("input_cache_read")
+            try:
+                cached_per_m = float(cached) * 1_000_000 if cached not in (None, "") else None
+            except (TypeError, ValueError):
+                cached_per_m = None
+            released_at = datetime.fromtimestamp(created, timezone.utc).date().isoformat() if created else None
+            discovery_records.append({
+                "company_id": company_id,
+                "company_name": company.get("name", company_id),
+                "region": company.get("region", "global"),
+                "name": item.get("name") or item.get("id"),
+                "provider_model_id": item.get("id"),
+                "released_at": released_at,
+                "input_per_m": round(inp, 6),
+                "output_per_m": round(out, 6),
+                "cached_input_per_m": round(cached_per_m, 6) if cached_per_m is not None else None,
+                "context_window_k": round((item.get("context_length") or 0) / 1000, 1) or None,
+                "source_name": cfg.get("source_name", "OpenRouter public model catalog"),
+                "source_url": cfg.get("url"),
+                "source_tier": 3,
+            })
+
+    discovery_records.sort(key=lambda row: (row.get("released_at") or "", row.get("provider_model_id") or ""), reverse=True)
+    payload = {
+        "generated_at": now,
+        "source": cfg.get("url"),
+        "records": records,
+        "discovery_records": discovery_records,
+        "unmatched_model_ids": unmatched,
+    }
     _shared.atomic_write(root / "data" / "automated" / "model_market_pricing.json", payload)
     if verbose:
-        print(f"[model_market_pricing] {len(records)} records, {len(unmatched)} unmatched")
-    return {"collector": "model_market_pricing", "status": "ok" if records else "partial", "records": len(records), "unmatched": len(unmatched)}
+        print(f"[model_market_pricing] {len(records)} routed prices, {len(discovery_records)} discoveries, {len(unmatched)} unmatched")
+    return {
+        "collector": "model_market_pricing",
+        "status": "ok" if records else "partial",
+        "records": len(records),
+        "discoveries": len(discovery_records),
+        "unmatched": len(unmatched),
+    }
 
 
 def parse_args() -> argparse.Namespace:

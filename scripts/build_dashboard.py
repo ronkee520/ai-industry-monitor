@@ -156,6 +156,7 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
         },
         "token_pricing": {
             "records": pricing_records,
+            "latest_models": market_pricing.get("discovery_records", []),
             "methodology": {
                 "blended_formula": "input × 0.65 + output × 0.35 (USD)",
                 "comparability": "不同币种按fx_rate转USD；Batch/缓存/长上下文/企业折扣不包含在内。",

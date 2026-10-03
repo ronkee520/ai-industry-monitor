@@ -38,6 +38,16 @@ class TestBuildDashboard(unittest.TestCase):
                 self.assertIn("confidence", rec)
                 self.assertIn("region", rec)
 
+    def test_latest_model_radar_is_available(self):
+        payload = _dash.build_dashboard(self.root)
+        latest = payload.get("token_pricing", {}).get("latest_models", [])
+        self.assertGreaterEqual(len(latest), 8)
+        self.assertTrue(any(row.get("company_id") == "openai" for row in latest))
+        for row in latest:
+            self.assertIsNotNone(row.get("provider_model_id"))
+            self.assertGreaterEqual(row.get("input_per_m", -1), 0)
+            self.assertGreaterEqual(row.get("output_per_m", -1), 0)
+
     def test_sample_records_not_mislabeled_as_verified(self):
         """⚠️ sample 数据绝对不能标记为 verified。"""
         payload = _dash.build_dashboard(self.root)

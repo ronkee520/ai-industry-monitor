@@ -1,4 +1,13 @@
 company_id,company_name,model_id,model_name,source_url,input_price_per_m,output_price_per_m,cached_input_price_per_m,currency,tier,as_of_date,source_name,note
+openai,OpenAI,gpt6_astra,GPT-6 Astra,https://developers.openai.com/api/docs/models,10,50,1,USD,standard,2026-10-04,OpenAI API Models,官方标准价格
+openai,OpenAI,gpt61_sol,GPT-6.1 Sol,https://developers.openai.com/api/docs/models,2,10,0.1,USD,standard,2026-10-04,OpenAI API Models,官方标准价格
+openai,OpenAI,gpt6_luna,GPT-6 Luna,https://developers.openai.com/api/docs/models/gpt-6-luna,0.1,0.5,0.01,USD,standard,2026-10-04,OpenAI API Models,官方标准价格
+anthropic,Anthropic,claude_opus55,Claude Opus 5.5,https://platform.claude.com/docs/en/about-claude/models/overview,4,20,,USD,standard,2026-10-04,Claude Platform Models,官方标准价格
+anthropic,Anthropic,claude_sonnet55,Claude Sonnet 5.5,https://platform.claude.com/docs/en/about-claude/models/overview,2,10,,USD,standard,2026-10-04,Claude Platform Models,官方标准价格
+google,Google DeepMind,gemini38_flash,Gemini 3.8 Flash,https://ai.google.dev/gemini-api/docs/latest-model,0.75,3.75,,USD,introductory,2026-10-04,Google Gemini API,官方推广价格
+xai,xAI,grok47,Grok 4.7,https://docs.x.ai/developers/models/grok-4.7,2,6,0.5,USD,standard,2026-10-04,xAI Models,官方标准价格
+deepseek,DeepSeek,deepseek_v4_pro,DeepSeek-V4-Pro,https://api-docs.deepseek.com/quick_start/pricing,0.435,0.87,0.003625,USD,standard,2026-10-04,DeepSeek API Docs,缓存未命中输入价格
+deepseek,DeepSeek,deepseek_v4_flash,DeepSeek-V4-Flash,https://api-docs.deepseek.com/quick_start/pricing,0.14,0.28,0.0028,USD,standard,2026-10-04,DeepSeek API Docs,缓存未命中输入价格
 openai,OpenAI,gpt4o,GPT-4o,https://platform.openai.com/docs/pricing,,,,USD,standard,,OpenAI API Pricing,打开官方定价页→找到GPT-4o标准档→填入input/output价格
 openai,OpenAI,gpt4o_mini,GPT-4o Mini,https://platform.openai.com/docs/pricing,,,,USD,standard,,OpenAI API Pricing,打开官方定价页→找到GPT-4o Mini标准档→填入input/output价格
 anthropic,Anthropic,claude_opus4,Claude Opus 4,https://www.anthropic.com/pricing,,,,USD,standard,,Anthropic API Pricing,打开定价页→找到Claude Opus 4标准档→填入input/output价格

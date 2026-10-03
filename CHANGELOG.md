@@ -1,5 +1,15 @@
 # Changelog
 
+## [Unreleased] — 产品化界面与实时模型雷达
+
+### Added
+- 加入最新模型自动发现：每次更新从公开 API 目录提取重点厂商最近模型、上下文和市场价格，并在 Token 经济页展示。
+- 补入 GPT-6 Astra、GPT-6.1 Sol、GPT-6 Luna、Claude 5.5、Gemini 3.8 Flash、Grok 4.7 与 DeepSeek V4 系列的官方价格基线。
+
+### Changed
+- 移除界面中的开发说明、示例警告、手工维护路径和阶段性评述，改为面向最终用户的指标与空状态。
+- 新闻模块改为“AI 产业动态”；“方法论与数据”精简为“数据与来源”，只保留口径、来源和更新状态。
+
 ## [Unreleased] — 全量数据与研究增强
 
 ### Added

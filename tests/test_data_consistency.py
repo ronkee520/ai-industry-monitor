@@ -92,13 +92,17 @@ class TestDataConsistency(unittest.TestCase):
 
     # ── Record count ────────────────────────────────────────────
     def test_token_pricing_count(self):
-        self.assertEqual(len(self.tp["records"]), 17,
-            f"预期 17 条 token pricing 记录，实际 {len(self.tp['records'])}")
+        self.assertGreaterEqual(len(self.tp["records"]), 26,
+            f"预期至少 26 条 token pricing 记录，实际 {len(self.tp['records'])}")
 
-    def test_all_manual_required_not_verified(self):
+    def test_verified_records_are_complete(self):
         verified = [r for r in self.tp["records"] if r.get("confidence") == "verified"]
-        self.assertEqual(verified, [],
-            f"当前不应存在 verified 记录: {[r['metric_id'] for r in verified]}")
+        self.assertGreaterEqual(len(verified), 9)
+        for record in verified:
+            self.assertIsNotNone(record.get("value"), record["metric_id"])
+            self.assertIsNotNone(record.get("input_per_m"), record["metric_id"])
+            self.assertIsNotNone(record.get("output_per_m"), record["metric_id"])
+            self.assertEqual(record.get("evidence_status"), "official_pricing", record["metric_id"])
 
     # ── No absolute paths / API keys ────────────────────────────
     def test_no_absolute_paths_in_data_files(self):

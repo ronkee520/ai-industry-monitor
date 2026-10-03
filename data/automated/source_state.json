@@ -5,7 +5,7 @@
     "kind": "official_pricing",
     "name": "OpenAI API Pricing",
     "url": "https://platform.openai.com/docs/pricing",
-    "checked_at": "2026-10-04T00:04:02+08:00",
+    "checked_at": "2026-10-04T01:32:00+08:00",
     "status": "error",
     "http_status": null,
     "final_url": null,
@@ -20,15 +20,15 @@
     "kind": "official_pricing",
     "name": "Anthropic API Pricing",
     "url": "https://www.anthropic.com/pricing",
-    "checked_at": "2026-10-04T00:04:03+08:00",
+    "checked_at": "2026-10-04T01:32:01+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://claude.com/pricing",
-    "content_hash": "790c4d2f1c017c2907302abc1be498af64ad9fde95680cf5a748d92ffd80dae1",
+    "content_hash": "bec5a814204ff3e9d19b827b2686427034c3c1c57ccbbdba2b78cc55751205b7",
     "changed": true,
-    "text_chars": 1187146,
+    "text_chars": 1188134,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:03+08:00"
+    "last_successful_check": "2026-10-04T01:32:01+08:00"
   },
   {
     "source_id": "google_pricing",
@@ -36,15 +36,15 @@
     "kind": "official_pricing",
     "name": "Gemini Developer API Pricing",
     "url": "https://ai.google.dev/pricing",
-    "checked_at": "2026-10-04T00:04:04+08:00",
+    "checked_at": "2026-10-04T01:32:02+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://ai.google.dev/gemini-api/docs/pricing?hl=zh-cn",
-    "content_hash": "5c90fbe9393434c025a9e8fa8a73b709ef8338db040c5cc804515a22877a66d0",
+    "content_hash": "1cdabb0380b4d802ba74168b122702663edcde51b93abb3b37882ccdb0df3dd6",
     "changed": true,
-    "text_chars": 238322,
+    "text_chars": 238326,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:04+08:00"
+    "last_successful_check": "2026-10-04T01:32:02+08:00"
   },
   {
     "source_id": "xai_pricing",
@@ -52,7 +52,7 @@
     "kind": "official_pricing",
     "name": "xAI API Pricing",
     "url": "https://x.ai/pricing",
-    "checked_at": "2026-10-04T00:04:01+08:00",
+    "checked_at": "2026-10-04T01:31:59+08:00",
     "status": "error",
     "http_status": null,
     "final_url": null,
@@ -67,7 +67,7 @@
     "kind": "official_pricing",
     "name": "Mistral API Pricing",
     "url": "https://mistral.ai/technology/",
-    "checked_at": "2026-10-04T00:04:02+08:00",
+    "checked_at": "2026-10-04T01:32:00+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://mistral.ai/products/studio/",
@@ -75,7 +75,7 @@
     "changed": false,
     "text_chars": 344221,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:02+08:00"
+    "last_successful_check": "2026-10-04T01:32:00+08:00"
   },
   {
     "source_id": "cohere_pricing",
@@ -83,7 +83,7 @@
     "kind": "official_pricing",
     "name": "Cohere API Pricing",
     "url": "https://cohere.com/pricing",
-    "checked_at": "2026-10-04T00:04:02+08:00",
+    "checked_at": "2026-10-04T01:32:00+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://cohere.com/pricing",
@@ -91,7 +91,7 @@
     "changed": false,
     "text_chars": 535472,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:02+08:00"
+    "last_successful_check": "2026-10-04T01:32:00+08:00"
   },
   {
     "source_id": "amazon_bedrock_pricing",
@@ -99,15 +99,15 @@
     "kind": "official_pricing",
     "name": "AWS Bedrock Pricing",
     "url": "https://aws.amazon.com/bedrock/pricing/",
-    "checked_at": "2026-10-04T00:04:03+08:00",
+    "checked_at": "2026-10-04T01:32:02+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://aws.amazon.com/cn/bedrock/pricing/",
-    "content_hash": "bf6b714808c2b4561bb3cf37b7549fc74bc9b3bf8991162b63f85483492a74ac",
+    "content_hash": "feaf88b4d162fb374992b4e3a5a21ee6925ad1e94037e3df71ca1e637e7d745c",
     "changed": true,
     "text_chars": 847431,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:03+08:00"
+    "last_successful_check": "2026-10-04T01:32:02+08:00"
   },
   {
     "source_id": "deepseek_pricing",
@@ -115,7 +115,7 @@
     "kind": "official_pricing",
     "name": "DeepSeek API Pricing",
     "url": "https://api-docs.deepseek.com/quick_start/pricing",
-    "checked_at": "2026-10-04T00:04:02+08:00",
+    "checked_at": "2026-10-04T01:32:00+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://api-docs.deepseek.com/quick_start/pricing/",
@@ -123,7 +123,7 @@
     "changed": false,
     "text_chars": 23908,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:02+08:00"
+    "last_successful_check": "2026-10-04T01:32:00+08:00"
   },
   {
     "source_id": "alibaba_pricing",
@@ -131,15 +131,15 @@
     "kind": "official_pricing",
     "name": "阿里云百炼模型定价",
     "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
-    "checked_at": "2026-10-04T00:04:04+08:00",
+    "checked_at": "2026-10-04T01:32:01+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://help.aliyun.com/zh/model-studio/model-pricing",
-    "content_hash": "2fd059c3b8ce863eec506021dda668c608405aa878c65b1852a836de1983868a",
+    "content_hash": "74d4f4df8925c2c6eb4fd1c84622d8070090838e5bfd60a60a1ea63a7bb7b68c",
     "changed": true,
     "text_chars": 1800655,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:04+08:00"
+    "last_successful_check": "2026-10-04T01:32:01+08:00"
   },
   {
     "source_id": "doubao_pricing",
@@ -147,15 +147,15 @@
     "kind": "official_pricing",
     "name": "火山方舟模型服务计费",
     "url": "https://www.volcengine.com/docs/84458/1585097",
-    "checked_at": "2026-10-04T00:04:04+08:00",
+    "checked_at": "2026-10-04T01:32:02+08:00",
     "status": "ok",
     "http_status": 200,
-    "final_url": "https://docs.volcengine.com/docs/84458/1585097",
-    "content_hash": "60c890d27927d0e3c7519e20ae4905d94631850ba63bfb4582b428365dfea725",
+    "final_url": "https://docs.volcengine.com/docs/Coze/Modelcost?lang=zh",
+    "content_hash": "bbcd41e1ea55ecd5851b76f007e39df73dfb2ed09244fef450c60b60a51cda13",
     "changed": true,
     "text_chars": 11902,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:04+08:00"
+    "last_successful_check": "2026-10-04T01:32:02+08:00"
   },
   {
     "source_id": "baidu_pricing",
@@ -163,7 +163,7 @@
     "kind": "official_pricing",
     "name": "百度千帆模型定价",
     "url": "https://cloud.baidu.com/product-s/qianfan.html",
-    "checked_at": "2026-10-04T00:04:03+08:00",
+    "checked_at": "2026-10-04T01:32:01+08:00",
     "status": "error",
     "http_status": null,
     "final_url": null,
@@ -178,15 +178,15 @@
     "kind": "official_pricing",
     "name": "腾讯混元模型定价",
     "url": "https://cloud.tencent.com/product/hunyuan",
-    "checked_at": "2026-10-04T00:04:03+08:00",
+    "checked_at": "2026-10-04T01:32:01+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://cloud.tencent.com/product/hunyuan",
-    "content_hash": "ac6d4179593d373b7c9efb500e657d8a76d9a827dee473ffe336945b6b38ce52",
+    "content_hash": "e17f2cfae9ad8c8e7cc5c01d086b835dea3597b1dc49ab3dbcf6cdf4a8a68e51",
     "changed": true,
     "text_chars": 29182,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:03+08:00"
+    "last_successful_check": "2026-10-04T01:32:01+08:00"
   },
   {
     "source_id": "zhipu_pricing",
@@ -194,15 +194,15 @@
     "kind": "official_pricing",
     "name": "智谱开放平台定价",
     "url": "https://bigmodel.cn/pricing",
-    "checked_at": "2026-10-04T00:04:03+08:00",
+    "checked_at": "2026-10-04T01:32:01+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://bigmodel.cn/pricing",
-    "content_hash": "3c6bea72e4119ebcd02640c4ecdf12c74cec257a71477ba6b84d2dce71e4c290",
+    "content_hash": "45db0b07e312cd92fcc37428a398bb0e96b30f732278bbd57d96d46cf9f08226",
     "changed": true,
     "text_chars": 3853,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:03+08:00"
+    "last_successful_check": "2026-10-04T01:32:01+08:00"
   },
   {
     "source_id": "moonshot_pricing",
@@ -210,7 +210,7 @@
     "kind": "official_pricing",
     "name": "Kimi 开放平台",
     "url": "https://platform.kimi.com/",
-    "checked_at": "2026-10-04T00:04:06+08:00",
+    "checked_at": "2026-10-04T01:32:03+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://platform.kimi.com/",
@@ -218,7 +218,7 @@
     "changed": false,
     "text_chars": 92955,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:06+08:00"
+    "last_successful_check": "2026-10-04T01:32:03+08:00"
   },
   {
     "source_id": "vast_ai",
@@ -226,7 +226,7 @@
     "kind": "gpu_rental",
     "name": "Vast.ai GPU Pricing",
     "url": "https://vast.ai/",
-    "checked_at": "2026-10-04T00:04:08+08:00",
+    "checked_at": "2026-10-04T01:32:06+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://vast.ai/",
@@ -234,7 +234,7 @@
     "changed": null,
     "text_chars": 101410,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:08+08:00"
+    "last_successful_check": "2026-10-04T01:32:06+08:00"
   },
   {
     "source_id": "lambda_cloud_pricing",
@@ -242,7 +242,7 @@
     "kind": "gpu_rental",
     "name": "Lambda Cloud On-Demand GPU Pricing",
     "url": "https://lambda.ai/instances",
-    "checked_at": "2026-10-04T00:04:09+08:00",
+    "checked_at": "2026-10-04T01:32:06+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://lambda.ai/instances",
@@ -250,7 +250,7 @@
     "changed": null,
     "text_chars": 97803,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:09+08:00"
+    "last_successful_check": "2026-10-04T01:32:06+08:00"
   },
   {
     "source_id": "runpod_pricing",
@@ -258,7 +258,7 @@
     "kind": "gpu_rental",
     "name": "RunPod GPU Pricing",
     "url": "https://www.runpod.io/pricing",
-    "checked_at": "2026-10-04T00:04:09+08:00",
+    "checked_at": "2026-10-04T01:32:07+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://www.runpod.io/pricing",
@@ -266,7 +266,7 @@
     "changed": null,
     "text_chars": 320186,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:09+08:00"
+    "last_successful_check": "2026-10-04T01:32:07+08:00"
   },
   {
     "source_id": "aliyun_gpu",
@@ -274,14 +274,14 @@
     "kind": "gpu_rental_cloud",
     "name": "阿里云GPU定价",
     "url": "https://help.aliyun.com/en/cs/product-overview/product-billing-rules",
-    "checked_at": "2026-10-04T00:04:09+08:00",
+    "checked_at": "2026-10-04T01:32:07+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://help.aliyun.com/en/cs/product-overview/product-billing-rules",
-    "content_hash": "9ebbd4a75a6d96a9264532d862e409a2d9aa65191df4e1c62710a80526965e84",
+    "content_hash": "bed6d81a145735e8f84365a8e5b88ab88fdbaba910104d9cdc3e9bda0e96fcaf",
     "changed": null,
     "text_chars": 119932,
     "error": null,
-    "last_successful_check": "2026-10-04T00:04:09+08:00"
+    "last_successful_check": "2026-10-04T01:32:07+08:00"
   }
 ]

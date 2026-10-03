@@ -69,3 +69,15 @@
 {"date":"2026-10-04","metric_id":"token_blended_cost::anthropic::claude_sonnet4::market_route","value":7.2,"currency":"USD","blended_cost_usd":7.2}
 {"date":"2026-10-04","metric_id":"token_blended_cost::anthropic::claude_opus4::market_route","value":12.0,"currency":"USD","blended_cost_usd":12.0}
 {"date":"2026-10-04","metric_id":"token_blended_cost::bytedance::doubao_seed20::standard","value":null,"currency":"CNY","blended_cost_usd":null}
+{"date":"2026-10-04","metric_id":"token_blended_cost::deepseek::deepseek_v4_flash::standard","value":0.189,"currency":"USD","blended_cost_usd":0.189}
+{"date":"2026-10-04","metric_id":"token_blended_cost::openai::gpt6_luna::standard","value":0.24,"currency":"USD","blended_cost_usd":0.24}
+{"date":"2026-10-04","metric_id":"token_blended_cost::deepseek::deepseek_v4_pro::standard","value":0.58725,"currency":"USD","blended_cost_usd":0.58725}
+{"date":"2026-10-04","metric_id":"token_blended_cost::google::gemini38_flash::standard","value":1.8,"currency":"USD","blended_cost_usd":1.8}
+{"date":"2026-10-04","metric_id":"token_blended_cost::xai::grok47::standard","value":3.4,"currency":"USD","blended_cost_usd":3.4}
+{"date":"2026-10-04","metric_id":"token_blended_cost::openai::gpt61_sol::standard","value":4.8,"currency":"USD","blended_cost_usd":4.8}
+{"date":"2026-10-04","metric_id":"token_blended_cost::anthropic::claude_sonnet55::standard","value":4.8,"currency":"USD","blended_cost_usd":4.8}
+{"date":"2026-10-04","metric_id":"token_blended_cost::anthropic::claude_opus55::standard","value":9.6,"currency":"USD","blended_cost_usd":9.6}
+{"date":"2026-10-04","metric_id":"token_blended_cost::openai::gpt6_astra::standard","value":24.0,"currency":"USD","blended_cost_usd":24.0}
+{"date":"2026-10-04","metric_id":"token_blended_cost::zhipu::glm53_prime::market_route","value":4.9,"currency":"USD","blended_cost_usd":4.9}
+{"date":"2026-10-04","metric_id":"token_blended_cost::moonshot::kimi_k3::market_route","value":5.1935,"currency":"USD","blended_cost_usd":5.1935}
+{"date":"2026-10-04","metric_id":"token_blended_cost::alibaba::qwen38_max_prime::market_route","value":6.8,"currency":"USD","blended_cost_usd":6.8}
