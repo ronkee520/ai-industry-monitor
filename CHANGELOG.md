@@ -12,6 +12,8 @@
 - AI Cycle 改为 `proxy_v1` 初步信号并固定为低置信度，明确披露尚未覆盖的模型能力、Token 用量、估值和 ETF 资金流。
 - 来源健康页增加 GPU、CAPEX、产业链财务和行情覆盖统计。
 - 公司范围扩展到 NVIDIA、AMD 和 Broadcom，共 24 家。
+- 全站升级为机构研究终端视觉体系：深色品牌头部、页面级研究标题、强化 KPI/表格层级、涨跌色彩与移动端适配。
+- Windows 原子文件替换增加短暂占用重试，避免索引器或安全扫描导致偶发构建失败。
 
 ## [Unreleased] — Automation reliability
 

@@ -50,6 +50,8 @@
     return (n >= 0 ? "+" : "") + n.toFixed(1) + "%";
   };
 
+  const pctClass = v => v == null || !Number.isFinite(Number(v)) ? "" : (Number(v) >= 0 ? "positive" : "negative");
+
   const fmtDate = s => {
     if (!s) return "—";
     try { return new Date(s).toLocaleString("zh-CN", { hour12: false }); }
@@ -164,8 +166,10 @@
     const m = D.meta || {};
     const h = D.health || {};
     const el = document.getElementById("header-meta");
-    el.innerHTML = `<b>最新快照 ${esc(fmtDate(m.generated_at))}</b>
-      ${esc(m.schedule || "")} · 健康: ${esc(h.status || "—")}`;
+    const state = h.status || "unknown";
+    el.innerHTML = `<span class="snapshot-status status-${esc(state)}"><i></i>${esc(state)}</span>
+      <span class="snapshot-copy"><b>最新快照 ${esc(fmtDate(m.generated_at))}</b>
+      ${esc(m.schedule || "")}</span>`;
     document.title = m.title || "AI Industry Monitor";
   }
 
@@ -189,6 +193,7 @@
     const hasRisk = c.risk_crowding_score != null;
 
     app.innerHTML = `
+      ${pageHero("ALLOCATION INTELLIGENCE", "AI 产业景气与风险总览", "把模型经济、商业化、算力资本开支与市场价格信号放进同一研究框架。", "公开数据 · 可追溯 · 每周更新")}
       ${isSample ? renderSampleWarning(c) : ""}
 
       <!-- Stage Card -->
@@ -279,6 +284,13 @@
     </article>`;
   }
 
+  function pageHero(kicker, title, description, meta) {
+    return `<section class="page-hero">
+      <div><span class="page-kicker">${esc(kicker)}</span><h1>${esc(title)}</h1><p>${esc(description)}</p></div>
+      ${meta ? `<span class="page-hero-meta">${esc(meta)}</span>` : ""}
+    </section>`;
+  }
+
   function renderHealthWarnings(h) {
     if (!h || !h.warnings || !h.warnings.length) return "";
     return `<section class="section"><div class="warning-banner info">
@@ -338,6 +350,7 @@
     const median = costs.length ? costs[Math.floor(costs.length / 2)] : null;
 
     app.innerHTML = `
+      ${pageHero("MODEL ECONOMICS", "Token 经济", "比较主流模型的输入、输出与标准化混合成本，跟踪推理价格曲线。", `${realRecords.length} 条有效记录`)}
       ${sampleRecords.length ? `<div class="warning-banner sample-warn"><span class="warning-icon">⚠️</span><div><b>${sampleRecords.length} 条定价记录为 SAMPLE 数据。</b>这些数值是结构示例，不应被引用为真实价格。</div></div>` : ""}
 
       <section class="section">
@@ -454,7 +467,7 @@
         <td>${badgeConfidence(r.model_status)}</td>
         <td class="num">${fmtValue(r.value)} ${esc(r.currency || "")}</td>
         <td class="num">${fmtUSD(r.blended_cost_usd)}</td>
-        <td class="num">${fmtPct(r.change_pct)}</td>
+        <td class="num ${pctClass(r.change_pct)}">${fmtPct(r.change_pct)}</td>
         <td>${badgeConfidence(r.confidence)} ${badgeEvidence(r.evidence_status)}</td>
         <td>${badgeFreshness(r.freshness)}</td>
         <td>${sourceLink(r.source_url, r.source_name)}<br><small>${esc(r.note || "").slice(0,80)}</small></td>
@@ -476,6 +489,7 @@
     const missing = records.filter(r => r.value == null);
 
     app.innerHTML = `
+      ${pageHero("COMMERCIALIZATION", "商业化进程", "分口径观察 ARR、年化收入、融资与估值，避免把不同性质的指标混为一谈。", `${withValue.length}/${records.length} 条已披露`)}
       ${missing.length ? `<div class="warning-banner missing-data"><span class="warning-icon">📊</span><div><b>${missing.length} 条商业化指标数据缺失(value=null)。</b>请在 data/manual/business_metrics.json 中填入真实数据。</div></div>` : ""}
 
       <section class="section">
@@ -527,6 +541,7 @@
     const gpuSources = sources.filter(s => s.kind && (s.kind.includes("gpu") || s.kind.includes("rental")));
 
     app.innerHTML = `
+      ${pageHero("INFRASTRUCTURE", "AI 算力与云 CAPEX", "从 GPU 即时租赁价格与云厂商资本开支两端观察基础设施景气。", `${gpu.length} 条 GPU 价格 · ${capex.length} 条 CAPEX`)}
       <section class="section">
         <div class="section-head"><h2>GPU 按需价格</h2><p>统一为 USD / GPU·小时；不同实例规模、区域和可用性不能直接等同</p></div>
 
@@ -582,6 +597,7 @@
     rows.forEach(r => { if (!latest[r.company_id] || r.as_of_date > latest[r.company_id].as_of_date) latest[r.company_id] = r; });
     const current = Object.values(latest);
     app.innerHTML = `
+      ${pageHero("VALUE CHAIN", "AI 产业链", "连接模型需求、云基础设施、芯片设计与上游制造，观察利润与投入如何传导。", `${current.length} 家核心公司`)}
       <section class="section"><div class="section-head"><h2>AI 产业链结构</h2><p>需求 → 设计 → 制造/设备 → 系统/云 → 模型与应用</p></div>
         <div class="chain-flow">
           <div><b>模型与应用</b><span>OpenAI · Anthropic · 国内模型厂商</span></div><i>←</i>
@@ -611,11 +627,12 @@
     const all = [...(watch.foreign || []), ...(watch.domestic || [])];
     const bySymbol = Object.fromEntries(rows.map(r=>[r.symbol,r]));
     app.innerHTML = `
+      ${pageHero("MARKET LENS", "投资研究", "用收益、回撤与波动率刻画市场行为，并与产业基本面信号交叉验证。", `${rows.length}/${all.length} 个标的有行情`)}
       <div class="warning-banner info"><span class="warning-icon">🧭</span><div><b>资产配置信号层。</b>价格趋势只反映市场行为，需与产业周期、盈利和估值共同判断；本页不构成投资建议。</div></div>
       <section class="section"><div class="section-head"><h2>AI 资产观察池</h2><p>免费日线来自 Yahoo Finance；交易前应以持牌行情源复核</p></div>
         <div class="kpi-grid">${kpiCard("观察标的",all.length)}${kpiCard("行情覆盖",rows.length)}${kpiCard("近1月上涨",rows.filter(r=>(r.return_1m_pct||0)>0).length)}${kpiCard("高波动标的",rows.filter(r=>(r.volatility_1y_pct||0)>50).length)}</div>
         <div class="card"><div class="table-wrap"><table id="market-table"><thead><tr><th data-key="symbol">代码</th><th data-key="name">公司/ETF</th><th>产业角色</th><th data-key="close">收盘</th><th data-key="return_1w_pct">1周</th><th data-key="return_1m_pct">1月</th><th data-key="return_3m_pct">3月</th><th data-key="return_ytd_pct">YTD</th><th data-key="drawdown_52w_pct">距52周高点</th><th data-key="volatility_1y_pct">年化波动</th><th>来源</th></tr></thead><tbody>
-        ${all.map(w=>{const r=bySymbol[w.symbol]||{}; return `<tr><td><strong>${esc(w.symbol)}</strong></td><td>${esc(w.name)}</td><td>${esc(w.role)}</td><td class="num">${r.close==null?"—":fmtNum(r.close,2)} ${esc(r.currency||"")}</td><td class="num">${fmtPct(r.return_1w_pct)}</td><td class="num">${fmtPct(r.return_1m_pct)}</td><td class="num">${fmtPct(r.return_3m_pct)}</td><td class="num">${fmtPct(r.return_ytd_pct)}</td><td class="num">${fmtPct(r.drawdown_52w_pct)}</td><td class="num">${r.volatility_1y_pct==null?"—":fmtNum(r.volatility_1y_pct,1)+"%"}</td><td>${r.source_url?sourceLink(r.source_url,"Yahoo Finance"):badgeConfidence("missing")}</td></tr>`}).join("")}
+        ${all.map(w=>{const r=bySymbol[w.symbol]||{}; return `<tr><td><strong>${esc(w.symbol)}</strong></td><td>${esc(w.name)}</td><td>${esc(w.role)}</td><td class="num">${r.close==null?"—":fmtNum(r.close,2)} ${esc(r.currency||"")}</td><td class="num ${pctClass(r.return_1w_pct)}">${fmtPct(r.return_1w_pct)}</td><td class="num ${pctClass(r.return_1m_pct)}">${fmtPct(r.return_1m_pct)}</td><td class="num ${pctClass(r.return_3m_pct)}">${fmtPct(r.return_3m_pct)}</td><td class="num ${pctClass(r.return_ytd_pct)}">${fmtPct(r.return_ytd_pct)}</td><td class="num ${pctClass(r.drawdown_52w_pct)}">${fmtPct(r.drawdown_52w_pct)}</td><td class="num">${r.volatility_1y_pct==null?"—":fmtNum(r.volatility_1y_pct,1)+"%"}</td><td>${r.source_url?sourceLink(r.source_url,"Yahoo Finance"):badgeConfidence("missing")}</td></tr>`}).join("")}
         </tbody></table></div></div>
       </section>
       <section class="section"><article class="card"><h3>仍需专业数据接口的字段</h3><p>一致预期盈利、Forward P/E、EV/EBITDA、ETF申赎资金流和机构持仓变化。目前保持缺失，不使用网页猜测值替代。</p></article></section>`;
@@ -634,6 +651,7 @@
     const runs = (D.history?.runs || []).slice(-10).reverse();
 
     app.innerHTML = `
+      ${pageHero("RESEARCH GOVERNANCE", "方法论与数据", "披露数据边界、来源层级、评分限制和流水线状态，让每个结论都可核查。", "透明口径 · 审计留痕")}
       <section class="section">
         <div class="section-head"><h2>项目说明</h2></div>
         <div class="method-grid">

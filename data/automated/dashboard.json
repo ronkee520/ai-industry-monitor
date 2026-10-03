@@ -2,7 +2,7 @@
   "meta": {
     "title": "AI Industry Monitor",
     "subtitle": "AI产业与大模型商业化监测 Dashboard",
-    "generated_at": "2026-10-04T00:05:24+08:00",
+    "generated_at": "2026-10-04T01:03:16+08:00",
     "schedule": "每周一、周五 09:00 (Asia/Shanghai)",
     "data_policy": "公开可引用数据。sample/missing/manual_required 标记明确。",
     "fx": {
@@ -19,7 +19,7 @@
   },
   "overview": {
     "cycle": {
-      "generated_at": "2026-10-04T00:05:24+08:00",
+      "generated_at": "2026-10-04T01:03:16+08:00",
       "stage_id": "commercialization",
       "stage_label": "商业化兑现期",
       "industry_development_score": 76.2,
@@ -3182,7 +3182,7 @@
       },
       {
         "date": "2026-10-04",
-        "generated_at": "2026-10-04T00:04:24+08:00",
+        "generated_at": "2026-10-04T01:03:16+08:00",
         "stage_id": "commercialization",
         "stage_label": "商业化兑现期",
         "industry_development_score": 76.2,
@@ -3768,7 +3768,7 @@
   ],
   "health": {
     "status": "degraded",
-    "generated_at": "2026-10-04T00:05:24+08:00",
+    "generated_at": "2026-10-04T01:03:16+08:00",
     "sources_ok": 15,
     "sources_total": 18,
     "sources_failed": 3,

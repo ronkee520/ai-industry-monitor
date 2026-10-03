@@ -13,6 +13,7 @@ import os
 import re
 import ssl
 import tempfile
+import time
 import urllib.request
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -40,6 +41,18 @@ VALID_EVIDENCE_STATUSES = {
     "manual_required",
     "unknown",
 }
+
+
+def _replace_with_retry(source: str, target: str, *, attempts: int = 6) -> None:
+    """Replace a file atomically, tolerating short-lived Windows scanner locks."""
+    for attempt in range(attempts):
+        try:
+            os.replace(source, target)
+            return
+        except PermissionError:
+            if attempt == attempts - 1:
+                raise
+            time.sleep(0.05 * (attempt + 1))
 VALID_CONFIDENCES = {
     "verified",
     "inferred",
@@ -122,7 +135,7 @@ def atomic_write(path: Path, data: Any, *, indent: int = 2) -> None:
         with os.fdopen(fd, "w", encoding="utf-8") as handle:
             handle.write(serialized)
             handle.write("\n")
-        os.replace(tmp_name, str(path))
+        _replace_with_retry(tmp_name, str(path))
     except Exception:
         # 清理临时文件
         try:
@@ -187,7 +200,7 @@ def _append_jsonl_with_dedup(
         with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as handle:
             for row in existing:
                 handle.write(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n")
-        os.replace(tmp_name, str(path))
+        _replace_with_retry(tmp_name, str(path))
     except Exception:
         try:
             os.unlink(tmp_name)
