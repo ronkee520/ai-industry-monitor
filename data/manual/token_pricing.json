@@ -214,7 +214,7 @@
       "input_per_m": null,
       "output_per_m": null,
       "cached_input_per_m": null,
-      "unit": "USD_per_1M_tokens",
+      "unit": "CNY_per_1M_tokens",
       "currency": "CNY",
       "company_id": "alibaba",
       "model_id": "qwen3_max",
@@ -280,6 +280,31 @@
       "confidence": "manual_required",
       "note": "百度千帆定价结构复杂（含免费额度/按量/包月），需人工核验后录入。",
       "tags": ["manual_required", "blended", "complex_pricing"]
+    },
+    {
+      "metric_id": "token_blended_cost::tencent::hunyuan_turbo::standard",
+      "metric_name": "混元 Turbo 标准档混合成本",
+      "metric_category": "token_pricing",
+      "value": null,
+      "input_per_m": null,
+      "output_per_m": null,
+      "cached_input_per_m": null,
+      "unit": "CNY_per_1M_tokens",
+      "currency": "CNY",
+      "company_id": "tencent",
+      "model_id": "hunyuan_turbo",
+      "region": "domestic",
+      "tier": "standard",
+      "period": "2026-07",
+      "as_of_date": "2026-07-29",
+      "collected_at": "2026-07-29T00:00:00+08:00",
+      "source_name": "腾讯混元模型定价",
+      "source_url": "https://cloud.tencent.com/product/hunyuan",
+      "source_tier": 1,
+      "evidence_status": "manual_required",
+      "confidence": "manual_required",
+      "note": "待人工确认当前可用模型名称、标准按量定价及具体官方定价页。",
+      "tags": ["manual_required", "blended", "watchlist_model"]
     },
     {
       "metric_id": "token_blended_cost::zhipu::glm4::standard",
@@ -408,5 +433,5 @@
     }
   ],
 
-  "_meta_remaining": "以下模型暂无 token_pricing 记录: xAI Grok 4 (公测中，定价不稳定), Meta Llama 4 (开源模型，无官方API定价), 腾讯混元Turbo (待确认定价页URL)。llama 仅通过托管平台(Groq/Together)提供推理服务，价格取决于托管方，不宜与官方API价格混排。"
+  "_meta_remaining": "以下模型暂无 token_pricing 记录: xAI Grok 4 (公测中，定价不稳定), Meta Llama 4 (开源模型，无官方API定价)。Llama 仅通过托管平台(Groq/Together)提供推理服务，价格取决于托管方，不宜与官方API价格混排。"
 }

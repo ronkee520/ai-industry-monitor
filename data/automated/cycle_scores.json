@@ -1,35 +1,40 @@
 {
-  "generated_at": "2026-07-29T16:12:29+08:00",
-  "stage_id": "infra_expansion",
-  "stage_label": "基础设施扩张期",
-  "industry_development_score": 50.0,
+  "generated_at": "2026-10-03T14:15:39+08:00",
+  "stage_id": "insufficient_data",
+  "stage_label": "数据不足",
+  "industry_development_score": null,
   "risk_crowding_score": null,
   "risk_note": "第一期风险Overlay使用默认中性值(50)。第二期实现自动化后更新。",
   "factor_scores": {
     "technology_maturity": {
-      "score": 50.0,
-      "weight": 0.3
+      "score": null,
+      "weight": 0.3,
+      "available": false
     },
     "commercialization": {
-      "score": 50.0,
-      "weight": 0.35
+      "score": null,
+      "weight": 0.35,
+      "available": false
     },
     "capital_investment": {
-      "score": 50.0,
-      "weight": 0.35
+      "score": null,
+      "weight": 0.35,
+      "available": false
     }
   },
-  "confidence": "low",
-  "insufficient_data": false,
-  "sample_based": true,
-  "missing_factor_count": 2,
+  "confidence": "missing",
+  "insufficient_data": true,
+  "sample_based": false,
+  "missing_based": true,
+  "missing_factor_count": 3,
   "data_coverage": {
     "pricing_records": 0,
     "pricing_real": 0,
     "business_records": 0,
     "business_real": 0,
-    "sources_ok": 0,
-    "sources_total": 0
+    "gpu_real": 0,
+    "sources_ok": 14,
+    "sources_total": 17
   },
   "stages_reference": [
     {

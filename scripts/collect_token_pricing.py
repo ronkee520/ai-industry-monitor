@@ -123,6 +123,7 @@ def collect_token_pricing(
         "ok": ok_count,
         "changed": changed_count,
         "errors": error_count,
+        "status": "ok" if error_count == 0 else "partial",
     }
 
     # dry_run 已在上方提前返回
@@ -177,6 +178,19 @@ def _fetch_source(
         })
     else:
         state["error"] = result.get("error", "unknown")
+        if prev.get("content_hash"):
+            state.update({
+                "status": "stale_fallback",
+                "http_status": prev.get("http_status"),
+                "final_url": prev.get("final_url"),
+                "content_hash": prev.get("content_hash"),
+                "changed": None,
+                "text_chars": prev.get("text_chars"),
+                "last_successful_check": prev.get("last_successful_check") or prev.get("checked_at"),
+            })
+
+    if state["status"] == "ok":
+        state["last_successful_check"] = checked_at
 
     return state
 

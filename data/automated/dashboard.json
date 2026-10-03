@@ -2,7 +2,7 @@
   "meta": {
     "title": "AI Industry Monitor",
     "subtitle": "AI产业与大模型商业化监测 Dashboard",
-    "generated_at": "2026-07-29T16:12:29+08:00",
+    "generated_at": "2026-10-03T14:15:39+08:00",
     "schedule": "每周一、周五 09:00 (Asia/Shanghai)",
     "data_policy": "公开可引用数据。sample/missing/manual_required 标记明确。",
     "fx": {
@@ -13,43 +13,48 @@
   "kpis": {
     "companies": 21,
     "models_with_pricing": 0,
-    "source_ok": 0,
-    "source_total": 0,
+    "source_ok": 14,
+    "source_total": 17,
     "arr_disclosures": 0
   },
   "overview": {
     "cycle": {
-      "generated_at": "2026-07-29T16:12:29+08:00",
-      "stage_id": "infra_expansion",
-      "stage_label": "基础设施扩张期",
-      "industry_development_score": 50.0,
+      "generated_at": "2026-10-03T14:15:39+08:00",
+      "stage_id": "insufficient_data",
+      "stage_label": "数据不足",
+      "industry_development_score": null,
       "risk_crowding_score": null,
       "risk_note": "第一期风险Overlay使用默认中性值(50)。第二期实现自动化后更新。",
       "factor_scores": {
         "technology_maturity": {
-          "score": 50.0,
-          "weight": 0.3
+          "score": null,
+          "weight": 0.3,
+          "available": false
         },
         "commercialization": {
-          "score": 50.0,
-          "weight": 0.35
+          "score": null,
+          "weight": 0.35,
+          "available": false
         },
         "capital_investment": {
-          "score": 50.0,
-          "weight": 0.35
+          "score": null,
+          "weight": 0.35,
+          "available": false
         }
       },
-      "confidence": "low",
-      "insufficient_data": false,
-      "sample_based": true,
-      "missing_factor_count": 2,
+      "confidence": "missing",
+      "insufficient_data": true,
+      "sample_based": false,
+      "missing_based": true,
+      "missing_factor_count": 3,
       "data_coverage": {
         "pricing_records": 0,
         "pricing_real": 0,
         "business_records": 0,
         "business_real": 0,
-        "sources_ok": 0,
-        "sources_total": 0
+        "gpu_real": 0,
+        "sources_ok": 14,
+        "sources_total": 17
       },
       "stages_reference": [
         {
@@ -133,8 +138,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -170,8 +175,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -207,8 +212,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -244,8 +249,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -281,8 +286,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -318,8 +323,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -355,8 +360,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -392,8 +397,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -404,7 +409,7 @@
         "input_per_m": null,
         "output_per_m": null,
         "cached_input_per_m": null,
-        "unit": "USD_per_1M_tokens",
+        "unit": "CNY_per_1M_tokens",
         "currency": "CNY",
         "company_id": "alibaba",
         "model_id": "qwen3_max",
@@ -429,8 +434,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -466,45 +471,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
-        }
-      },
-      {
-        "metric_id": "token_blended_cost::tencent::hunyuan_turbo::standard",
-        "metric_name": "混元 Turbo 标准档混合成本",
-        "metric_category": "token_pricing",
-        "value": null,
-        "input_per_m": null,
-        "output_per_m": null,
-        "cached_input_per_m": null,
-        "unit": "CNY_per_1M_tokens",
-        "currency": "CNY",
-        "company_id": "tencent",
-        "model_id": "hunyuan_turbo",
-        "region": "domestic",
-        "tier": "standard",
-        "period": "2026-07",
-        "as_of_date": "2026-07-29",
-        "collected_at": "2026-07-29T00:00:00+08:00",
-        "source_name": "腾讯混元模型定价",
-        "source_url": "https://cloud.tencent.com/product/hunyuan",
-        "source_tier": 1,
-        "evidence_status": "manual_required",
-        "confidence": "manual_required",
-        "note": "waiting for manual verification from official pricing page. 需人工确认具体定价页URL和最新模型名称。",
-        "tags": [
-          "manual_required",
-          "blended",
-          "production_model"
-        ],
-        "company_name": "腾讯混元",
-        "model_status": "watchlist",
-        "blended_cost_usd": null,
-        "change_pct": null,
-        "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -540,8 +508,45 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
+        }
+      },
+      {
+        "metric_id": "token_blended_cost::tencent::hunyuan_turbo::standard",
+        "metric_name": "混元 Turbo 标准档混合成本",
+        "metric_category": "token_pricing",
+        "value": null,
+        "input_per_m": null,
+        "output_per_m": null,
+        "cached_input_per_m": null,
+        "unit": "CNY_per_1M_tokens",
+        "currency": "CNY",
+        "company_id": "tencent",
+        "model_id": "hunyuan_turbo",
+        "region": "domestic",
+        "tier": "standard",
+        "period": "2026-07",
+        "as_of_date": "2026-07-29",
+        "collected_at": "2026-07-29T00:00:00+08:00",
+        "source_name": "腾讯混元模型定价",
+        "source_url": "https://cloud.tencent.com/product/hunyuan",
+        "source_tier": 1,
+        "evidence_status": "manual_required",
+        "confidence": "manual_required",
+        "note": "待人工确认当前可用模型名称、标准按量定价及具体官方定价页。",
+        "tags": [
+          "manual_required",
+          "blended",
+          "watchlist_model"
+        ],
+        "company_name": "腾讯混元",
+        "model_status": "watchlist",
+        "blended_cost_usd": null,
+        "change_pct": null,
+        "freshness": {
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -577,8 +582,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -614,8 +619,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -651,8 +656,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -688,8 +693,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -725,8 +730,8 @@
         "blended_cost_usd": null,
         "change_pct": null,
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       }
     ],
@@ -762,8 +767,8 @@
         ],
         "company_name": "OpenAI",
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -791,8 +796,8 @@
         ],
         "company_name": "Anthropic",
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -820,8 +825,8 @@
         ],
         "company_name": "OpenAI",
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -849,8 +854,8 @@
         ],
         "company_name": "Anthropic",
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -878,8 +883,8 @@
         ],
         "company_name": "Anthropic",
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -907,8 +912,8 @@
         ],
         "company_name": "OpenAI",
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -936,8 +941,8 @@
         ],
         "company_name": "OpenAI",
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       },
       {
@@ -965,8 +970,8 @@
         ],
         "company_name": "OpenAI",
         "freshness": {
-          "status": "fresh",
-          "age_days": 0
+          "status": "very_stale",
+          "age_days": 66
         }
       }
     ],
@@ -975,24 +980,509 @@
     }
   },
   "compute": {
-    "gpu": [],
+    "gpu": [
+      {
+        "metric_id": "gpu_source_state::aliyun_gpu",
+        "metric_name": "阿里云GPU定价",
+        "metric_category": "gpu_pricing",
+        "value": null,
+        "unit": "source_state",
+        "currency": null,
+        "company_id": null,
+        "model_id": null,
+        "region": "global",
+        "period": "2026-10-03",
+        "as_of_date": "2026-10-03",
+        "collected_at": "2026-10-03T14:13:08+08:00",
+        "source_name": "阿里云GPU定价",
+        "source_url": "https://help.aliyun.com/en/cs/product-overview/product-billing-rules",
+        "source_tier": 1,
+        "evidence_status": "public_snapshot",
+        "confidence": "inferred",
+        "note": "GPU源状态: ok. 价格解析待后续版本实现。",
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      },
+      {
+        "metric_id": "gpu_source_state::vast_ai",
+        "metric_name": "Vast.ai GPU Pricing",
+        "metric_category": "gpu_pricing",
+        "value": null,
+        "unit": "source_state",
+        "currency": null,
+        "company_id": null,
+        "model_id": null,
+        "region": "global",
+        "period": "2026-10-03",
+        "as_of_date": "2026-10-03",
+        "collected_at": "2026-10-03T14:13:08+08:00",
+        "source_name": "Vast.ai GPU Pricing",
+        "source_url": "https://vast.ai/",
+        "source_tier": 1,
+        "evidence_status": "public_snapshot",
+        "confidence": "inferred",
+        "note": "GPU源状态: ok. 价格解析待后续版本实现。",
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      },
+      {
+        "metric_id": "gpu_source_state::runpod_pricing",
+        "metric_name": "RunPod GPU Pricing",
+        "metric_category": "gpu_pricing",
+        "value": null,
+        "unit": "source_state",
+        "currency": null,
+        "company_id": null,
+        "model_id": null,
+        "region": "global",
+        "period": "2026-10-03",
+        "as_of_date": "2026-10-03",
+        "collected_at": "2026-10-03T14:13:08+08:00",
+        "source_name": "RunPod GPU Pricing",
+        "source_url": "https://www.runpod.io/pricing",
+        "source_tier": 1,
+        "evidence_status": "public_snapshot",
+        "confidence": "inferred",
+        "note": "GPU源状态: ok. 价格解析待后续版本实现。",
+        "freshness": {
+          "status": "fresh",
+          "age_days": 0
+        }
+      }
+    ],
     "note": "GPU价格来自公开按需定价页。整机/合约/竞价价格不混排。"
   },
-  "sources": [],
-  "news": [],
+  "sources": [
+    {
+      "source_id": "openai_pricing",
+      "name": "OpenAI API Pricing",
+      "url": "https://platform.openai.com/docs/pricing",
+      "kind": "official_pricing",
+      "status": "error",
+      "checked_at": "2026-10-03T14:13:03+08:00",
+      "changed": null,
+      "text_chars": null,
+      "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "source_id": "anthropic_pricing",
+      "name": "Anthropic API Pricing",
+      "url": "https://www.anthropic.com/pricing",
+      "kind": "official_pricing",
+      "status": "ok",
+      "checked_at": "2026-10-03T14:13:03+08:00",
+      "changed": false,
+      "text_chars": 1188134,
+      "error": null
+    },
+    {
+      "source_id": "google_pricing",
+      "name": "Gemini Developer API Pricing",
+      "url": "https://ai.google.dev/pricing",
+      "kind": "official_pricing",
+      "status": "ok",
+      "checked_at": "2026-10-03T14:13:04+08:00",
+      "changed": false,
+      "text_chars": 238322,
+      "error": null
+    },
+    {
+      "source_id": "xai_pricing",
+      "name": "xAI API Pricing",
+      "url": "https://x.ai/pricing",
+      "kind": "official_pricing",
+      "status": "error",
+      "checked_at": "2026-10-03T14:13:02+08:00",
+      "changed": null,
+      "text_chars": null,
+      "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "source_id": "mistral_pricing",
+      "name": "Mistral API Pricing",
+      "url": "https://mistral.ai/technology/",
+      "kind": "official_pricing",
+      "status": "ok",
+      "checked_at": "2026-10-03T14:13:03+08:00",
+      "changed": false,
+      "text_chars": 344221,
+      "error": null
+    },
+    {
+      "source_id": "cohere_pricing",
+      "name": "Cohere API Pricing",
+      "url": "https://cohere.com/pricing",
+      "kind": "official_pricing",
+      "status": "ok",
+      "checked_at": "2026-10-03T14:13:02+08:00",
+      "changed": false,
+      "text_chars": 535485,
+      "error": null
+    },
+    {
+      "source_id": "amazon_bedrock_pricing",
+      "name": "AWS Bedrock Pricing",
+      "url": "https://aws.amazon.com/bedrock/pricing/",
+      "kind": "official_pricing",
+      "status": "ok",
+      "checked_at": "2026-10-03T14:13:04+08:00",
+      "changed": false,
+      "text_chars": 847431,
+      "error": null
+    },
+    {
+      "source_id": "deepseek_pricing",
+      "name": "DeepSeek API Pricing",
+      "url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "kind": "official_pricing",
+      "status": "ok",
+      "checked_at": "2026-10-03T14:13:03+08:00",
+      "changed": false,
+      "text_chars": 23908,
+      "error": null
+    },
+    {
+      "source_id": "alibaba_pricing",
+      "name": "阿里云百炼模型定价",
+      "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
+      "kind": "official_pricing",
+      "status": "ok",
+      "checked_at": "2026-10-03T14:13:04+08:00",
+      "changed": false,
+      "text_chars": 1799673,
+      "error": null
+    },
+    {
+      "source_id": "doubao_pricing",
+      "name": "火山方舟模型服务计费",
+      "url": "https://www.volcengine.com/docs/84458/1585097",
+      "kind": "official_pricing",
+      "status": "ok",
+      "checked_at": "2026-10-03T14:13:04+08:00",
+      "changed": false,
+      "text_chars": 11902,
+      "error": null
+    },
+    {
+      "source_id": "baidu_pricing",
+      "name": "百度千帆模型定价",
+      "url": "https://cloud.baidu.com/product-s/qianfan.html",
+      "kind": "official_pricing",
+      "status": "error",
+      "checked_at": "2026-10-03T14:13:03+08:00",
+      "changed": null,
+      "text_chars": null,
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "source_id": "tencent_pricing",
+      "name": "腾讯混元模型定价",
+      "url": "https://cloud.tencent.com/product/hunyuan",
+      "kind": "official_pricing",
+      "status": "ok",
+      "checked_at": "2026-10-03T14:13:04+08:00",
+      "changed": false,
+      "text_chars": 29182,
+      "error": null
+    },
+    {
+      "source_id": "zhipu_pricing",
+      "name": "智谱开放平台定价",
+      "url": "https://bigmodel.cn/pricing",
+      "kind": "official_pricing",
+      "status": "ok",
+      "checked_at": "2026-10-03T14:13:04+08:00",
+      "changed": false,
+      "text_chars": 3853,
+      "error": null
+    },
+    {
+      "source_id": "moonshot_pricing",
+      "name": "Kimi 开放平台",
+      "url": "https://platform.kimi.com/",
+      "kind": "official_pricing",
+      "status": "ok",
+      "checked_at": "2026-10-03T14:13:07+08:00",
+      "changed": false,
+      "text_chars": 92955,
+      "error": null
+    },
+    {
+      "source_id": "aliyun_gpu",
+      "name": "阿里云GPU定价",
+      "url": "https://help.aliyun.com/en/cs/product-overview/product-billing-rules",
+      "kind": "gpu_rental_cloud",
+      "status": "ok",
+      "checked_at": "2026-10-03T14:13:08+08:00",
+      "changed": null,
+      "text_chars": 119932,
+      "error": null
+    },
+    {
+      "source_id": "vast_ai",
+      "name": "Vast.ai GPU Pricing",
+      "url": "https://vast.ai/",
+      "kind": "gpu_rental",
+      "status": "ok",
+      "checked_at": "2026-10-03T14:13:08+08:00",
+      "changed": null,
+      "text_chars": 101410,
+      "error": null
+    },
+    {
+      "source_id": "runpod_pricing",
+      "name": "RunPod GPU Pricing",
+      "url": "https://www.runpod.io/pricing",
+      "kind": "gpu_rental",
+      "status": "ok",
+      "checked_at": "2026-10-03T14:13:08+08:00",
+      "changed": null,
+      "text_chars": 320186,
+      "error": null
+    }
+  ],
+  "news": [
+    {
+      "title": "OpenAI IPO Date: Investor Timeline, Valuation and Expectations - SmartAsset",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNaUZMX0tXaVBQLTZhYVhQSGhWYndyQUo3TVBpMm9fU21lQWRzOFpBcHZubmxQeEJEMW0xcUUweEhxaDVwUHdwc1ItWVZxV3FlRHIzRVhlWXRDbGo1akJlb0p4SHJYVFJtUVRzNlJhek44eHRlaGtsVW55eUZRREZILV9TMFJOWUFCZlh5WjNBNTVWOXhKMWlyag?oc=5",
+      "publisher": "SmartAsset",
+      "published_at": "2026-10-03T06:55:12+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "Anthropic's IPO Can't Wait Forever - Newcomer | Substack",
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE00RmYtTmVzZkp2dkNWRUpjdUx1Y1hxb3Y5RllxQVFXMlJUNDNnRWpRMlh6TjlLQ29aS1h3WWVuYXZDMDNORmotUW84aTcxV1BhZ2Y3Qjh2aGdPMk42WFM0Zm9CZGVjLTlaNkE?oc=5",
+      "publisher": "Newcomer | Substack",
+      "published_at": "2026-10-03T00:39:49+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "Anthropic IPO: What ETF Investors Should Know - TradingView",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPbWYxZGV4TzZXSUUzbHVKdlIxUk94NXdlQjROTldUMGlQdGhza1c0a0xjZXM5Ml95TnhPejl3V2xaS0ZwZmQzSHFKMWh5SUwycW40VUc4N0k2RVJPVjFveTNfQ2hoMk80YkUtR0o1eW03XzVoQmNsSGVSejZhdm1kanhTMU9HN3R4ZHZEcXNBYTA3S2NxWVlvYmtWYVA4eklOVlE?oc=5",
+      "publisher": "TradingView",
+      "published_at": "2026-10-02T21:00:00+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "Anthropic is targeting a pre-Thanksgiving IPO at up to a $2 trillion valuation - qz.com",
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBDbk5RZUZxQXF2UDdJOWpUU3V5dXR2SmdYeEg3cS0zU3BiQzlFNm5qb0xNR2RvcUVwTVZ5b2JLc3JHckRxNTFoTk5uRWkxY2pLRFZVY0lDNVBQVm9GMzRpekpKUlRGZ05kNXc?oc=5",
+      "publisher": "qz.com",
+      "published_at": "2026-10-02T19:15:18+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "PitchBook: Anthropic’s Leaked Financials Reflect Fast Growth, but Not a $2 Trillion Valuation - Morningstar",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOZG5rTkw5OThUUU9UbEl2NTk4X1RpQUJBTFVRdF92RGFzd1N5MzRTTklySlktTHF0M1FFdkY4a2VwUnBidWIzVFRpR2VQTnozbFJTX0dXMlJRTnVrWVJGaUdmckNvekQ4T1dPZG1Mb3ZfTm9KNHhVT3BSdVZ4cC11d1lEalJBZ2QydS0wcEg0Y0paUkpDaVBmS1NLNGwydUdHRVdpS295ME1KS0ta?oc=5",
+      "publisher": "Morningstar",
+      "published_at": "2026-10-02T18:10:14+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "Your AI Bill Is a Toll Booth. Stop Paying Twice. - Towards Data Science",
+      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOY00zMFN1MzNwT05sRlFwX3plb3QxQmVCRDA0blI1WUxod1V3Q25CYm05amxDb3dSbXYxTjNGM2FWdFhjdGs4ZU1Va1lvUlotYmFMXzBhOGEwN0NpQVlwYWU5b2RZTll1UGpXbFpXbERMWDRWeTBEWVc3MnhrQVFjc0xTS1M?oc=5",
+      "publisher": "Towards Data Science",
+      "published_at": "2026-10-01T19:21:15+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "新思科技(SNPS.US)携手OpenAI开发芯片设计AI模型，收入分成模式推动股价一度涨7%_全球市场 - 证券之星",
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBxVVVpaTIzeEpIdnlUT0ZfN1dHSHFvTlh3T0NJa2tMeHViaGRmQzgyVWZlRC1VekQ5ZkhrNGxFZ01DNnBzSkxqRGJQLTNfNlRxTXAteVh5ajl0eTc2T1FhYmtLWWk?oc=5",
+      "publisher": "证券之星",
+      "published_at": "2026-10-01T08:17:15+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "Anthropic’s $11.6 Billion Quarter Just Changed How the Market Should Read the S-1 - Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPWDNQVUtxQlR0MTFnZFJiQlZGOXNrTXRZczBvSkZ3Nmh5ZHpEdHo2TzBGZ2hocUQ5Zko1TVYwX3RjMWxHN0hQbDBQSENDMTdhb3V0YWJGVkpfS0NMamFJako3UmdjMkpwelI0RG1CcURMV1FpQkN0ZjdXSW1lbzJCWklKZVI5dDJFQV9yX01JZU5VaWhfMFlLTk1R?oc=5",
+      "publisher": "Yahoo Finance",
+      "published_at": "2026-10-01T03:44:12+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "大模型降价推动商业化落地，恒生科技ETF南方（520570）覆盖AI变现主线 - 东方财富",
+      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE9oMlBmcXYyTWlZbEg1S0U4c2YzdW1qV2NBTG50TzNGeEhzeUhjVXNMM2laaUNIMGo1SkFfZXRITlNKTm5PclBWcnU0Q0JyQVpEcEEzVGNKbjhvOGp0cDJhSE1uU001Zw?oc=5",
+      "publisher": "东方财富",
+      "published_at": "2026-09-30T23:57:01+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "Context Windows: How Much Context Does an LLM Really Need, and What Are the Trade-Offs? - snowflake.com",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOU2wwRG10UzZwS2l3OTRBOVMwT08taEc1NlctT1dTbWx6THVtUndJeHpsdDhxYjA4TTRJM1B6TnJiSUNVMnhHdW04Y1JQVzFSUnJPc2NpN3dwUDI2LUhRUkUyd3VYQkVqMndIWWZEUGs2NWU4aHBwNENMcy1YUUxNcXM2V1hUanRvc3RaUGxQTEZtMzdEM3l0Nm1QejlOU2FxNWFDaFdZR3BHSndQMlE5QV9GUUNDenJoNUE?oc=5",
+      "publisher": "snowflake.com",
+      "published_at": "2026-09-30T17:33:41+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "EXCLUSIVE: Anthropic's IPO prospectus shows sweeping AI vision, surging costs - Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNbVlPeVROc0FBWTl6a0ZCZXdPVF93WjdPT1BFV2xkQmlyRE9oYS1wRF9yWk0zV1EwSlJ5Vmt0UkpucHdQWUpSbGdzUmdVeC1EWm5sMzBkTUNQMkg3ekVYMkMtemVySUxhWnRCTWRNLTA1Vl8tZVZkRU80ZVk4TjdZbE5LdjJ5VzJXbUlmM1FvMnJqTFE4TkZVeEJFVndEMmpIbGN5WDRxclhHX0JZdHp6LWlad3JTakZr?oc=5",
+      "publisher": "Reuters",
+      "published_at": "2026-09-30T09:16:47+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "从1.3万亿到3000亿，市值蒸发万亿，智谱AI资本狂欢落幕？ - 手机新浪网",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPTXpmeV93TVJkWFZnaERkM0Q5SW1oaDU2SU1NNHdXTXJ3M180aDRIWHk4ZEJnZTZmMTNzbExHa1ZHc1dhX0RDWG9GcHA2Q1BjQjBlLWo2QlBKTzJlWVRQcnJZdGxhY1NNYXNGa0tSTWljZGpQcGVwSWJWQ1l6M0N1WWIxUkpadHdHOWxXblBn?oc=5",
+      "publisher": "手机新浪网",
+      "published_at": "2026-09-30T08:07:00+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "OpenAI revenue run rate nears $70B as enterprise sales surge - The Journal Record",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNUXdpbGV2RWhaSHZob1lDNjJRYjRUbGVvN0tZMkJzZ1RobHZBX3BDNk1DZjdYdjNkWTRYQVZWUy1CRUR0Z0g5alBfMlpBWVZJWnlZSkdpX3lVTlB4ZnpJZEgtajZPQlRIdFlCZ1NrU2dzZXlZbF81SHBWX2FoWDVOMm5vTGlwQ2ZiYVJmcHh5eWN4eHNOVURDcHMtQQ?oc=5",
+      "publisher": "The Journal Record",
+      "published_at": "2026-09-30T00:46:40+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "A Quarter of Anthropic's Revenue Comes From 2 Customers. Experts Say the Real Test Comes Next - inc.com",
+      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPNEJnUEtlR3NzTFY2OVQycFBtb1VLMWJhaUF1UXUxSFVMcHYyc2ZTc3A3YmNDNElsNUhyZTR6VlhWeXQtQk5YUlI0cWl3T1h1cWpCeW1kbmUzUEItVFdIV3QtRG9RUUdBSnhCdlZOdVpHUkFnU1JzdjBDTFc5MFE3RXFTcjhkZzlnNTdxbWY2QWRYLUc2MjE1dU85cDZla3VzUGx3Y3Y3aWNmeDZnYXNnZFBGSjZRbklDSWxBT2E3QVZfUXBCcmV4TU9abw?oc=5",
+      "publisher": "inc.com",
+      "published_at": "2026-09-30T00:15:49+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "Scoop: OpenAI's annual recurring revenue nears $70B - Axios",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQT2xYcWJPOUFTTWFUWmpMSFN1UzdQc3ZoWmFFUEpsTFJFcjZBbkdqemNrN18ydnpIQnJyR09xMW9Ba2ZHWkFwRUMyMlZLcFkxQ1dDdl9mb1MxZnYwcExXcGNFTFQ3UHBTbERwM2pVYzdwcnZ6MnNSM3NHbE5VODFfaXNhX3dsQjF3?oc=5",
+      "publisher": "Axios",
+      "published_at": "2026-09-29T22:15:48+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "“Token Prices Are Falling, but Bills Are Rising”: As AI Advances, Token Management Becomes a Competitive Edge - economy.ac",
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFBTanFPeGhFMjJleUhXTFdKZXJfX3hOandYa3VFbFhLRWJzVDhYM3lNa0Zpb1AySjQ2RWZVQTQxS0dMM1VzNXZxZ0V0Vm5tbHU5VGZURGxaQQ?oc=5",
+      "publisher": "economy.ac",
+      "published_at": "2026-09-29T16:10:10+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "OpenClaw costs: What running OpenClaw actually costs - Hostinger",
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBNeVpSc3VZSXhXRnNZaklzTHl5QjRqd2JKNVlpa0VtRGZ2X1RzSmdLNWktd0dRVWg5U0hQblpReWw3aEQ3WG54ckVLYm84TWIyUWt1N0xjckNHUUtLLV9GdDF5bHA?oc=5",
+      "publisher": "Hostinger",
+      "published_at": "2026-09-29T15:00:00+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "[AI Costs③] AI Gateways Emerge as Key Tool for Cutting Token Costs - thelec.net",
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9hTWI2Q1p1dlhCUk9oallTMGpzUmVFbWJGYUZoMFdJYmRKTGZoR3RYUEZ3bF95R0FtRkp2UDFzWF9JOHBZVndGMVJJOWlWYlo3am1oZ1hXY2tQT0J3MnNfT0ZlU0QxRVU?oc=5",
+      "publisher": "thelec.net",
+      "published_at": "2026-09-29T08:17:33+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "绿色识别方法创新与实践——基于AI大模型的探索与应用 - 新浪财经",
+      "url": "https://news.google.com/rss/articles/CBMixAJBVV95cUxPMTN4UVZaM1hzQ241dHV5SEc1U2dQYnJGbWRUN0RBSG1SU3dRU21OTDltdFhvOXU0dGhUYXdTb2RDSG9adXlETzN1dWc5NFo4MjV5dnM0dlpjeHRSY2RFVE1jQjd4M2oxTFJFaW1udUs2VExscV9Rd2E0eUI2YmdxUzgzSnkwOEI3V3VsV3ZXZUloQTZZOFRGVlI4T1hEVXk5dmxGQllMMzNNX096aEdqN0hnSVlVVUtXdGo1WmwwQTZTTXlPNS1XRFhoWFh6emN3OE1yUEtQZlVKeGtrTGNMUnh2WS04MTVIeUZobU5ieVBneUdhRXFDdnNvSTVBYkc4WkEyemV6MVVLLVFwX0VFT3RmNldDaER0OUY2bWZoRUxEM1p5c1RDWXk4Ym51ODNISHBxTDFjSDJwalJrM0szWVRRdGg?oc=5",
+      "publisher": "新浪财经",
+      "published_at": "2026-09-29T06:14:47+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "大模型公司ARR增长难掩亏损扩大，融资链面临断裂风险 - 虎嗅网",
+      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFB2a1dOSDk0eG5XWHRZSWFUS2tiVUt3czVCcU5VMDFlTHpHSzlaYzVGaUcyaVlBd3JVZGdBTnZadjVjMkRaa2Vhc2dRNGQ4M3NydTVySw?oc=5",
+      "publisher": "虎嗅网",
+      "published_at": "2026-09-28T18:22:21+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    }
+  ],
   "health": {
-    "status": "partial",
-    "generated_at": "2026-07-29T16:12:29+08:00",
-    "sources_ok": 0,
-    "sources_total": 0,
-    "source_success_rate": "0/0",
+    "status": "degraded",
+    "generated_at": "2026-10-03T14:15:39+08:00",
+    "sources_ok": 14,
+    "sources_total": 17,
+    "sources_failed": 3,
+    "source_success_rate": "14/17",
     "pricing_total": 17,
     "pricing_missing": 17,
     "pricing_sample": 0,
     "business_total": 8,
     "business_missing": 8,
     "warnings": [
-      "17 pricing records have null values"
+      "17 pricing records have null values",
+      "8 business records have null values",
+      "3 sources are unavailable or using stale fallback"
     ]
   },
   "methodology": {

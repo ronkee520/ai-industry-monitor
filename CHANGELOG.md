@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased] — Automation reliability
+
+### Fixed
+- 修复 GPU 采集器完成抓取后返回未定义 `summary` 的异常，并增加非 dry-run 回归测试。
+- 补齐 `hunyuan_turbo` 的手工定价占位记录，恢复模板、候选数据和正式数据的跨文件一致性。
+- AI Cycle 在定价/商业化/CAPEX 数据不足时现在输出“数据不足”，不再将默认中性分误展示为“基础设施扩张期”。
+- 新闻历史按 URL + 发布时间去重，避免每次运行重复追加。
+
+### Changed
+- 定时/手动工作流将自动数据、历史和新闻写回 `main`，保留审计轨迹并防止 60 天无活动停用定时任务。
+- 取消会掩盖代码错误的全量 `--skip-fetch` 回退；外部来源失败由采集器标记为 `partial`，未处理程序异常则使 CI 显式失败。
+
 ## [Unreleased] — 第一期 MVP
 
 ### Added — Step 2: 项目骨架

@@ -68,10 +68,9 @@ jobs:
             python scripts/run_all.py --project-root . --skip-fetch --verbose
           else
             echo "scheduled/manual — 尝试网络采集"
-            python scripts/run_all.py --project-root . --verbose || {
-              echo "采集部分失败，回退到 --skip-fetch"
-              python scripts/run_all.py --project-root . --skip-fetch --verbose
-            }
+            # 单个外部数据源失败会被采集器标记为 partial，不会阻断构建。
+            # 未处理的代码异常必须让工作流失败，避免回退构建掩盖真实 bug。
+            python scripts/run_all.py --project-root . --verbose
           fi
 
       # ── 5. Verify build output ───────────────────────────
@@ -127,6 +126,21 @@ jobs:
           echo "✓ 构建校验通过"
 
       # ── 6. Configure Pages ────────────────────────────────
+      # 定时结果写回 main：保留历史、便于审计，也防止公开仓库
+      # 因 60 天无活动被 GitHub 自动停用 schedule。
+      - name: Persist automated data snapshot
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/automated data/history data/news
+          if git diff --cached --quiet; then
+            echo "无可持久化的数据变化"
+          else
+            git commit -m "data: refresh automated snapshot [skip ci]"
+            git push origin "HEAD:${{ github.event.repository.default_branch }}"
+          fi
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 

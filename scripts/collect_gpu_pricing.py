@@ -94,6 +94,14 @@ def collect_gpu_pricing(
     # dry_run 已在上方提前返回，此处必然是 dry_run=False
     _shared.atomic_write(state_path, merged)
     log("source_state.json 已更新（含GPU条目）", force=True)
+    summary: dict[str, Any] = {
+        "collector": "gpu_pricing",
+        "total": len(gpu_sources),
+        "fetched": len(gpu_states),
+        "ok": ok,
+        "errors": err,
+        "status": "ok" if err == 0 else "partial",
+    }
     return summary
 
 
@@ -105,7 +113,7 @@ def _gpu_state(
     text = result.get("text", "")
     digest = _shared.hash_content(text) if text else None
     old = prev.get("content_hash")
-    return {
+    state = {
         "source_id": src["id"],
         "provider": src.get("provider", ""),
         "kind": src.get("kind"),
@@ -120,6 +128,19 @@ def _gpu_state(
         "text_chars": len(text) if text else None,
         "error": result.get("error"),
     }
+    if not ok and prev.get("content_hash"):
+        state.update({
+            "status": "stale_fallback",
+            "http_status": prev.get("http_status"),
+            "final_url": prev.get("final_url"),
+            "content_hash": prev.get("content_hash"),
+            "changed": None,
+            "text_chars": prev.get("text_chars"),
+            "last_successful_check": prev.get("last_successful_check") or prev.get("checked_at"),
+        })
+    elif ok:
+        state["last_successful_check"] = checked
+    return state
 
 
 def main() -> int:

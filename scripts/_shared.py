@@ -47,6 +47,7 @@ VALID_CONFIDENCES = {
     "sample",
     "stale_fallback",
     "missing",
+    "manual_required",
 }
 
 

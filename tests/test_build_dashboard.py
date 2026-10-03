@@ -61,12 +61,21 @@ class TestBuildDashboard(unittest.TestCase):
         # 第一期只有 sample 数据或无数据时，应标记 confidence=low
         self.assertIn(cycle.get("confidence", ""), ("low", "medium", "missing"))
 
+    def test_cycle_does_not_claim_stage_without_data(self):
+        payload = _dash.build_dashboard(self.root)
+        cycle = payload.get("overview", {}).get("cycle", {})
+        if cycle.get("data_coverage", {}).get("pricing_real", 0) == 0 and cycle.get("data_coverage", {}).get("business_real", 0) == 0:
+            self.assertTrue(cycle.get("insufficient_data"))
+            self.assertEqual(cycle.get("stage_id"), "insufficient_data")
+            self.assertIsNone(cycle.get("industry_development_score"))
+
     def test_health_structure(self):
         payload = _dash.build_dashboard(self.root)
         health = payload["health"]
         self.assertIn("sources_ok", health)
         self.assertIn("sources_total", health)
         self.assertIn("pricing_sample", health)
+        self.assertIn("sources_failed", health)
 
     def test_determine_stage_low_industry(self):
         stages = _dash._shared.load_json(

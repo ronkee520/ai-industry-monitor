@@ -5,6 +5,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 _SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 _spec = importlib.util.spec_from_file_location(
@@ -73,12 +74,33 @@ class TestCollectPricingCandidates(unittest.TestCase):
 
     # ── Candidate never writes to token_pricing.json ────────────
     def test_candidate_does_not_modify_token_pricing(self):
-        tp_path = self.root / "data" / "manual" / "token_pricing.json"
-        before = tp_path.read_text(encoding="utf-8")
-        _coll.collect_candidates(self.root, dry_run=False, verbose=False)
-        after = tp_path.read_text(encoding="utf-8")
-        self.assertEqual(before, after,
-            "collect_candidates 绝对不能修改 token_pricing.json")
+        # 单元测试不应访问网络，也不应改写仓库内的候选数据文件。
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            manual = root / "data" / "manual"
+            manual.mkdir(parents=True)
+            (manual / "manual_pricing_template.csv").write_text(
+                "company_id,company_name,model_id,model_name,tier,input_price_per_m,output_price_per_m,cached_input_price_per_m,currency,as_of_date,source_url,source_name,note\n"
+                "test,Test,test_model,Test Model,standard,,,,USD,,https://example.com,Test Source,\n",
+                encoding="utf-8",
+            )
+            tp_path = manual / "token_pricing.json"
+            tp_path.write_text('{"records":[{"model_id":"test_model","value":null}]}', encoding="utf-8")
+            before = tp_path.read_text(encoding="utf-8")
+            fake = {
+                "ok": True,
+                "status": 200,
+                "final_url": "https://example.com",
+                "text": "<html><body>Test Model input $1.00 / 1M tokens output $2.00 / 1M tokens</body></html>",
+                "content_hash": "abc",
+                "text_chars": 100,
+                "error": None,
+            }
+            with mock.patch.object(_coll._shared, "fetch_url", return_value=fake):
+                _coll.collect_candidates(root, dry_run=False, verbose=False)
+            after = tp_path.read_text(encoding="utf-8")
+            self.assertEqual(before, after,
+                "collect_candidates 绝对不能修改 token_pricing.json")
 
     # ── JS render score ─────────────────────────────────────────
     def test_js_render_score_high_for_bundle(self):

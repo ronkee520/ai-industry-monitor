@@ -85,6 +85,11 @@ class TestDataConsistency(unittest.TestCase):
         self.assertEqual(bad, [],
             f"missing/manual_required 的 value 不能为 0: {bad}")
 
+    def test_currency_matches_unit(self):
+        bad = [r["metric_id"] for r in self.tp["records"]
+               if r.get("currency") and not str(r.get("unit", "")).startswith(r["currency"] + "_")]
+        self.assertEqual(bad, [], f"币种与单位不一致: {bad}")
+
     # ── Record count ────────────────────────────────────────────
     def test_token_pricing_count(self):
         self.assertEqual(len(self.tp["records"]), 17,

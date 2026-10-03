@@ -122,7 +122,7 @@ def collect_news(
             "url": item.get("url"), "title": item.get("title"),
             "publisher": item.get("publisher"), "published_at": item.get("published_at"),
             "query": item.get("query"),
-        })
+        }, dedupe_keys=["url", "published_at"])
 
     return summary
 

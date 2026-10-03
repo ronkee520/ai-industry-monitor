@@ -385,12 +385,21 @@ def _build_health(
     missing_pricing = sum(1 for p in pricing if p.get("value") is None)
     missing_business = sum(1 for b in business if b.get("value") is None)
     sample_count = sum(1 for p in pricing if p.get("confidence") == "sample")
+    failed = total - ok
+
+    if total == 0 or ok == 0:
+        status = "partial"
+    elif ok < total:
+        status = "degraded"
+    else:
+        status = "ok"
 
     return {
-        "status": "ok" if ok > 0 else "partial",
+        "status": status,
         "generated_at": generated_at,
         "sources_ok": ok,
         "sources_total": total,
+        "sources_failed": failed,
         "source_success_rate": f"{ok}/{total}" if total else "0/0",
         "pricing_total": len(pricing),
         "pricing_missing": missing_pricing,
@@ -403,6 +412,12 @@ def _build_health(
         ) + (
             [f"{sample_count} pricing records are SAMPLES — do not cite as real data"]
             if sample_count else []
+        ) + (
+            [f"{missing_business} business records have null values"]
+            if missing_business else []
+        ) + (
+            [f"{failed} sources are unavailable or using stale fallback"]
+            if failed else []
         ),
     }
 
@@ -431,11 +446,11 @@ def _build_cycle_scores(
     business_with_value = [b for b in business if b.get("value") is not None]
     sources_ok = sum(1 for s in sources if s.get("status") == "ok")
 
-    # 简化评分：各因子 50 为中性起始点
-    # 第一期不做精算，只输出框架
-    tech_score = 50.0
-    biz_score = 50.0
-    capital_score = 50.0
+    # 简化评分：只在有最低数据覆盖时输出分数。
+    # 不再用默认 50 冒充真实的产业周期结论。
+    tech_score: float | None = None
+    biz_score: float | None = None
+    capital_score: float | None = None
 
     # 如果有真实 pricing 数据（不含 sample），微调 tech_score
     real_pricing = [p for p in pricing_with_value if p.get("confidence") != "sample"]
@@ -451,34 +466,42 @@ def _build_cycle_scores(
     if len(real_business) >= 5:
         biz_score = 65.0
 
-    # 如果有 ≥50% 来源在线，capital_score 微调
-    total_sources = len(sources)
-    if total_sources > 0:
-        if sources_ok / total_sources >= 0.5:
-            capital_score = 55.0
-        if sources_ok / total_sources >= 0.8:
-            capital_score = 65.0
+    # 来源页可访问性不等于资本投入强度。只有真实 GPU/CAPEX 数值才评分。
+    real_gpu = [g for g in gpu if g.get("value") is not None]
+    if real_gpu:
+        capital_score = 55.0
 
-    industry_score = round(
-        tech_score * factors.get("technology_maturity", {}).get("weight", 0.30)
-        + biz_score * factors.get("commercialization", {}).get("weight", 0.35)
-        + capital_score * factors.get("capital_investment", {}).get("weight", 0.35),
-        1,
-    )
+    total_sources = len(sources)
+    available_factor_scores = [
+        score for score in (tech_score, biz_score, capital_score) if score is not None
+    ]
+    sufficient_industry_data = len(available_factor_scores) >= 2
+    if sufficient_industry_data:
+        weighted = [
+            (tech_score, factors.get("technology_maturity", {}).get("weight", 0.30)),
+            (biz_score, factors.get("commercialization", {}).get("weight", 0.35)),
+            (capital_score, factors.get("capital_investment", {}).get("weight", 0.35)),
+        ]
+        present = [(score, weight) for score, weight in weighted if score is not None]
+        weight_sum = sum(weight for _, weight in present)
+        industry_score: float | None = round(
+            sum(float(score) * weight for score, weight in present) / weight_sum, 1
+        )
+    else:
+        industry_score = None
 
     # Risk overlay — 第一期默认为 50 (中性)
     risk_score = 50.0
     risk_factors = cycle_cfg.get("risk_overlay", {}).get("sub_factors", {})
     risk_available = 0  # 第一期无自动化 risk 数据
 
-    # 确定阶段
-    stage_id, stage_label = _determine_stage(industry_score, risk_score, stages)
+    # 确定阶段：数据不足时明确返回“数据不足”，不输出伪精确结论。
+    if sufficient_industry_data and industry_score is not None:
+        stage_id, stage_label = _determine_stage(industry_score, risk_score, stages)
+    else:
+        stage_id, stage_label = ("insufficient_data", "数据不足")
 
-    missing_factors = 0
-    if len(real_pricing) < 5:
-        missing_factors += 1
-    if len(real_business) < 2:
-        missing_factors += 1
+    missing_factors = 3 - len(available_factor_scores)
 
     return {
         "generated_at": generated_at,
@@ -488,19 +511,21 @@ def _build_cycle_scores(
         "risk_crowding_score": risk_score if risk_available >= 2 else None,
         "risk_note": "第一期风险Overlay使用默认中性值(50)。第二期实现自动化后更新。" if risk_available < 2 else None,
         "factor_scores": {
-            "technology_maturity": {"score": tech_score, "weight": 0.30},
-            "commercialization": {"score": biz_score, "weight": 0.35},
-            "capital_investment": {"score": capital_score, "weight": 0.35},
+            "technology_maturity": {"score": tech_score, "weight": 0.30, "available": tech_score is not None},
+            "commercialization": {"score": biz_score, "weight": 0.35, "available": biz_score is not None},
+            "capital_investment": {"score": capital_score, "weight": 0.35, "available": capital_score is not None},
         },
-        "confidence": "low" if missing_factors >= 2 else "medium",
-        "insufficient_data": missing_factors >= 3,
-        "sample_based": len(real_pricing) < 3,
+        "confidence": "missing" if not sufficient_industry_data else ("low" if missing_factors else "medium"),
+        "insufficient_data": not sufficient_industry_data,
+        "sample_based": any(p.get("confidence") == "sample" for p in pricing_with_value),
+        "missing_based": not sufficient_industry_data,
         "missing_factor_count": missing_factors,
         "data_coverage": {
             "pricing_records": len(pricing_with_value),
             "pricing_real": len(real_pricing),
             "business_records": len(business_with_value),
             "business_real": len(real_business),
+            "gpu_real": len(real_gpu),
             "sources_ok": sources_ok,
             "sources_total": total_sources,
         },

@@ -146,8 +146,15 @@ https://ronkee520.github.io/ai-industry-monitor/
 GitHub Actions 每周一和周五自动运行。流程：
 
 ```
-数据采集 → 数据校验 → 构建 dashboard JSON → 构建 _site → 部署 GitHub Pages
+数据采集 → 数据校验 → 构建 dashboard JSON → 持久化快照/历史 → 部署 GitHub Pages
 ```
+
+定时运行会将 `data/automated/`、`data/history/` 和 `data/news/` 的结果写回 `main`，
+使历史可审计，同时避免公开仓库因长期无活动而被 GitHub 停用定时任务。
+
+> **自动化边界**：当前自动采集主要负责官方页面可访问性、内容指纹与新闻待复核池；
+> Token 价格、ARR、估值、融资和 CAPEX 数值在未经可靠解析或人工核验前保持 `null`。
+> 页面发生变化不等于指标已自动更新。
 
 ### 手动更新特定模块
 

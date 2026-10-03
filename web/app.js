@@ -88,7 +88,9 @@
   function badgeEvidence(e) {
     const map = { official_pricing: "tag verified", company_disclosure: "tag verified",
       media_report: "tag reported", public_snapshot: "tag reported",
-      sample: "tag sample", missing: "tag missing", manual_required: "tag manual" };
+      sample: "tag sample", missing: "tag missing", manual_required: "tag manual",
+      stale_fallback: "tag stale", ok: "tag verified", error: "tag error",
+      partial_dynamic: "tag manual" };
     return `<span class="${map[e] || 'tag missing'}">${esc(e)}</span>`;
   }
 
@@ -174,7 +176,7 @@
     const h = D.health || {};
     const n = D.news || [];
 
-    const isSample = c.sample_based || c.confidence === "low";
+    const isSample = c.insufficient_data || c.sample_based || c.confidence === "low";
     const hasRisk = c.risk_crowding_score != null;
 
     app.innerHTML = `
@@ -308,6 +310,7 @@
       commercialization: "ARR加速增长，Token使用量爆发，部分公司实现盈利。技术成熟与商业闭环共振。",
       valuation_crowding: "⚠️ 估值处于高位，资金拥挤。需警惕基本面与价格的背离。这不代表产业更成熟。",
       cyclical_adjustment: "⚠️ 产能过剩担忧，Capex增速放缓。行业进入出清或再平衡。由边际恶化信号触发。",
+      insufficient_data: "当前的真实定价、商业化与资本开支数据覆盖不足，暂不输出产业周期判断。",
     };
     return m[id] || "";
   }
