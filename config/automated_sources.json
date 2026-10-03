@@ -1,0 +1,55 @@
+{
+  "_description": "无需密钥的结构化数据源与映射。聚合平台价格仅作市场快照，不替代厂商官方报价。",
+  "_version": "1.0.0",
+  "model_market": {
+    "url": "https://openrouter.ai/api/v1/models",
+    "source_name": "OpenRouter public model catalog",
+    "source_tier": 3,
+    "routes": {
+      "gpt4o": ["openai/gpt-4o"],
+      "gpt4o_mini": ["openai/gpt-4o-mini"],
+      "claude_opus4": ["anthropic/claude-opus-4.8", "anthropic/claude-opus-4.7", "anthropic/claude-opus-4.6"],
+      "claude_sonnet4": ["anthropic/claude-sonnet-4.6", "anthropic/claude-sonnet-4.5", "anthropic/claude-sonnet-4"],
+      "gemini25_pro": ["google/gemini-2.5-pro"],
+      "gemini25_flash": ["google/gemini-2.5-flash"],
+      "grok4": ["x-ai/grok-4.7", "x-ai/grok-4.6", "x-ai/grok-4.5"],
+      "llama4": ["meta-llama/llama-4-maverick", "meta-llama/llama-4-scout"],
+      "mistral_large": ["mistralai/mistral-large-2512", "mistralai/mistral-large"],
+      "command_r_plus": ["cohere/command-r-plus-08-2024"],
+      "amazon_nova_pro": ["amazon/nova-pro-v1"],
+      "deepseek_v3": ["deepseek/deepseek-chat-v3.1", "deepseek/deepseek-chat"],
+      "deepseek_r1": ["deepseek/deepseek-r1-0528", "deepseek/deepseek-r1"],
+      "qwen3_max": ["qwen/qwen3-max"],
+      "doubao_seed20": [],
+      "ernie4": ["baidu/ernie-4.5-vl-424b-a47b"],
+      "hunyuan_turbo": ["tencent/hunyuan-a13b-instruct"],
+      "glm4": ["z-ai/glm-4.7", "z-ai/glm-4.6", "z-ai/glm-4.5"],
+      "kimi_k2": ["moonshotai/kimi-k2.6", "moonshotai/kimi-k2"]
+    }
+  },
+  "sec": {
+    "base_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json",
+    "user_agent_env": "SEC_USER_AGENT",
+    "companies": [
+      {"company_id": "microsoft", "cik": "0000789019", "role": "csp"},
+      {"company_id": "google", "cik": "0001652044", "role": "csp"},
+      {"company_id": "amazon", "cik": "0001018724", "role": "csp"},
+      {"company_id": "meta", "cik": "0001326801", "role": "csp"},
+      {"company_id": "nvidia", "cik": "0001045810", "role": "semiconductor"},
+      {"company_id": "amd", "cik": "0000002488", "role": "semiconductor"},
+      {"company_id": "broadcom", "cik": "0001730168", "role": "semiconductor"}
+    ]
+  },
+  "optional_apis": {
+    "alpha_vantage": {
+      "env": "ALPHAVANTAGE_API_KEY",
+      "purpose": "实时/日频行情、P/E、盈利指标。免费额度不足以一次覆盖全部标的，建议申请后分批轮询。",
+      "required": false
+    },
+    "fred": {
+      "env": "FRED_API_KEY",
+      "purpose": "无风险利率和金融条件，用于估值拥挤度校准。",
+      "required": false
+    }
+  }
+}

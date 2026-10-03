@@ -153,6 +153,16 @@
 
   "gpu_sources": [
     {
+      "id": "lambda_cloud_pricing",
+      "provider": "Lambda Cloud",
+      "kind": "gpu_rental",
+      "name": "Lambda Cloud On-Demand GPU Pricing",
+      "url": "https://lambda.ai/instances",
+      "tier": 1,
+      "parser": "lambda_price_table",
+      "enabled": true
+    },
+    {
       "id": "runpod_pricing",
       "provider": "RunPod",
       "kind": "gpu_rental",

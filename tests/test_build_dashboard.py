@@ -25,6 +25,9 @@ class TestBuildDashboard(unittest.TestCase):
         self.assertIn("compute", payload)
         self.assertIn("health", payload)
         self.assertIn("sources", payload)
+        self.assertIn("supply_chain", payload)
+        self.assertIn("investment", payload)
+        self.assertIn("history", payload)
 
     def test_pricing_records_have_required_fields(self):
         payload = _dash.build_dashboard(self.root)
@@ -76,6 +79,11 @@ class TestBuildDashboard(unittest.TestCase):
         self.assertIn("sources_total", health)
         self.assertIn("pricing_sample", health)
         self.assertIn("sources_failed", health)
+
+    def test_second_phase_records_are_present(self):
+        payload = _dash.build_dashboard(self.root)
+        self.assertGreaterEqual(len(payload["compute"].get("capex", [])), 2)
+        self.assertGreaterEqual(len(payload["supply_chain"].get("records", [])), 3)
 
     def test_determine_stage_low_industry(self):
         stages = _dash._shared.load_json(

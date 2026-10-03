@@ -38,9 +38,9 @@
 │  Tab 2  Token 经济                      │
 │  Tab 3  商业化                          │
 │  Tab 4  AI 算力 & 云 CAPEX              │
-│  Tab 5  方法论与数据                    │
-│                                         │
-│  第二期: AI产业链 · 投资研究              │
+│  Tab 5  AI产业链                        │
+│  Tab 6  投资研究                        │
+│  Tab 7  方法论与数据                    │
 └─────────────────────────────────────────┘
 ```
 
@@ -152,9 +152,9 @@ GitHub Actions 每周一和周五自动运行。流程：
 定时运行会将 `data/automated/`、`data/history/` 和 `data/news/` 的结果写回 `main`，
 使历史可审计，同时避免公开仓库因长期无活动而被 GitHub 停用定时任务。
 
-> **自动化边界**：当前自动采集主要负责官方页面可访问性、内容指纹与新闻待复核池；
-> Token 价格、ARR、估值、融资和 CAPEX 数值在未经可靠解析或人工核验前保持 `null`。
-> 页面发生变化不等于指标已自动更新。
+> **自动化边界**：Token 市场路由价来自 OpenRouter 公共目录（T3，不能冒充厂商直连价）；
+> CAPEX 与美股产业链财务来自 SEC Companyfacts（T1）；GPU 使用可重复解析的官方公开页；
+> ARR、私募估值和融资仍以公司披露或权威媒体人工核验。页面变化不等于指标已更新。
 
 ### 手动更新特定模块
 
@@ -204,7 +204,22 @@ ai-industry-monitor/
 | `/api/token-pricing.json` | Token 价格数据 |
 | `/api/business.json` | 商业化指标 |
 | `/api/gpu-pricing.json` | GPU 价格 |
+| `/api/supply-chain.json` | 产业链财务指标 |
+| `/api/investment.json` | 标的观察池与市场快照 |
+| `/api/history.json` | 指标历史快照 |
 | `/api/health.json` | 系统健康状态 |
+
+### API 与密钥
+
+核心流水线不需要付费 API：OpenRouter 公共模型目录、SEC Companyfacts、Lambda 官方价格页和 Yahoo Finance 图表快照均可匿名访问。
+
+建议在仓库 `Settings → Secrets and variables → Actions` 中增加：
+
+- `SEC_USER_AGENT`：格式建议为 `AI Industry Monitor your-email@example.com`，不是密钥，但符合 SEC 自动访问规范。
+- `ALPHAVANTAGE_API_KEY`：可选，未来用于持牌友好的行情/估值增强；当前版本没有它也能运行。
+- `FRED_API_KEY`：可选，未来用于利率与金融条件风险因子；当前版本没有它也能运行。
+
+任何密钥都不要写进 JSON、代码或 commit。
 
 ---
 

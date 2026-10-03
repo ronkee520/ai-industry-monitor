@@ -50,6 +50,12 @@ class TestBuildSite(unittest.TestCase):
     def test_methodology_page_exists(self):
         self.assertTrue((self.site_dir / "methodology" / "index.html").exists())
 
+    def test_supply_chain_page_exists(self):
+        self.assertTrue((self.site_dir / "supply-chain" / "index.html").exists())
+
+    def test_investment_page_exists(self):
+        self.assertTrue((self.site_dir / "investment" / "index.html").exists())
+
     # ── Static assets ──────────────────────────────────────────
     def test_app_js_copied(self):
         self.assertTrue((self.site_dir / "app.js").exists())
@@ -82,7 +88,7 @@ class TestBuildSite(unittest.TestCase):
         self.assertIn('DASHBOARD_ROOT = "./"', content)
 
     def test_sub_pages_use_parent_assets(self):
-        for sub in ("token", "business", "compute", "methodology"):
+        for sub in ("token", "business", "compute", "supply-chain", "investment", "methodology"):
             content = (self.site_dir / sub / "index.html").read_text(encoding="utf-8")
             self.assertIn('../app.js', content, f"{sub}/index.html 未引用 ../app.js")
             self.assertIn('../styles.css', content, f"{sub}/index.html 未引用 ../styles.css")
@@ -110,6 +116,10 @@ class TestBuildSite(unittest.TestCase):
 
     def test_api_health_json(self):
         self.assertTrue((self.site_dir / "api" / "health.json").exists())
+
+    def test_second_phase_api_files(self):
+        for name in ("supply-chain.json", "investment.json", "history.json"):
+            self.assertTrue((self.site_dir / "api" / name).exists())
 
     # ── No CDN or hardcoded paths ──────────────────────────────
     def test_no_cdn_in_html(self):

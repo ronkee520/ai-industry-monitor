@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-10-03T23:46:21+08:00",
+  "capex_records": [],
+  "supply_chain_records": [],
+  "errors": [
+    {
+      "company_id": "microsoft",
+      "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "company_id": "google",
+      "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "company_id": "amazon",
+      "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "company_id": "meta",
+      "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "company_id": "nvidia",
+      "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "company_id": "amd",
+      "error": "HTTPError: HTTP Error 403: Forbidden"
+    },
+    {
+      "company_id": "broadcom",
+      "error": "HTTPError: HTTP Error 403: Forbidden"
+    }
+  ]
+}

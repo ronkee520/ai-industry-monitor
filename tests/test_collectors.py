@@ -19,6 +19,9 @@ _token = _load("collect_token_pricing")
 _gpu = _load("collect_gpu_pricing")
 _news = _load("collect_news")
 _biz = _load("collect_business_metrics")
+_model_market = _load("collect_model_market_pricing")
+_sec = _load("collect_sec_fundamentals")
+_market = _load("collect_market_data")
 
 
 class TestTokenPricingCollector(unittest.TestCase):
@@ -118,6 +121,31 @@ class TestBusinessCollector(unittest.TestCase):
         result = _biz.collect_business_metrics(root, dry_run=True)
         self.assertIsInstance(result, dict)
         self.assertIn("stats", result)
+
+
+class TestStructuredCollectors(unittest.TestCase):
+    def test_model_market_dry_run(self):
+        result = _model_market.collect_model_market_pricing(_resolve_root(), dry_run=True)
+        self.assertGreater(result["models"], 10)
+
+    def test_sec_annual_fact_dedupes_restated_value(self):
+        facts = {"facts": {"us-gaap": {"Revenues": {"units": {"USD": [
+            {"start":"2024-01-01","end":"2024-12-31","filed":"2025-01-01","form":"10-K","fp":"FY","fy":2024,"val":10},
+            {"start":"2024-01-01","end":"2024-12-31","filed":"2025-02-01","form":"10-K/A","fp":"FY","fy":2024,"val":11}
+        ]}}}}}
+        rows = _sec._annual_facts(facts, ("Revenues",))
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["val"], 11)
+
+    def test_lambda_parser_extracts_prices(self):
+        html = "<table><tr><td>NVIDIA H100 SXM</td><td>80 GB</td><td>208</td><td>$3.99</td></tr></table>"
+        rows = _gpu._parse_lambda_pricing({"provider":"Lambda","name":"Lambda","url":"https://lambda.ai/instances","tier":1}, html)
+        self.assertEqual(rows[0]["gpu_model"], "NVIDIA H100 SXM")
+        self.assertEqual(rows[0]["value"], 3.99)
+
+    def test_market_dry_run(self):
+        result = _market.collect_market_data(_resolve_root(), dry_run=True)
+        self.assertGreater(result["symbols"], 10)
 
 
 def _resolve_root():

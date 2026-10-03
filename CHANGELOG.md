@@ -1,5 +1,18 @@
 # Changelog
 
+## [Unreleased] — 全量数据与研究增强
+
+### Added
+- 新增 OpenRouter 公开模型目录、Yahoo Finance 行情、Lambda GPU 按需价格和 SEC Companyfacts 采集器。
+- 新增 AI 产业链、投资研究两大页面，以及 GPU/CAPEX、半导体财务、观察池收益与波动率视图。
+- 新增 Token 定价历史图、CSV 导出、10 个静态 JSON API 端点和流水线运行审计日志。
+- 补入 OpenAI、Anthropic 商业化/融资信息，以及微软、Alphabet、Meta、NVIDIA、AMD、Broadcom 的官方财务基线。
+
+### Changed
+- AI Cycle 改为 `proxy_v1` 初步信号并固定为低置信度，明确披露尚未覆盖的模型能力、Token 用量、估值和 ETF 资金流。
+- 来源健康页增加 GPU、CAPEX、产业链财务和行情覆盖统计。
+- 公司范围扩展到 NVIDIA、AMD 和 Broadcom，共 24 家。
+
 ## [Unreleased] — Automation reliability
 
 ### Fixed

@@ -1,40 +1,49 @@
 {
-  "generated_at": "2026-10-03T14:15:39+08:00",
-  "stage_id": "insufficient_data",
-  "stage_label": "数据不足",
-  "industry_development_score": null,
-  "risk_crowding_score": null,
-  "risk_note": "第一期风险Overlay使用默认中性值(50)。第二期实现自动化后更新。",
+  "generated_at": "2026-10-04T00:05:24+08:00",
+  "stage_id": "commercialization",
+  "stage_label": "商业化兑现期",
+  "industry_development_score": 76.2,
+  "risk_crowding_score": 58.2,
+  "risk_note": "基于观察池3个月动量、上涨广度和距52周高点的价格拥挤代理；不包含Forward P/E或ETF申赎，不能单独作为交易信号。",
+  "risk_components": {
+    "momentum": 56.5,
+    "breadth": 57.9,
+    "proximity_to_52w_high": 60.1
+  },
   "factor_scores": {
     "technology_maturity": {
-      "score": null,
+      "score": 73.2,
       "weight": 0.3,
-      "available": false
+      "available": true
     },
     "commercialization": {
-      "score": null,
+      "score": 65.0,
       "weight": 0.35,
-      "available": false
+      "available": true
     },
     "capital_investment": {
-      "score": null,
+      "score": 90,
       "weight": 0.35,
-      "available": false
+      "available": true
     }
   },
-  "confidence": "missing",
-  "insufficient_data": true,
+  "confidence": "low",
+  "score_method": "proxy_v1",
+  "limitations": "评分使用公开价格覆盖、商业披露数量、CAPEX增速与行情动量代理；尚未纳入模型能力基准、Token真实用量、一致预期估值与ETF申赎。",
+  "insufficient_data": false,
   "sample_based": false,
-  "missing_based": true,
-  "missing_factor_count": 3,
+  "missing_based": false,
+  "missing_factor_count": 0,
   "data_coverage": {
-    "pricing_records": 0,
-    "pricing_real": 0,
-    "business_records": 0,
-    "business_real": 0,
-    "gpu_real": 0,
-    "sources_ok": 14,
-    "sources_total": 17
+    "pricing_records": 18,
+    "pricing_real": 18,
+    "business_records": 7,
+    "business_real": 7,
+    "gpu_real": 10,
+    "capex_real": 4,
+    "capex_growth_companies": 1,
+    "sources_ok": 15,
+    "sources_total": 18
   },
   "stages_reference": [
     {

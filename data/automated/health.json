@@ -1,18 +1,22 @@
 {
   "status": "degraded",
-  "generated_at": "2026-10-03T14:15:39+08:00",
-  "sources_ok": 14,
-  "sources_total": 17,
+  "generated_at": "2026-10-04T00:05:24+08:00",
+  "sources_ok": 15,
+  "sources_total": 18,
   "sources_failed": 3,
-  "source_success_rate": "14/17",
-  "pricing_total": 17,
-  "pricing_missing": 17,
+  "source_success_rate": "15/18",
+  "pricing_total": 19,
+  "pricing_missing": 1,
   "pricing_sample": 0,
   "business_total": 8,
-  "business_missing": 8,
+  "business_missing": 1,
+  "gpu_records": 10,
+  "capex_records": 4,
+  "supply_chain_records": 6,
+  "market_records": 19,
   "warnings": [
-    "17 pricing records have null values",
-    "8 business records have null values",
+    "1 pricing records have null values",
+    "1 business records have null values",
     "3 sources are unavailable or using stale fallback"
   ]
 }

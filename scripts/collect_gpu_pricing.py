@@ -2,8 +2,8 @@
 """AI Industry Monitor — GPU 定价采集器。
 
 从 RunPod / Vast.ai / 阿里云等公开 GPU 租赁页面获取当前状态。
-第一版只记录 source_state（状态指纹），不尝试精确解析价格。
-解析失败时回退到 data/manual/ 中的手动维护数据。
+记录 source_state（状态指纹），并对结构稳定的数据源解析标准化价格。
+解析失败时保留上一份自动化快照。
 
 单独运行:
     python scripts/collect_gpu_pricing.py --project-root .
@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import concurrent.futures
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -67,6 +68,7 @@ def collect_gpu_pricing(
     }
 
     gpu_states: list[dict[str, Any]] = []
+    parsed_records: list[dict[str, Any]] = []
     ok = err = 0
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as ex:
@@ -80,6 +82,8 @@ def collect_gpu_pricing(
 
             state = _gpu_state(src, r, existing_by_id.get(src["id"], {}))
             gpu_states.append(state)
+            if r.get("ok") and src.get("parser") == "lambda_price_table":
+                parsed_records.extend(_parse_lambda_pricing(src, r.get("text", "")))
             if state["status"] == "ok":
                 ok += 1
             else:
@@ -93,6 +97,15 @@ def collect_gpu_pricing(
 
     # dry_run 已在上方提前返回，此处必然是 dry_run=False
     _shared.atomic_write(state_path, merged)
+    snapshot_path = root / "data" / "automated" / "gpu_pricing.json"
+    previous_snapshot = _shared.load_json(snapshot_path, {})
+    if parsed_records:
+        _shared.atomic_write(snapshot_path, {
+            "generated_at": _shared.now_shanghai().isoformat(timespec="seconds"),
+            "records": parsed_records,
+        })
+    elif previous_snapshot:
+        parsed_records = previous_snapshot.get("records", [])
     log("source_state.json 已更新（含GPU条目）", force=True)
     summary: dict[str, Any] = {
         "collector": "gpu_pricing",
@@ -100,9 +113,45 @@ def collect_gpu_pricing(
         "fetched": len(gpu_states),
         "ok": ok,
         "errors": err,
+        "records": len(parsed_records),
         "status": "ok" if err == 0 else "partial",
     }
     return summary
+
+
+def _parse_lambda_pricing(src: dict[str, Any], html: str) -> list[dict[str, Any]]:
+    """Extract the minimum displayed per-GPU hourly price for each Lambda SKU."""
+    text = _shared.visible_text(html)
+    names = [
+        ("B200 SXM6", 180), ("H100 SXM", 80), ("H100 PCIe", 80),
+        ("GH200", 96), ("A100 SXM", None), ("A100 PCIe", None),
+        ("A10", 24), ("A6000", 48), ("Tesla V100", 16), ("Quadro RTX 6000", 24),
+    ]
+    now = _shared.now_shanghai().isoformat(timespec="seconds")
+    today = now[:10]
+    out: list[dict[str, Any]] = []
+    for name, default_vram in names:
+        pattern = re.compile(rf"NVIDIA\s+{re.escape(name)}\s*(?:\|)?\s*(\d+)\s*GB.{{0,220}}?\$\s*([0-9]+(?:\.[0-9]+)?)", re.I)
+        matches = pattern.findall(text)
+        if not matches:
+            continue
+        prices = [float(price) for _, price in matches]
+        vrams = [int(vram) for vram, _ in matches]
+        value = min(prices)
+        slug = re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")
+        out.append({
+            "metric_id": f"gpu_rental_hourly::lambda::{slug}::ondemand_min",
+            "metric_name": f"Lambda {name} 按需最低展示价", "metric_category": "gpu_pricing",
+            "value": value, "unit": "USD_per_GPU_hour", "currency": "USD", "company_id": None,
+            "provider": src.get("provider", "Lambda Cloud"), "gpu_model": f"NVIDIA {name}",
+            "vram_gb": max(vrams) if vrams else default_vram, "price_type": "on_demand_displayed_min",
+            "region": "global", "period": today, "as_of_date": today, "collected_at": now,
+            "source_name": src.get("name"), "source_url": src.get("url"), "source_tier": src.get("tier", 1),
+            "evidence_status": "official_pricing", "confidence": "verified",
+            "note": "取官方页面不同实例规模中展示的每GPU小时最低价；不含税，不代表任一区域实时可用性。",
+            "tags": ["automated", "official", "on_demand"]
+        })
+    return out
 
 
 def _gpu_state(

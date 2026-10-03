@@ -29,6 +29,9 @@ import scripts.collect_token_pricing as _token  # noqa: E402
 import scripts.collect_gpu_pricing as _gpu  # noqa: E402
 import scripts.collect_news as _news  # noqa: E402
 import scripts.collect_business_metrics as _business  # noqa: E402
+import scripts.collect_model_market_pricing as _model_market  # noqa: E402
+import scripts.collect_sec_fundamentals as _sec  # noqa: E402
+import scripts.collect_market_data as _market  # noqa: E402
 import scripts.build_dashboard as _dashboard  # noqa: E402
 import scripts.build_site as _site  # noqa: E402
 
@@ -61,7 +64,10 @@ def run_all(
         print("[run_all] Phase 1: 数据采集")
         for name, mod in [
             ("token_pricing", _token),
+            ("model_market_pricing", _model_market),
             ("gpu_pricing", _gpu),
+            ("sec_fundamentals", _sec),
+            ("market_data", _market),
             ("news", _news),
             ("business_metrics", _business),
         ]:
@@ -100,6 +106,43 @@ def run_all(
 
     elapsed = round(time.time() - started, 1)
     results["elapsed_seconds"] = elapsed
+
+    # 仅为真实采集运行保留审计日志；push/测试中的 --skip-fetch 不制造伪运行记录。
+    if not dry_run and not skip_fetch:
+        generated_at = _shared.now_shanghai().isoformat(timespec="seconds")
+        phase_statuses = [
+            v.get("status", "ok") for v in results["phases"].values()
+            if isinstance(v, dict)
+        ]
+        run_status = (
+            "error" if "error" in phase_statuses
+            else "partial" if "partial" in phase_statuses
+            else "ok"
+        )
+        run_record = {
+            "generated_at": generated_at,
+            "elapsed_seconds": elapsed,
+            "status": run_status,
+            "phases": {
+                name: value.get("status", "ok") if isinstance(value, dict) else "unknown"
+                for name, value in results["phases"].items()
+            },
+        }
+        _shared.append_jsonl(
+            root / "data" / "history" / "runs.jsonl",
+            run_record,
+            dedupe_keys=["generated_at"],
+        )
+
+        # dashboard 已在上一步生成；把本次运行日志注入后重建站点，确保线上立即可见。
+        dashboard_path = root / "data" / "automated" / "dashboard.json"
+        dashboard = _shared.load_json(dashboard_path, {})
+        dashboard.setdefault("history", {})["runs"] = _shared.read_jsonl(
+            root / "data" / "history" / "runs.jsonl"
+        )[-100:]
+        _shared.atomic_write(dashboard_path, dashboard)
+        _site.build_site(root, verbose=False)
+
     print(f"[run_all] 完成 ({elapsed}s)")
 
     return results

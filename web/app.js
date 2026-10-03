@@ -12,6 +12,8 @@
     token:       ["/token/", "/token", "/token/index.html"],
     business:    ["/business/", "/business", "/business/index.html"],
     compute:     ["/compute/", "/compute", "/compute/index.html"],
+    "supply-chain": ["/supply-chain/", "/supply-chain", "/supply-chain/index.html"],
+    investment:  ["/investment/", "/investment", "/investment/index.html"],
     methodology: ["/methodology/", "/methodology", "/methodology/index.html"],
   };
 
@@ -99,6 +101,11 @@
     return `<span class="${map[t] || 'tag missing'}">T${esc(t)}</span>`;
   }
 
+  function badgeStatus(s) {
+    const map = { ok: "tag verified", partial: "tag manual", skipped: "tag stale", error: "tag error" };
+    return `<span class="${map[s] || 'tag missing'}">${esc(s || "unknown")}</span>`;
+  }
+
   // ── Value renderer — never show 0 for missing ──────────────────
   function fmtValue(v, nullLabel) {
     if (v === null || v === undefined) return `<span class="tag missing">${nullLabel || "待补充"}</span>`;
@@ -138,6 +145,8 @@
         case "token":        renderToken(D); break;
         case "business":     renderBusiness(D); break;
         case "compute":      renderCompute(D); break;
+        case "supply-chain": renderSupplyChain(D); break;
+        case "investment":   renderInvestment(D); break;
         case "methodology":  renderMethodology(D); break;
         default:             renderOverview(D);
       }
@@ -199,7 +208,7 @@
 
       <!-- Factor Scores -->
       <section class="section">
-        <div class="section-head"><h2>四维度评分</h2><p>${c.confidence === 'low' ? '⚠️ 当前数据覆盖不足，评分仅为框架演示' : ''}</p></div>
+        <div class="section-head"><h2>三项产业因子 + 风险 Overlay</h2><p>${c.confidence === 'low' ? '⚠️ 当前为 proxy_v1 初步信号，不是投资结论' : ''}</p></div>
         <div class="grid-2">
           ${renderFactorCard("技术成熟度", c.factor_scores?.technology_maturity, "Token降价速度·模型能力·开源生态·多模态")}
           ${renderFactorCard("商业化兑现度", c.factor_scores?.commercialization, "ARR轨迹·Token用量·企业采纳·披露覆盖")}
@@ -244,9 +253,9 @@
   function renderSampleWarning(c) {
     return `<div class="warning-banner sample-warn">
       <span class="warning-icon">⚠️</span>
-      <div><b>当前阶段判断为框架演示，不代表真实投资结论。</b>
-      基于 sample/missing 数据（置信度: ${esc(c.confidence)}，缺失因子: ${c.missing_factor_count}）。
-      所有 sample 数据明确标记，真实数据请等待自动化采集或手动填入 data/manual/。</div>
+      <div><b>当前阶段判断为初步代理信号，不代表投资结论。</b>
+      评分方法: ${esc(c.score_method || "proxy_v1")}；置信度: ${esc(c.confidence)}；缺失因子: ${c.missing_factor_count}。
+      ${esc(c.limitations || "缺失数据保持为空，不以估算值伪装为事实。")}</div>
     </div>`;
   }
 
@@ -374,10 +383,36 @@
           </table></div>
         </div>
       </section>
+      <section class="section"><div class="section-head"><h2>历史趋势</h2><p>同一指标的每日快照；价格未变化时曲线保持水平</p></div>
+        <div class="card"><div class="controls"><select id="history-model">${records.map(r=>`<option value="${esc(r.metric_id)}">${esc(r.company_name)} · ${esc(r.model_id)}</option>`).join("")}</select><button class="button" id="download-token-csv">导出当前价格 CSV</button></div><div id="history-chart" class="history-chart"></div></div>
+      </section>
     `;
 
     wireTokenTable(records);
+    wireHistoryChart(D.history?.token_pricing || [], records);
+    document.getElementById("download-token-csv")?.addEventListener("click",()=>downloadCsv("token-pricing.csv",records));
     makeSortable("token-table");
+  }
+
+  function wireHistoryChart(history, records) {
+    const select=document.getElementById("history-model"), host=document.getElementById("history-chart");
+    if(!select||!host) return;
+    const draw=()=>{
+      const points=history.filter(x=>x.metric_id===select.value && (x.blended_cost_usd??x.value)!=null).sort((a,b)=>a.date.localeCompare(b.date));
+      if(points.length<2){host.innerHTML='<div class="empty-state">至少需要两个不同日期的有效快照后才显示趋势。</div>';return;}
+      const vals=points.map(x=>Number(x.blended_cost_usd??x.value)), min=Math.min(...vals), max=Math.max(...vals), range=max-min||1;
+      const coords=vals.map((v,i)=>`${30+i*(740/Math.max(vals.length-1,1))},${170-(v-min)/range*130}`).join(" ");
+      host.innerHTML=`<svg viewBox="0 0 800 210" role="img" aria-label="价格历史趋势"><line x1="30" y1="170" x2="770" y2="170" stroke="var(--line)"/><polyline fill="none" stroke="var(--accent)" stroke-width="3" points="${coords}"/><text x="30" y="195">${esc(points[0].date)}</text><text x="690" y="195">${esc(points.at(-1).date)}</text><text x="35" y="25">最高 ${fmtUSD(max)} · 最低 ${fmtUSD(min)}</text></svg>`;
+    };
+    select.addEventListener("change",draw); draw();
+  }
+
+  function downloadCsv(filename, rows) {
+    if(!rows.length) return;
+    const keys=["company_name","model_id","input_per_m","output_per_m","blended_cost_usd","currency","as_of_date","confidence","source_url"];
+    const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+    const csv='\ufeff'+[keys.join(","),...rows.map(r=>keys.map(k=>q(r[k])).join(","))].join("\n");
+    const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"})); a.download=filename; a.click(); URL.revokeObjectURL(a.href);
   }
 
   function renderBarChart(rows, valField, labelFn, fmtFn, cls, barCls) {
@@ -487,40 +522,41 @@
   function renderCompute(D) {
     const comp = D.compute || {};
     const gpu = comp.gpu || [];
+    const capex = comp.capex || [];
     const sources = D.sources || [];
     const gpuSources = sources.filter(s => s.kind && (s.kind.includes("gpu") || s.kind.includes("rental")));
 
     app.innerHTML = `
       <section class="section">
-        <div class="section-head"><h2>GPU 价格 / 数据源状态</h2><p>第一版记录来源抓取状态与指纹。价格解析功能在后续版本增强。</p></div>
+        <div class="section-head"><h2>GPU 按需价格</h2><p>统一为 USD / GPU·小时；不同实例规模、区域和可用性不能直接等同</p></div>
 
         <div class="warning-banner info">
           <span class="warning-icon">📡</span>
-          <div>GPU 价格解析功能待增强。当前仅展示数据源抓取状态和页面变化检测。真实 GPU 价格数据请在 data/manual/ 中维护。</div>
+          <div>优先展示可重复解析的官方按需价；无法结构化的页面仍保留状态监控。正式采购成本需核对区域、税费和合约折扣。</div>
         </div>
 
         ${gpu.length ? `<div class="card" style="margin-bottom:14px">
-          <h3>GPU 源状态 (${gpu.length})</h3>
+          <h3>GPU 价格记录 (${gpu.filter(g => g.value != null).length})</h3>
+          ${renderBarChart(gpu.filter(g => g.value != null), "value", r => `${r.provider || r.source_name} · ${r.gpu_model || r.metric_name}`, r => fmtUSD(r.value, 2))}
           <div class="table-wrap"><table>
-            <thead><tr><th>来源</th><th>URL</th><th>状态</th><th>检查时间</th><th>变化</th></tr></thead>
+            <thead><tr><th>平台</th><th>GPU</th><th>显存</th><th>USD/GPU·h</th><th>口径</th><th>时间</th><th>来源</th></tr></thead>
             <tbody>${gpu.map(g => `<tr>
-              <td><strong>${esc(g.metric_name)}</strong></td>
-              <td>${sourceLink(g.source_url, g.source_url?.slice(0,50) + "…")}</td>
-              <td>${badgeEvidence(g.evidence_status)}</td>
-              <td>${esc(fmtDateShort(g.collected_at))}</td>
-              <td>${badgeFreshness(g.freshness)}</td>
+              <td><strong>${esc(g.provider || g.source_name)}</strong></td>
+              <td>${esc(g.gpu_model || g.metric_name)}</td><td>${g.vram_gb ? esc(g.vram_gb) + " GB" : "—"}</td>
+              <td class="num">${g.value != null ? fmtUSD(g.value, 2) : "—"}</td><td>${esc(g.price_type || g.unit || "—")}</td>
+              <td>${esc(fmtDateShort(g.as_of_date || g.collected_at))}</td><td>${sourceLink(g.source_url, g.source_name)}</td>
             </tr>`).join("")}</tbody>
           </table></div>
         </div>` : `<div class="empty-state" style="margin-bottom:14px"><h3>暂无 GPU 源状态</h3><p>请先运行 python scripts/collect_gpu_pricing.py --project-root .</p></div>`}
       </section>
 
-      <!-- CAPEX placeholder -->
       <section class="section">
-        <div class="section-head"><h2>云厂商 CAPEX</h2></div>
-        <div class="warning-banner missing-data">
-          <span class="warning-icon">📊</span>
-          <div><b>CAPEX 模块为第二期深化方向。</b>当前仅保留数据接口。真实 CAPEX 数据将在第二期加入 data/manual/supply_chain_finance.json 和自动化采集流程。</div>
-        </div>
+        <div class="section-head"><h2>云厂商 CAPEX</h2><p>SEC 10-K XBRL 实际值；公司整体CAPEX，不等同于纯AI投入</p></div>
+        ${capex.length ? `<div class="card">
+          ${renderBarChart(capex.slice().sort((a,b)=>(b.value||0)-(a.value||0)), "value", r => `${r.company_name} · ${r.period}`, r => fmtUSD(r.value, 1)+"B")}
+          <div class="table-wrap"><table><thead><tr><th>公司</th><th>期间</th><th>CAPEX</th><th>XBRL口径</th><th>截至</th><th>来源</th></tr></thead><tbody>
+          ${capex.map(r=>`<tr><td><strong>${esc(r.company_name)}</strong></td><td>${esc(r.period)}</td><td class="num">${fmtUSD(r.value,3)}B</td><td>${esc(r.xbrl_concept||"—")}</td><td>${esc(r.as_of_date)}</td><td>${sourceLink(r.filing_url||r.source_url,"SEC filing")}</td></tr>`).join("")}
+          </tbody></table></div></div>` : `<div class="empty-state"><h3>等待 SEC 数据</h3><p>下一次联网采集将自动补齐四大CSP年度CAPEX。</p></div>`}
       </section>
 
       <!-- Source Status for GPU-related sources -->
@@ -537,7 +573,57 @@
   }
 
   // ═══════════════════════════════════════════════════════════════
-  // TAB 5: Methodology & Data
+  // TAB 5: AI Supply Chain
+  // ═══════════════════════════════════════════════════════════════
+  function renderSupplyChain(D) {
+    const sc = D.supply_chain || {};
+    const rows = sc.records || [];
+    const latest = {};
+    rows.forEach(r => { if (!latest[r.company_id] || r.as_of_date > latest[r.company_id].as_of_date) latest[r.company_id] = r; });
+    const current = Object.values(latest);
+    app.innerHTML = `
+      <section class="section"><div class="section-head"><h2>AI 产业链结构</h2><p>需求 → 设计 → 制造/设备 → 系统/云 → 模型与应用</p></div>
+        <div class="chain-flow">
+          <div><b>模型与应用</b><span>OpenAI · Anthropic · 国内模型厂商</span></div><i>←</i>
+          <div><b>云与系统</b><span>Microsoft · Amazon · Google · Meta</span></div><i>←</i>
+          <div><b>GPU / ASIC / 网络</b><span>NVIDIA · AMD · Broadcom</span></div><i>←</i>
+          <div><b>制造与设备</b><span>TSMC · ASML · 封装 · HBM</span></div>
+        </div>
+      </section>
+      <section class="section"><div class="section-head"><h2>核心公司财务趋势</h2><p>${esc(sc.note || "")}</p></div>
+        <div class="kpi-grid">${kpiCard("SEC财务记录", rows.length)}${kpiCard("覆盖公司", current.length)}${kpiCard("最新营收最高", current.length ? fmtUSD(Math.max(...current.map(r=>r.value||0)),1)+"B" : "—")}${kpiCard("平均毛利率", current.filter(r=>r.gross_margin_pct!=null).length ? fmtNum(current.filter(r=>r.gross_margin_pct!=null).reduce((s,r)=>s+r.gross_margin_pct,0)/current.filter(r=>r.gross_margin_pct!=null).length,1)+"%" : "—")}</div>
+        <div class="card">${renderBarChart(current.slice().sort((a,b)=>(b.value||0)-(a.value||0)),"value",r=>`${r.company_name} · ${r.period}`,r=>fmtUSD(r.value,1)+"B")}
+        <div class="table-wrap"><table id="supply-table"><thead><tr><th data-key="company_name">公司</th><th data-key="period">期间</th><th data-key="value">营收 USD B</th><th data-key="gross_margin_pct">毛利率</th><th>口径</th><th>来源</th></tr></thead><tbody>
+        ${rows.map(r=>`<tr><td><strong>${esc(r.company_name)}</strong></td><td>${esc(r.period)}</td><td class="num">${fmtNum(r.value,3)}</td><td class="num">${r.gross_margin_pct==null?"—":fmtNum(r.gross_margin_pct,1)+"%"}</td><td>${esc(r.xbrl_concept||"—")}</td><td>${sourceLink(r.source_url,"SEC Companyfacts")}</td></tr>`).join("")}
+        </tbody></table></div></div>
+      </section>`;
+    makeSortable("supply-table");
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // TAB 6: Investment Research
+  // ═══════════════════════════════════════════════════════════════
+  function renderInvestment(D) {
+    const inv = D.investment || {};
+    const market = inv.market || {};
+    const rows = market.records || [];
+    const watch = inv.watchlist || {};
+    const all = [...(watch.foreign || []), ...(watch.domestic || [])];
+    const bySymbol = Object.fromEntries(rows.map(r=>[r.symbol,r]));
+    app.innerHTML = `
+      <div class="warning-banner info"><span class="warning-icon">🧭</span><div><b>资产配置信号层。</b>价格趋势只反映市场行为，需与产业周期、盈利和估值共同判断；本页不构成投资建议。</div></div>
+      <section class="section"><div class="section-head"><h2>AI 资产观察池</h2><p>免费日线来自 Yahoo Finance；交易前应以持牌行情源复核</p></div>
+        <div class="kpi-grid">${kpiCard("观察标的",all.length)}${kpiCard("行情覆盖",rows.length)}${kpiCard("近1月上涨",rows.filter(r=>(r.return_1m_pct||0)>0).length)}${kpiCard("高波动标的",rows.filter(r=>(r.volatility_1y_pct||0)>50).length)}</div>
+        <div class="card"><div class="table-wrap"><table id="market-table"><thead><tr><th data-key="symbol">代码</th><th data-key="name">公司/ETF</th><th>产业角色</th><th data-key="close">收盘</th><th data-key="return_1w_pct">1周</th><th data-key="return_1m_pct">1月</th><th data-key="return_3m_pct">3月</th><th data-key="return_ytd_pct">YTD</th><th data-key="drawdown_52w_pct">距52周高点</th><th data-key="volatility_1y_pct">年化波动</th><th>来源</th></tr></thead><tbody>
+        ${all.map(w=>{const r=bySymbol[w.symbol]||{}; return `<tr><td><strong>${esc(w.symbol)}</strong></td><td>${esc(w.name)}</td><td>${esc(w.role)}</td><td class="num">${r.close==null?"—":fmtNum(r.close,2)} ${esc(r.currency||"")}</td><td class="num">${fmtPct(r.return_1w_pct)}</td><td class="num">${fmtPct(r.return_1m_pct)}</td><td class="num">${fmtPct(r.return_3m_pct)}</td><td class="num">${fmtPct(r.return_ytd_pct)}</td><td class="num">${fmtPct(r.drawdown_52w_pct)}</td><td class="num">${r.volatility_1y_pct==null?"—":fmtNum(r.volatility_1y_pct,1)+"%"}</td><td>${r.source_url?sourceLink(r.source_url,"Yahoo Finance"):badgeConfidence("missing")}</td></tr>`}).join("")}
+        </tbody></table></div></div>
+      </section>
+      <section class="section"><article class="card"><h3>仍需专业数据接口的字段</h3><p>一致预期盈利、Forward P/E、EV/EBITDA、ETF申赎资金流和机构持仓变化。目前保持缺失，不使用网页猜测值替代。</p></article></section>`;
+    makeSortable("market-table");
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // TAB 7: Methodology & Data
   // ═══════════════════════════════════════════════════════════════
   function renderMethodology(D) {
     const h = D.health || {};
@@ -545,6 +631,7 @@
     const methods = D.methodology || {};
     const o = D.overview || {};
     const c = o.cycle || {};
+    const runs = (D.history?.runs || []).slice(-10).reverse();
 
     app.innerHTML = `
       <section class="section">
@@ -611,6 +698,10 @@
             <div>${kpiCard("定价缺失", h.pricing_missing)}</div>
             <div>${kpiCard("商业指标", h.business_total)}</div>
             <div>${kpiCard("商业缺失", h.business_missing)}</div>
+            <div>${kpiCard("GPU价格", h.gpu_records)}</div>
+            <div>${kpiCard("CAPEX记录", h.capex_records)}</div>
+            <div>${kpiCard("产业链财务", h.supply_chain_records)}</div>
+            <div>${kpiCard("行情覆盖", h.market_records)}</div>
           </div>
           ${h.warnings?.length ? `<div class="warning-banner info" style="margin-top:12px"><span class="warning-icon">ℹ️</span><div>${h.warnings.map(w => esc(w)).join("<br>")}</div></div>` : ""}
         </div>
@@ -638,6 +729,7 @@
           <p><strong>本地预览</strong>: <code>cd _site && python -m http.server 8080</code></p>
           <p><strong>最新快照</strong>: ${esc(m.generated_at)}</p>
           <p><strong>数据策略</strong>: ${esc(m.data_policy)}</p>
+          ${runs.length ? `<div class="table-wrap" style="margin-top:16px"><table><thead><tr><th>运行时间</th><th>状态</th><th>耗时</th><th>采集阶段</th></tr></thead><tbody>${runs.map(r=>`<tr><td>${esc(fmtDate(r.generated_at))}</td><td>${badgeStatus(r.status)}</td><td>${esc(r.elapsed_seconds)}s</td><td>${esc(Object.entries(r.phases||{}).map(([k,v])=>`${k}:${v}`).join(" · "))}</td></tr>`).join("")}</tbody></table></div>` : `<p class="empty-state">尚无完整网络采集运行日志；下一次定时或手动全量更新后自动生成。</p>`}
         </div>
       </section>
     `;

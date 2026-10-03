@@ -224,6 +224,39 @@
       "status": "active",
       "listed": false,
       "description": "上海AI Lab，InternLM系列开源模型的发布者"
+    },
+    {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "name_zh": "英伟达",
+      "region": "overseas",
+      "type": "semiconductor",
+      "status": "active",
+      "listed": true,
+      "ticker": "NVDA",
+      "description": "AI加速器、网络与系统平台核心供应商"
+    },
+    {
+      "id": "amd",
+      "name": "AMD",
+      "name_zh": "AMD",
+      "region": "overseas",
+      "type": "semiconductor",
+      "status": "active",
+      "listed": true,
+      "ticker": "AMD",
+      "description": "CPU、GPU与数据中心加速器供应商"
+    },
+    {
+      "id": "broadcom",
+      "name": "Broadcom",
+      "name_zh": "博通",
+      "region": "overseas",
+      "type": "semiconductor",
+      "status": "active",
+      "listed": true,
+      "ticker": "AVGO",
+      "description": "AI网络与定制加速器供应商"
     }
   ]
 }

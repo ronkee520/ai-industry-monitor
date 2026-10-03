@@ -10,41 +10,41 @@
       "metric_id": "capex_total::microsoft::fy2024",
       "metric_name": "Microsoft FY2024 CAPEX",
       "metric_category": "capex",
-      "value": null,
+      "value": 44.477,
       "unit": "USD_billion",
       "currency": "USD",
       "company_id": "microsoft",
       "region": "overseas",
       "period": "FY2024",
-      "as_of_date": "2026-07-29",
-      "collected_at": "2026-07-29T00:00:00+08:00",
-      "source_name": "待确认",
-      "source_url": "",
+      "as_of_date": "2024-06-30",
+      "collected_at": "2026-10-03T00:00:00+08:00",
+      "source_name": "Microsoft 2025 Annual Report",
+      "source_url": "https://www.microsoft.com/investor/reports/ar25/index.html",
       "source_tier": 1,
-      "evidence_status": "manual_required",
-      "confidence": "missing",
-      "note": "⚠️ 需要从Microsoft年报/季报中提取",
-      "tags": ["missing", "capex"]
+      "evidence_status": "company_disclosure",
+      "confidence": "verified",
+      "note": "现金流量表 Additions to property and equipment；公司整体口径。",
+      "tags": ["verified", "capex"]
     },
     {
-      "metric_id": "capex_total::microsoft::fy2025e",
-      "metric_name": "Microsoft FY2025E CAPEX",
+      "metric_id": "capex_total::microsoft::fy2025",
+      "metric_name": "Microsoft FY2025 CAPEX",
       "metric_category": "capex",
-      "value": null,
+      "value": 64.551,
       "unit": "USD_billion",
       "currency": "USD",
       "company_id": "microsoft",
       "region": "overseas",
-      "period": "FY2025E",
-      "as_of_date": "2026-07-29",
-      "collected_at": "2026-07-29T00:00:00+08:00",
-      "source_name": "待确认",
-      "source_url": "",
+      "period": "FY2025",
+      "as_of_date": "2025-06-30",
+      "collected_at": "2026-10-03T00:00:00+08:00",
+      "source_name": "Microsoft 2025 Annual Report",
+      "source_url": "https://www.microsoft.com/investor/reports/ar25/index.html",
       "source_tier": 1,
-      "evidence_status": "manual_required",
-      "confidence": "missing",
-      "note": "⚠️ 需要从公司指引中提取",
-      "tags": ["missing", "capex"]
+      "evidence_status": "company_disclosure",
+      "confidence": "verified",
+      "note": "现金流量表 Additions to property and equipment；公司整体口径。",
+      "tags": ["verified", "capex"]
     },
     {
       "metric_id": "capex_total::alphabet::fy2024",
@@ -105,8 +105,97 @@
       "confidence": "missing",
       "note": "⚠️ 需要从Meta年报/季报中提取",
       "tags": ["missing", "capex"]
+    },
+    {
+      "metric_id": "capex_total::alphabet::fy2025",
+      "metric_name": "Alphabet FY2025 CAPEX",
+      "metric_category": "capex",
+      "value": 91.0,
+      "unit": "USD_billion",
+      "currency": "USD",
+      "company_id": "google",
+      "region": "overseas",
+      "period": "FY2025",
+      "as_of_date": "2025-12-31",
+      "collected_at": "2026-10-03T00:00:00+08:00",
+      "source_name": "Alphabet 2025 Q4 Earnings Call",
+      "source_url": "https://abc.xyz/investor/events/event-details/2026/2025-Q4-Earnings-Call-2026-Dr_C033hS6/default.aspx",
+      "source_tier": 1,
+      "evidence_status": "company_disclosure",
+      "confidence": "verified",
+      "note": "公司CFO披露2025年CAPEX约910亿美元；公司整体口径。",
+      "tags": ["verified", "capex"]
+    },
+    {
+      "metric_id": "capex_total::meta::fy2025",
+      "metric_name": "Meta FY2025 CAPEX",
+      "metric_category": "capex",
+      "value": 72.22,
+      "unit": "USD_billion",
+      "currency": "USD",
+      "company_id": "meta",
+      "region": "overseas",
+      "period": "FY2025",
+      "as_of_date": "2025-12-31",
+      "collected_at": "2026-10-03T00:00:00+08:00",
+      "source_name": "Meta FY2025 Results",
+      "source_url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Fourth-Quarter-and-Full-Year-2025-Results/default.aspx",
+      "source_tier": 1,
+      "evidence_status": "company_disclosure",
+      "confidence": "verified",
+      "note": "包含融资租赁本金支付的资本开支；公司整体口径。",
+      "tags": ["verified", "capex"]
     }
   ],
-
-  "_semiconductor_records_note": "半导体公司(NVIDIA/AMD/Broadcom/TSMC/ASML)的财务数据将在第二期添加。结构同通用指标格式。"
+  "supply_chain_records": [
+    {
+      "metric_id": "revenue::nvidia::fy2025", "metric_name": "NVIDIA FY2025 营收", "metric_category": "semiconductor",
+      "value": 130.497, "unit": "USD_billion", "currency": "USD", "company_id": "nvidia", "region": "overseas",
+      "period": "FY2025", "as_of_date": "2025-01-26", "collected_at": "2026-10-03T00:00:00+08:00",
+      "source_name": "NVIDIA FY2025 Results", "source_url": "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Financial-Results-for-Fourth-Quarter-and-Fiscal-2025/",
+      "source_tier": 1, "evidence_status": "company_disclosure", "confidence": "verified", "gross_margin_pct": 75.0,
+      "note": "GAAP公司整体营收和毛利率；财年截至2025年1月。", "tags": ["verified", "semiconductor"]
+    },
+    {
+      "metric_id": "revenue::nvidia::fy2026", "metric_name": "NVIDIA FY2026 营收", "metric_category": "semiconductor",
+      "value": 215.938, "unit": "USD_billion", "currency": "USD", "company_id": "nvidia", "region": "overseas",
+      "period": "FY2026", "as_of_date": "2026-01-25", "collected_at": "2026-10-03T00:00:00+08:00",
+      "source_name": "NVIDIA FY2026 Results", "source_url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Fourth-Quarter-and-Fiscal-2026/",
+      "source_tier": 1, "evidence_status": "company_disclosure", "confidence": "verified", "gross_margin_pct": 71.1,
+      "note": "GAAP公司整体营收和毛利率；财年截至2026年1月。", "tags": ["verified", "semiconductor"]
+    },
+    {
+      "metric_id": "revenue::amd::fy2024", "metric_name": "AMD FY2024 营收", "metric_category": "semiconductor",
+      "value": 25.785, "unit": "USD_billion", "currency": "USD", "company_id": "amd", "region": "overseas",
+      "period": "FY2024", "as_of_date": "2024-12-28", "collected_at": "2026-10-03T00:00:00+08:00",
+      "source_name": "AMD FY2025 Results", "source_url": "https://ir.amd.com/news-events/press-releases/detail/1276/amd-reports-fourth-quarter-and-full-year-2025-financial-results",
+      "source_tier": 1, "evidence_status": "company_disclosure", "confidence": "verified", "gross_margin_pct": 49.0,
+      "note": "GAAP公司整体营收和毛利率。", "tags": ["verified", "semiconductor"]
+    },
+    {
+      "metric_id": "revenue::amd::fy2025", "metric_name": "AMD FY2025 营收", "metric_category": "semiconductor",
+      "value": 34.639, "unit": "USD_billion", "currency": "USD", "company_id": "amd", "region": "overseas",
+      "period": "FY2025", "as_of_date": "2025-12-27", "collected_at": "2026-10-03T00:00:00+08:00",
+      "source_name": "AMD FY2025 Results", "source_url": "https://ir.amd.com/news-events/press-releases/detail/1276/amd-reports-fourth-quarter-and-full-year-2025-financial-results",
+      "source_tier": 1, "evidence_status": "company_disclosure", "confidence": "verified", "gross_margin_pct": 50.0,
+      "note": "GAAP公司整体营收和毛利率。", "tags": ["verified", "semiconductor"]
+    },
+    {
+      "metric_id": "revenue::broadcom::fy2024", "metric_name": "Broadcom FY2024 营收", "metric_category": "semiconductor",
+      "value": 51.574, "unit": "USD_billion", "currency": "USD", "company_id": "broadcom", "region": "overseas",
+      "period": "FY2024", "as_of_date": "2024-11-03", "collected_at": "2026-10-03T00:00:00+08:00",
+      "source_name": "Broadcom FY2025 Results", "source_url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-fourth-quarter-and-fiscal-year-2025",
+      "source_tier": 1, "evidence_status": "company_disclosure", "confidence": "verified", "gross_margin_pct": null,
+      "note": "GAAP公司整体营收；包含半导体与基础设施软件业务。", "tags": ["verified", "semiconductor"]
+    },
+    {
+      "metric_id": "revenue::broadcom::fy2025", "metric_name": "Broadcom FY2025 营收", "metric_category": "semiconductor",
+      "value": 63.887, "unit": "USD_billion", "currency": "USD", "company_id": "broadcom", "region": "overseas",
+      "period": "FY2025", "as_of_date": "2025-11-02", "collected_at": "2026-10-03T00:00:00+08:00",
+      "source_name": "Broadcom FY2025 Results", "source_url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-fourth-quarter-and-fiscal-year-2025",
+      "source_tier": 1, "evidence_status": "company_disclosure", "confidence": "verified", "gross_margin_pct": null,
+      "note": "GAAP公司整体营收；包含半导体与基础设施软件业务。", "tags": ["verified", "semiconductor"]
+    }
+  ],
+  "_semiconductor_records_note": "先覆盖NVIDIA、AMD、Broadcom；TSMC/ASML与国内映射后续通过持牌/交易所接口补充。"
 }

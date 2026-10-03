@@ -59,6 +59,8 @@ jobs:
 
       # ── 4. Run data pipeline ─────────────────────────────
       - name: Run data pipeline
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
         run: |
           if [[ "${{ github.event.inputs.skip_fetch }}" == "true" ]]; then
             echo "skip_fetch=true — 跳过网络采集"
@@ -82,6 +84,8 @@ jobs:
             "_site/token/index.html"
             "_site/business/index.html"
             "_site/compute/index.html"
+            "_site/supply-chain/index.html"
+            "_site/investment/index.html"
             "_site/methodology/index.html"
             "_site/api/index.json"
             "_site/api/dashboard.json"
@@ -89,6 +93,9 @@ jobs:
             "_site/api/token-pricing.json"
             "_site/api/business.json"
             "_site/api/gpu-pricing.json"
+            "_site/api/supply-chain.json"
+            "_site/api/investment.json"
+            "_site/api/history.json"
             "_site/api/health.json"
             "_site/.nojekyll"
             "_site/app.js"

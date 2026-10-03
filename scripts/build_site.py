@@ -38,6 +38,8 @@ SUB_PAGES = {
     "token":        "../",
     "business":     "../",
     "compute":      "../",
+    "supply-chain": "../",
+    "investment":   "../",
     "methodology":  "../",
 }
 
@@ -137,6 +139,9 @@ def _write_api(site_dir: Path, dashboard: dict[str, Any], health: dict[str, Any]
         "token-pricing.json":  {"meta": meta, **dashboard.get("token_pricing", {})},
         "business.json":       {"meta": meta, **dashboard.get("business", {})},
         "gpu-pricing.json":    {"meta": meta, **dashboard.get("compute", {})},
+        "supply-chain.json":   {"meta": meta, **dashboard.get("supply_chain", {})},
+        "investment.json":     {"meta": meta, **dashboard.get("investment", {})},
+        "history.json":        {"meta": meta, **dashboard.get("history", {})},
         "health.json":         health,
     }
 
@@ -154,6 +159,9 @@ def _write_api(site_dir: Path, dashboard: dict[str, Any], health: dict[str, Any]
             {"path": "./token-pricing.json", "description": "Token 定价数据"},
             {"path": "./business.json",      "description": "商业化指标（ARR/收入/融资）"},
             {"path": "./gpu-pricing.json",   "description": "GPU 定价 + CAPEX"},
+            {"path": "./supply-chain.json",  "description": "AI产业链财务指标"},
+            {"path": "./investment.json",    "description": "投资标的与市场数据"},
+            {"path": "./history.json",       "description": "指标历史快照"},
             {"path": "./health.json",        "description": "系统健康报告"},
         ],
         "note": "GitHub Pages 静态 JSON。sample/missing 数据均有明确标记。",
