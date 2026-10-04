@@ -65,7 +65,8 @@ class TestBuildSite(unittest.TestCase):
 
     def test_site_wide_watermark_is_in_shared_styles(self):
         content = (self.site_dir / "styles.css").read_text(encoding="utf-8")
-        self.assertIn('content: "SUSTech Ren Keyi"', content)
+        self.assertIn("SUSTech%20Ren%20Keyi", content)
+        self.assertIn("background-repeat: repeat", content)
         self.assertIn("pointer-events: none", content)
 
     def test_history_chart_handles_flat_and_single_point_series(self):
@@ -75,6 +76,14 @@ class TestBuildSite(unittest.TestCase):
         self.assertIn("history-point", content)
         self.assertIn("仅 1 个有效快照", content)
         self.assertIn("价格未变", content)
+        self.assertIn("history-range", content)
+        self.assertIn("coverageDays", content)
+
+    def test_price_history_uses_daily_schedule_and_extended_retention(self):
+        dashboard_builder = (self.root / "scripts" / "build_dashboard.py").read_text(encoding="utf-8")
+        workflow = (self.root / ".github" / "workflows" / "update-deploy.yml").read_text(encoding="utf-8")
+        self.assertIn('price_history[-20000:]', dashboard_builder)
+        self.assertIn('cron: "0 1 * * *"', workflow)
 
     def test_favicon_copied(self):
         self.assertTrue((self.site_dir / "favicon.svg").exists())

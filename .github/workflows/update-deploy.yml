@@ -2,10 +2,8 @@ name: Update & Deploy AI Industry Monitor
 
 on:
   schedule:
-    # 北京时间周一 09:00 (UTC+8 → UTC 01:00)
-    - cron: "0 1 * * 1"
-    # 北京时间周五 09:00
-    - cron: "0 1 * * 5"
+    # 北京时间每日 09:00 (UTC+8 → UTC 01:00)，持续积累价格历史曲线。
+    - cron: "0 1 * * *"
 
   workflow_dispatch:
     inputs:
@@ -116,7 +114,7 @@ jobs:
 
           # 检查模板变量
           echo "检查模板变量替换..."
-          if grep -r '{{ROOT_PREFIX}}\|{{ASSET_PREFIX}}' _site/ -l 2>/dev/null; then
+          if grep -r '{{ROOT_PREFIX}}\|{{ASSET_PREFIX}}\|{{ASSET_VERSION}}' _site/ -l 2>/dev/null; then
             echo "ERROR: 存在未替换的模板变量"
             exit 1
           fi

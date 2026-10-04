@@ -139,7 +139,7 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
             "title": "AI Industry Monitor",
             "subtitle": "AI产业与大模型商业化监测 Dashboard",
             "generated_at": generated_at,
-            "schedule": "每周一、周五 09:00 (Asia/Shanghai)",
+            "schedule": "每日 09:00 (Asia/Shanghai)",
             "data_policy": "公开可引用数据。sample/missing/manual_required 标记明确。",
             "fx": {"cny_per_usd": fx, "note": "仅用于跨币种横向比较"},
         },
@@ -183,7 +183,8 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
             "note": "行情与估值接口为可选增强；未配置API时不输出伪数据。"
         },
         "history": {
-            "token_pricing": price_history[-1000:],
+            # 约可保留 30 个模型每日快照 22 个月，避免长期曲线被全局截断。
+            "token_pricing": price_history[-20000:],
             "business": business_history[-500:],
             "gpu_pricing": _shared.read_jsonl(root / "data" / "history" / "gpu_pricing.jsonl")[-500:],
             "cycle_scores": _shared.read_jsonl(root / "data" / "history" / "cycle_scores.jsonl")[-200:],

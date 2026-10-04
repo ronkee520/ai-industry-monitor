@@ -162,7 +162,7 @@ def _write_api(site_dir: Path, dashboard: dict[str, Any], health: dict[str, Any]
         "name": "AI Industry Monitor API",
         "version": "1.0.0",
         "snapshot_at": meta.get("generated_at", ""),
-        "refresh_schedule": "每周一、周五 09:00 (Asia/Shanghai)",
+        "refresh_schedule": "每日 09:00 (Asia/Shanghai)",
         "endpoints": [
             {"path": "./dashboard.json",     "description": "全量快照（所有模块）"},
             {"path": "./overview.json",      "description": "总览 + AI Cycle 评分 + 健康"},
@@ -212,7 +212,7 @@ def _write_placeholder(site_dir: Path, dashboard: dict[str, Any]) -> None:
 def _placeholder_dashboard() -> dict[str, Any]:
     now = _shared.now_shanghai().isoformat(timespec="seconds")
     return {
-        "meta": {"title": "AI Industry Monitor", "generated_at": now, "schedule": "每周一、周五 09:00"},
+        "meta": {"title": "AI Industry Monitor", "generated_at": now, "schedule": "每日 09:00"},
         "kpis": {"companies": 21, "models_with_pricing": 0, "source_ok": 0, "source_total": 0, "arr_disclosures": 0},
         "overview": {"cycle": {"stage_label": "数据不足", "industry_development_score": None, "risk_crowding_score": None, "confidence": "missing", "missing_factor_count": 3}},
         "token_pricing": {"records": []}, "business": {"records": []}, "compute": {"gpu": []},
