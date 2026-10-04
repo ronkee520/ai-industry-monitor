@@ -53,6 +53,22 @@ body {
   -webkit-font-smoothing: antialiased;
   font-variant-numeric: tabular-nums;
 }
+body::after {
+  content: "SUSTech Ren Keyi";
+  position: fixed;
+  right: 22px;
+  bottom: 16px;
+  z-index: 40;
+  color: var(--ink-strong);
+  opacity: .12;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
 a { color: var(--accent); text-decoration: none; }
 a:hover { color: var(--accent-dark); }
 
@@ -277,7 +293,13 @@ td .source-link { font-size: 11px; }
 .button { border:1px solid var(--accent); background:linear-gradient(135deg,var(--accent),#3157d9); color:#fff; border-radius:9px; padding:8px 13px; font:inherit; font-size:11px; font-weight:700; cursor:pointer; box-shadow:0 5px 12px rgba(59,109,246,.18); }
 .button:hover { background:var(--accent-dark); transform:translateY(-1px); }
 .history-chart { min-height:210px; }
-.history-chart svg { width:100%; max-height:240px; font-size:11px; fill:var(--muted); }
+.history-chart svg { width:100%; max-height:250px; font-size:11px; fill:var(--muted); overflow:visible; }
+.history-chart .history-grid { stroke:var(--line-soft); stroke-width:1; }
+.history-chart .history-line { fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+.history-chart .history-point { fill:var(--accent); stroke:var(--card); stroke-width:3; transition:r .15s ease; }
+.history-chart .history-point:hover { r:7; }
+.history-chart .history-summary { fill:var(--muted); font-weight:700; }
+.history-chart .history-axis-label, .history-chart .history-date { fill:var(--muted); }
 .controls input:focus, .controls select:focus { outline: none; border-color: var(--accent); }
 
 /* ── Source Health Grid ─────────────────────────────────────── */

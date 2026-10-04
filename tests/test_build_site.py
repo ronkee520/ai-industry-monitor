@@ -63,6 +63,19 @@ class TestBuildSite(unittest.TestCase):
     def test_styles_css_copied(self):
         self.assertTrue((self.site_dir / "styles.css").exists())
 
+    def test_site_wide_watermark_is_in_shared_styles(self):
+        content = (self.site_dir / "styles.css").read_text(encoding="utf-8")
+        self.assertIn('content: "SUSTech Ren Keyi"', content)
+        self.assertIn("pointer-events: none", content)
+
+    def test_history_chart_handles_flat_and_single_point_series(self):
+        """不变价格不能与横轴重合，单个快照也应显示为数据点。"""
+        content = (self.site_dir / "app.js").read_text(encoding="utf-8")
+        self.assertIn("span===0", content)
+        self.assertIn("history-point", content)
+        self.assertIn("仅 1 个有效快照", content)
+        self.assertIn("价格未变", content)
+
     def test_favicon_copied(self):
         self.assertTrue((self.site_dir / "favicon.svg").exists())
 

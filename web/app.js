@@ -367,7 +367,7 @@
         </div>
       </section>
       <section class="section"><div class="section-head"><h2>历史趋势</h2><p>同一指标的每日快照；价格未变化时曲线保持水平</p></div>
-        <div class="card"><div class="controls"><select id="history-model">${records.map(r=>`<option value="${esc(r.metric_id)}">${esc(r.company_name)} · ${esc(r.model_id)}</option>`).join("")}</select><button class="button" id="download-token-csv">导出当前价格 CSV</button></div><div id="history-chart" class="history-chart"></div></div>
+        <div class="card"><div class="controls"><select id="history-model">${records.map(r=>`<option value="${esc(r.metric_id)}">${esc(r.company_name)} · ${esc(r.model_id)}${r.tier === "aggregator_route" ? " · 路由市场" : r.source_tier === 1 ? " · 官方" : ""}</option>`).join("")}</select><button class="button" id="download-token-csv">导出当前价格 CSV</button></div><div id="history-chart" class="history-chart"></div></div>
       </section>
     `;
 
@@ -381,11 +381,39 @@
     const select=document.getElementById("history-model"), host=document.getElementById("history-chart");
     if(!select||!host) return;
     const draw=()=>{
-      const points=history.filter(x=>x.metric_id===select.value && (x.blended_cost_usd??x.value)!=null).sort((a,b)=>a.date.localeCompare(b.date));
-      if(points.length<2){host.innerHTML='<div class="empty-state">至少需要两个不同日期的有效快照后才显示趋势。</div>';return;}
-      const vals=points.map(x=>Number(x.blended_cost_usd??x.value)), min=Math.min(...vals), max=Math.max(...vals), range=max-min||1;
-      const coords=vals.map((v,i)=>`${30+i*(740/Math.max(vals.length-1,1))},${170-(v-min)/range*130}`).join(" ");
-      host.innerHTML=`<svg viewBox="0 0 800 210" role="img" aria-label="价格历史趋势"><line x1="30" y1="170" x2="770" y2="170" stroke="var(--line)"/><polyline fill="none" stroke="var(--accent)" stroke-width="3" points="${coords}"/><text x="30" y="195">${esc(points[0].date)}</text><text x="690" y="195">${esc(points.at(-1).date)}</text><text x="35" y="25">最高 ${fmtUSD(max)} · 最低 ${fmtUSD(min)}</text></svg>`;
+      // 同一天只保留最后一条有效记录，避免重复点让曲线产生误导。
+      const byDate=new Map();
+      history.forEach(x=>{
+        const value=Number(x.blended_cost_usd??x.value);
+        if(x.metric_id===select.value && x.date && Number.isFinite(value)) byDate.set(x.date,{...x,_value:value});
+      });
+      const points=[...byDate.values()].sort((a,b)=>a.date.localeCompare(b.date));
+      if(!points.length){host.innerHTML='<div class="empty-state">该模型目前没有有效价格快照。</div>';return;}
+
+      const vals=points.map(x=>x._value), min=Math.min(...vals), max=Math.max(...vals), span=max-min;
+      const left=64, right=770, top=46, bottom=178;
+      // 价格不变时给纵轴一个对称范围，让折线显示在图表中央而不是与横轴重合。
+      const padding=span===0 ? Math.max(Math.abs(max)*0.08,0.1) : span*0.15;
+      const yMin=min-padding, yMax=max+padding;
+      const xAt=i=>points.length===1 ? (left+right)/2 : left+i*((right-left)/(points.length-1));
+      const yAt=v=>bottom-(v-yMin)/(yMax-yMin)*(bottom-top);
+      const coords=points.map((p,i)=>`${xAt(i).toFixed(1)},${yAt(p._value).toFixed(1)}`).join(" ");
+      const gridValues=[yMax,(yMin+yMax)/2,yMin];
+      const grid=gridValues.map(v=>{
+        const y=yAt(v).toFixed(1);
+        return `<line class="history-grid" x1="${left}" y1="${y}" x2="${right}" y2="${y}"/><text class="history-axis-label" x="4" y="${Number(y)+4}">${esc(fmtUSD(v))}</text>`;
+      }).join("");
+      const dots=points.map((p,i)=>`<circle class="history-point" cx="${xAt(i).toFixed(1)}" cy="${yAt(p._value).toFixed(1)}" r="5"><title>${esc(p.date)} · ${esc(fmtUSD(p._value))}</title></circle>`).join("");
+      const dateLabels=points.length===1
+        ? `<text class="history-date" x="${xAt(0)}" y="211" text-anchor="middle">${esc(points[0].date)}</text>`
+        : `<text class="history-date" x="${left}" y="211">${esc(points[0].date)}</text><text class="history-date" x="${right}" y="211" text-anchor="end">${esc(points.at(-1).date)}</text>`;
+      const summary=points.length===1
+        ? `当前 ${fmtUSD(max)} · 仅 1 个有效快照`
+        : span===0
+          ? `价格未变 ${fmtUSD(max)} · ${points.length} 个快照`
+          : `最高 ${fmtUSD(max)} · 最低 ${fmtUSD(min)} · ${points.length} 个快照`;
+
+      host.innerHTML=`<svg viewBox="0 0 800 225" role="img" aria-label="${esc(summary)}">${grid}<text class="history-summary" x="${left}" y="24">${esc(summary)}</text><polyline class="history-line" points="${coords}"/>${dots}${dateLabels}</svg>`;
     };
     select.addEventListener("change",draw); draw();
   }
