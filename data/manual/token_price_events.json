@@ -4,6 +4,41 @@
   "_last_updated": "2026-10-04",
   "records": [
     {
+      "date": "2026-02-17",
+      "metric_id": "token_blended_cost::anthropic::claude_sonnet4::market_route",
+      "value": 7.2,
+      "currency": "USD",
+      "blended_cost_usd": 7.2,
+      "event_type": "official_price_effective",
+      "provider_model_id": "anthropic/claude-sonnet-4.6",
+      "source_name": "Claude Sonnet 4.6 model overview",
+      "source_url": "https://platform.claude.com/docs/en/models/sonnet-4-6/overview",
+      "evidence_status": "official_pricing",
+      "note": "当前路由实际对应 Claude Sonnet 4.6；官方输入/输出标价为 $3/$15，按看板 65%/35% 口径折算为 $7.20。"
+    },
+    {
+      "date": "2026-08-13",
+      "metric_id": "token_blended_cost::deepseek::deepseek_v4_pro::standard",
+      "value": 0.58725,
+      "currency": "USD",
+      "blended_cost_usd": 0.58725,
+      "event_type": "official_price_effective",
+      "source_name": "DeepSeek API Docs",
+      "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "evidence_status": "official_pricing"
+    },
+    {
+      "date": "2026-07-31",
+      "metric_id": "token_blended_cost::deepseek::deepseek_v4_flash::standard",
+      "value": 0.189,
+      "currency": "USD",
+      "blended_cost_usd": 0.189,
+      "event_type": "official_price_effective",
+      "source_name": "DeepSeek API Docs",
+      "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "evidence_status": "official_pricing"
+    },
+    {
       "date": "2026-09-03",
       "metric_id": "token_blended_cost::openai::gpt6_astra::standard",
       "value": 24.0,

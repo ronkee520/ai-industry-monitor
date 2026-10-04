@@ -56,6 +56,28 @@ class TestBuildDashboard(unittest.TestCase):
         self.assertEqual(min(row["date"] for row in grok), "2026-09-21")
         self.assertTrue(any(row.get("event_type") == "official_price_effective" for row in grok))
 
+    def test_claude_sonnet46_route_uses_official_effective_price(self):
+        payload = _dash.build_dashboard(self.root)
+        history = payload.get("history", {}).get("token_pricing", [])
+        sonnet = [row for row in history if row.get("metric_id") == "token_blended_cost::anthropic::claude_sonnet4::market_route"]
+        self.assertGreaterEqual(len(sonnet), 30)
+        self.assertEqual(min(row["date"] for row in sonnet), "2026-02-17")
+        self.assertTrue(any(row.get("event_type") == "official_price_effective" for row in sonnet))
+
+    def test_every_available_price_option_has_more_than_two_history_days(self):
+        payload = _dash.build_dashboard(self.root)
+        history = payload.get("history", {}).get("token_pricing", [])
+        counts = {}
+        for row in history:
+            counts.setdefault(row.get("metric_id"), set()).add(row.get("date"))
+        available = [
+            row["metric_id"] for row in payload.get("token_pricing", {}).get("records", [])
+            if row.get("blended_cost_usd") is not None
+        ]
+        missing = {metric_id: len(counts.get(metric_id, set())) for metric_id in available
+                   if len(counts.get(metric_id, set())) <= 2}
+        self.assertEqual(missing, {})
+
     def test_sample_records_not_mislabeled_as_verified(self):
         """⚠️ sample 数据绝对不能标记为 verified。"""
         payload = _dash.build_dashboard(self.root)

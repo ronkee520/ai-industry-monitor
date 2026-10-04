@@ -23,6 +23,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -32,6 +33,35 @@ if str(_PROJECT) not in sys.path:
     sys.path.insert(0, str(_PROJECT))
 
 from scripts import _shared  # noqa: E402
+
+
+def _expand_official_price_events(events: list[dict[str, Any]], through: date) -> list[dict[str, Any]]:
+    """Expand verified effective-price events into daily validity intervals."""
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    passthrough: list[dict[str, Any]] = []
+    for event in events:
+        if event.get("event_type") == "official_price_effective" and event.get("date") and event.get("metric_id"):
+            grouped.setdefault(event["metric_id"], []).append(event)
+        else:
+            passthrough.append(event)
+
+    expanded = list(passthrough)
+    for metric_id, metric_events in grouped.items():
+        ordered = sorted(metric_events, key=lambda row: row["date"])
+        for index, event in enumerate(ordered):
+            start = date.fromisoformat(event["date"])
+            next_start = date.fromisoformat(ordered[index + 1]["date"]) if index + 1 < len(ordered) else through + timedelta(days=1)
+            end = min(through, next_start - timedelta(days=1))
+            cursor = start
+            while cursor <= end:
+                row = dict(event)
+                row["date"] = cursor.isoformat()
+                if cursor != start:
+                    row["event_type"] = "official_price_interval"
+                    row["note"] = "官方生效价格在下一次已核验调价前持续有效。"
+                expanded.append(row)
+                cursor += timedelta(days=1)
+    return expanded
 
 
 # ── CLI ────────────────────────────────────────────────────────────
@@ -68,6 +98,9 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
     manual_business = _shared.load_json(root / "data" / "manual" / "business_metrics.json", {})
     manual_supply = _shared.load_json(root / "data" / "manual" / "supply_chain_finance.json", {})
     market_pricing = _shared.load_json(root / "data" / "automated" / "model_market_pricing.json", {})
+    market_price_history = _shared.load_json(
+        root / "data" / "automated" / "model_market_price_history.json", {}
+    ).get("records", [])
     sec_fundamentals = _shared.load_json(root / "data" / "automated" / "sec_fundamentals.json", {})
     market_snapshot = _shared.load_json(root / "data" / "automated" / "market.json", {})
     source_state = _shared.load_json(root / "data" / "automated" / "source_state.json", [])
@@ -75,12 +108,13 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
 
     # 加载历史（用于计算 change_pct）。官方价格事件提供可核验的历史起点，
     # 每日快照随后覆盖同日事件并持续追加，避免用当前价格倒填未知历史。
-    price_events = _shared.load_json(
+    raw_price_events = _shared.load_json(
         root / "data" / "manual" / "token_price_events.json", {}
     ).get("records", [])
+    price_events = _expand_official_price_events(raw_price_events, today)
     price_snapshots = _shared.read_jsonl(root / "data" / "history" / "token_pricing.jsonl")
     price_history_by_key: dict[tuple[str, str], dict[str, Any]] = {}
-    for row in [*price_events, *price_snapshots]:
+    for row in [*price_events, *market_price_history, *price_snapshots]:
         if row.get("date") and row.get("metric_id"):
             price_history_by_key[(row["date"], row["metric_id"])] = row
     price_history = sorted(
@@ -227,7 +261,11 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
             root / "data" / "history" / "token_pricing.jsonl",
             {"date": snapshot_date, "metric_id": rec["metric_id"],
              "value": rec.get("value"), "currency": rec.get("currency"),
-             "blended_cost_usd": rec.get("blended_cost_usd")},
+             "blended_cost_usd": rec.get("blended_cost_usd"),
+             "provider_model_id": rec.get("provider_model_id"),
+             "source_name": rec.get("source_name"), "source_url": rec.get("source_url"),
+             "source_tier": rec.get("source_tier"),
+             "evidence_status": rec.get("evidence_status")},
             dedupe_keys=["date", "metric_id"],
         )
     for rec in business_records:

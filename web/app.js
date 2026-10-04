@@ -367,8 +367,8 @@
           </table></div>
         </div>
       </section>
-      <section class="section"><div class="section-head"><h2>历史趋势</h2><p>同一指标的每日快照；价格未变化时曲线保持水平</p></div>
-        <div class="card"><div class="controls"><select id="history-model">${historyRecords.map(r=>`<option value="${esc(r.metric_id)}">${esc(r.company_name)} · ${esc(r.model_id)}${r.tier === "aggregator_route" ? " · 路由市场" : r.source_tier === 1 ? " · 官方" : ""}</option>`).join("")}</select><select id="history-range" aria-label="历史时间范围"><option value="90">近 90 天</option><option value="180">近 180 天</option><option value="365">近 1 年</option><option value="all" selected>全部历史</option></select><button class="button" id="download-token-csv">导出当前价格 CSV</button></div><div id="history-chart" class="history-chart"></div><p id="history-note" class="history-note"></p></div>
+      <section class="section"><div class="section-head"><h2>历史趋势</h2><p>官方价格事件与每日市场快照；价格未变化时曲线保持水平</p></div>
+        <div class="card"><div class="controls"><select id="history-model">${historyRecords.map(r=>`<option value="${esc(r.metric_id)}">${esc(r.company_name)} · ${esc(r.tier === "aggregator_route" ? (r.provider_model_id || r.model_id) : r.model_id)}${r.tier === "aggregator_route" ? " · 路由市场" : r.source_tier === 1 ? " · 官方" : ""}</option>`).join("")}</select><select id="history-range" aria-label="历史时间范围"><option value="90">近 90 天</option><option value="180">近 180 天</option><option value="365">近 1 年</option><option value="all" selected>全部历史</option></select><button class="button" id="download-token-csv">导出当前价格 CSV</button></div><div id="history-chart" class="history-chart"></div><p id="history-note" class="history-note"></p></div>
       </section>
     `;
 
@@ -411,20 +411,26 @@
         const y=yAt(v).toFixed(1);
         return `<line class="history-grid" x1="${left}" y1="${y}" x2="${right}" y2="${y}"/><text class="history-axis-label" x="4" y="${Number(y)+4}">${esc(fmtUSD(v))}</text>`;
       }).join("");
-      const dots=points.map(p=>`<circle class="history-point" cx="${xAt(p).toFixed(1)}" cy="${yAt(p._value).toFixed(1)}" r="5"><title>${esc(p.date)} · ${esc(fmtUSD(p._value))}</title></circle>`).join("");
+      const eventPoints=points.filter((p,i)=>i===0||i===points.length-1||String(p.event_type||"").includes("change")||String(p.event_type||"").includes("effective"));
+      const dots=eventPoints.map(p=>`<circle class="history-point" cx="${xAt(p).toFixed(1)}" cy="${yAt(p._value).toFixed(1)}" r="4"><title>${esc(p.date)} · ${esc(fmtUSD(p._value))}</title></circle>`).join("");
       const dateLabels=points.length===1
         ? `<text class="history-date" x="${xAt(points[0])}" y="211" text-anchor="middle">${esc(points[0].date)}</text>`
         : `<text class="history-date" x="${left}" y="211">${esc(points[0].date)}</text><text class="history-date" x="${right}" y="211" text-anchor="end">${esc(points.at(-1).date)}</text>`;
       const summary=points.length===1
         ? `当前 ${fmtUSD(max)} · 仅 1 个有效快照`
         : span===0
-          ? `价格未变 ${fmtUSD(max)} · ${points.length} 个快照 · 覆盖 ${coverageDays} 天`
-          : `最高 ${fmtUSD(max)} · 最低 ${fmtUSD(min)} · ${points.length} 个快照 · 覆盖 ${coverageDays} 天`;
+          ? `价格未变 ${fmtUSD(max)} · ${points.length} 个日值 · 覆盖 ${coverageDays} 天`
+          : `最高 ${fmtUSD(max)} · 最低 ${fmtUSD(min)} · ${points.length} 个日值 · 覆盖 ${coverageDays} 天`;
 
       host.innerHTML=`<svg viewBox="0 0 800 225" role="img" aria-label="${esc(summary)}">${grid}<text class="history-summary" x="${left}" y="24">${esc(summary)}</text><polyline class="history-line" points="${coords}"/>${dots}${dateLabels}</svg>`;
-      const officialAnchor=points.find(p=>p.event_type==="official_price_effective");
+      const officialAnchor=points.find(p=>p.event_type==="official_price_effective"||p.event_type==="official_price_reference");
+      const hasArchive=points.some(p=>String(p.event_type||"").startsWith("archived_price_"));
       note.textContent=officialAnchor
-        ? `历史起点为 ${officialAnchor.date} 的官方发布/价格生效事件；其后连接每日真实快照。`
+        ? hasArchive
+          ? `历史包含 ${officialAnchor.date} 起的官方生效价格，并衔接公开路由市场逐日变更档案；无变更日延续最近一次已观测价格。`
+          : `历史起点为 ${officialAnchor.date} 的官方价格生效事件；在下一次已核验调价前按有效价格区间连续展示。`
+        : hasArchive
+          ? `该曲线由公开路由市场的逐日价格变更档案重建；无变更日延续最近一次已观测价格，不代表虚构交易波动。`
         : points.length===1
           ? `该指标尚无可核验的更早价格，当前展示首次真实收录；系统将每日追加快照。`
           : `该曲线来自每日真实快照；价格未调整时保持水平。`;

@@ -128,6 +128,31 @@ class TestStructuredCollectors(unittest.TestCase):
         result = _model_market.collect_model_market_pricing(_resolve_root(), dry_run=True)
         self.assertGreater(result["models"], 10)
 
+    def test_model_market_history_reconstructs_unchanged_days(self):
+        records = [{
+            "metric_id": "token_blended_cost::test::model::market_route",
+            "provider_model_id": "test/model",
+            "input_per_m": 2.0,
+            "output_per_m": 6.0,
+            "as_of_date": "2026-07-30",
+        }]
+        csv_text = (
+            "date,event,source,provider,model,field,old,new\n"
+            "2026-07-29,changed,openrouter,test,test/model,input_usd_per_mtok,1,2\n"
+            "2026-07-29,changed,openrouter,test,test/model,output_usd_per_mtok,4,6\n"
+        )
+        payload = _model_market.build_market_price_history(
+            records,
+            csv_text,
+            {"history_started_at": "2026-07-28", "history_url": "https://example.com/history.csv"},
+        )
+        self.assertEqual([row["date"] for row in payload["records"]], [
+            "2026-07-28", "2026-07-29", "2026-07-30"
+        ])
+        self.assertEqual(payload["records"][0]["blended_cost_usd"], 2.05)
+        self.assertEqual(payload["records"][1]["blended_cost_usd"], 3.4)
+        self.assertEqual(payload["records"][2]["event_type"], "archived_price_interval")
+
     def test_sec_annual_fact_dedupes_restated_value(self):
         facts = {"facts": {"us-gaap": {"Revenues": {"units": {"USD": [
             {"start":"2024-01-01","end":"2024-12-31","filed":"2025-01-01","form":"10-K","fp":"FY","fy":2024,"val":10},

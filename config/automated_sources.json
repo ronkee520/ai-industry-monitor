@@ -4,6 +4,9 @@
   "model_market": {
     "url": "https://openrouter.ai/api/v1/models",
     "source_name": "OpenRouter public model catalog",
+    "history_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+    "history_source_name": "OpenRouter daily price-change archive",
+    "history_started_at": "2026-07-28",
     "source_tier": 3,
     "discovery_prefixes": {
       "openai": "openai/",
