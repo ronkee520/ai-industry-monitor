@@ -60,8 +60,8 @@ body::after {
   bottom: 16px;
   z-index: 40;
   color: var(--ink-strong);
-  opacity: .12;
-  font-size: 13px;
+  opacity: .26;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: .08em;
   line-height: 1;

@@ -84,6 +84,7 @@ class TestBuildSite(unittest.TestCase):
         content = (self.site_dir / "index.html").read_text(encoding="utf-8")
         self.assertNotIn("{{ROOT_PREFIX}}", content)
         self.assertNotIn("{{ASSET_PREFIX}}", content)
+        self.assertNotIn("{{ASSET_VERSION}}", content)
 
     def test_no_template_vars_in_any_page(self):
         for html_file in self.site_dir.rglob("*.html"):
@@ -92,6 +93,8 @@ class TestBuildSite(unittest.TestCase):
                 f"{html_file.relative_to(self.site_dir)} 残留 ROOT_PREFIX")
             self.assertNotIn("{{ASSET_PREFIX}}", content,
                 f"{html_file.relative_to(self.site_dir)} 残留 ASSET_PREFIX")
+            self.assertNotIn("{{ASSET_VERSION}}", content,
+                f"{html_file.relative_to(self.site_dir)} 残留 ASSET_VERSION")
 
     # ── Path correctness ───────────────────────────────────────
     def test_home_uses_relative_assets(self):
@@ -99,6 +102,12 @@ class TestBuildSite(unittest.TestCase):
         self.assertIn('./app.js', content)
         self.assertIn('./styles.css', content)
         self.assertIn('DASHBOARD_ROOT = "./"', content)
+
+    def test_assets_use_content_version_for_cache_busting(self):
+        for html_file in self.site_dir.rglob("*.html"):
+            content = html_file.read_text(encoding="utf-8")
+            self.assertRegex(content, r'app\.js\?v=[0-9a-f]{12}')
+            self.assertRegex(content, r'styles\.css\?v=[0-9a-f]{12}')
 
     def test_sub_pages_use_parent_assets(self):
         for sub in ("token", "business", "compute", "supply-chain", "investment", "methodology"):

@@ -20,6 +20,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import shutil
 import sys
@@ -74,6 +75,14 @@ def build_site(root: Path, *, verbose: bool = False) -> Path:
 
     # ── 复制静态资源到 _site/ 根目录 ──
     web_dir = root / "web"
+    asset_digest = hashlib.sha256()
+    for name in ("app.js", "styles.css"):
+        asset_path = web_dir / name
+        if asset_path.exists():
+            asset_digest.update(name.encode("utf-8"))
+            asset_digest.update(asset_path.read_bytes())
+    asset_version = asset_digest.hexdigest()[:12]
+
     for name in ("app.js", "styles.css", "favicon.svg"):
         src = web_dir / name
         if src.exists():
@@ -96,6 +105,7 @@ def build_site(root: Path, *, verbose: bool = False) -> Path:
             template
             .replace("{{ROOT_PREFIX}}", root_prefix)
             .replace("{{ASSET_PREFIX}}", asset_prefix)
+            .replace("{{ASSET_VERSION}}", asset_version)
         )
 
     # ── 首页：ROOT=./  ASSET=./  ──
@@ -176,7 +186,7 @@ def _verify_build(site_dir: Path) -> None:
     import re
     for html_file in site_dir.rglob("*.html"):
         content = html_file.read_text(encoding="utf-8")
-        for placeholder in ("{{ROOT_PREFIX}}", "{{ASSET_PREFIX}}"):
+        for placeholder in ("{{ROOT_PREFIX}}", "{{ASSET_PREFIX}}", "{{ASSET_VERSION}}"):
             if placeholder in content:
                 raise RuntimeError(
                     f"构建校验失败: {html_file.relative_to(site_dir)} 中残留未替换的 {placeholder}"
