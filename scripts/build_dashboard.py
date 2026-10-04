@@ -73,8 +73,20 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
     source_state = _shared.load_json(root / "data" / "automated" / "source_state.json", [])
     news_queue = _shared.load_json(root / "data" / "news" / "ai_news_queue.json", [])
 
-    # 加载历史（用于计算 change_pct）
-    price_history = _shared.read_jsonl(root / "data" / "history" / "token_pricing.jsonl")
+    # 加载历史（用于计算 change_pct）。官方价格事件提供可核验的历史起点，
+    # 每日快照随后覆盖同日事件并持续追加，避免用当前价格倒填未知历史。
+    price_events = _shared.load_json(
+        root / "data" / "manual" / "token_price_events.json", {}
+    ).get("records", [])
+    price_snapshots = _shared.read_jsonl(root / "data" / "history" / "token_pricing.jsonl")
+    price_history_by_key: dict[tuple[str, str], dict[str, Any]] = {}
+    for row in [*price_events, *price_snapshots]:
+        if row.get("date") and row.get("metric_id"):
+            price_history_by_key[(row["date"], row["metric_id"])] = row
+    price_history = sorted(
+        price_history_by_key.values(),
+        key=lambda row: (row.get("date", ""), row.get("metric_id", "")),
+    )
     business_history = _shared.read_jsonl(root / "data" / "history" / "business.jsonl")
 
     # ── 1. Token 定价模块 ──

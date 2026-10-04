@@ -298,6 +298,7 @@
   function renderToken(D) {
     const tp = D.token_pricing || {};
     const records = tp.records || [];
+    const historyRecords = records.filter(r => r.blended_cost_usd != null);
     const validRecords = records.filter(r => r.value != null);
     const latestModels = tp.latest_models || [];
     const blendedRecords = records.filter(r => r.blended_cost_usd != null);
@@ -367,7 +368,7 @@
         </div>
       </section>
       <section class="section"><div class="section-head"><h2>历史趋势</h2><p>同一指标的每日快照；价格未变化时曲线保持水平</p></div>
-        <div class="card"><div class="controls"><select id="history-model">${records.map(r=>`<option value="${esc(r.metric_id)}">${esc(r.company_name)} · ${esc(r.model_id)}${r.tier === "aggregator_route" ? " · 路由市场" : r.source_tier === 1 ? " · 官方" : ""}</option>`).join("")}</select><select id="history-range" aria-label="历史时间范围"><option value="90">近 90 天</option><option value="180">近 180 天</option><option value="365">近 1 年</option><option value="all" selected>全部历史</option></select><button class="button" id="download-token-csv">导出当前价格 CSV</button></div><div id="history-chart" class="history-chart"></div></div>
+        <div class="card"><div class="controls"><select id="history-model">${historyRecords.map(r=>`<option value="${esc(r.metric_id)}">${esc(r.company_name)} · ${esc(r.model_id)}${r.tier === "aggregator_route" ? " · 路由市场" : r.source_tier === 1 ? " · 官方" : ""}</option>`).join("")}</select><select id="history-range" aria-label="历史时间范围"><option value="90">近 90 天</option><option value="180">近 180 天</option><option value="365">近 1 年</option><option value="all" selected>全部历史</option></select><button class="button" id="download-token-csv">导出当前价格 CSV</button></div><div id="history-chart" class="history-chart"></div><p id="history-note" class="history-note"></p></div>
       </section>
     `;
 
@@ -378,17 +379,18 @@
   }
 
   function wireHistoryChart(history, records) {
-    const select=document.getElementById("history-model"), rangeSelect=document.getElementById("history-range"), host=document.getElementById("history-chart");
-    if(!select||!rangeSelect||!host) return;
+    const select=document.getElementById("history-model"), rangeSelect=document.getElementById("history-range"), host=document.getElementById("history-chart"), note=document.getElementById("history-note");
+    if(!select||!rangeSelect||!host||!note) return;
     const draw=()=>{
       // 同一天只保留最后一条有效记录，避免重复点让曲线产生误导。
       const byDate=new Map();
       history.forEach(x=>{
-        const value=Number(x.blended_cost_usd??x.value);
+        const rawValue=x.blended_cost_usd??x.value;
+        const value=rawValue===null||rawValue==="" ? NaN : Number(rawValue);
         if(x.metric_id===select.value && x.date && Number.isFinite(value)) byDate.set(x.date,{...x,_value:value});
       });
       const allPoints=[...byDate.values()].sort((a,b)=>a.date.localeCompare(b.date));
-      if(!allPoints.length){host.innerHTML='<div class="empty-state">该模型目前没有有效价格快照。</div>';return;}
+      if(!allPoints.length){host.innerHTML='<div class="empty-state">该模型目前没有有效价格快照。</div>';note.textContent="";return;}
       const rangeDays=Number(rangeSelect.value);
       const latestMs=Date.parse(`${allPoints.at(-1).date}T00:00:00Z`);
       const cutoffMs=Number.isFinite(rangeDays) ? latestMs-(rangeDays-1)*86400000 : -Infinity;
@@ -420,6 +422,12 @@
           : `最高 ${fmtUSD(max)} · 最低 ${fmtUSD(min)} · ${points.length} 个快照 · 覆盖 ${coverageDays} 天`;
 
       host.innerHTML=`<svg viewBox="0 0 800 225" role="img" aria-label="${esc(summary)}">${grid}<text class="history-summary" x="${left}" y="24">${esc(summary)}</text><polyline class="history-line" points="${coords}"/>${dots}${dateLabels}</svg>`;
+      const officialAnchor=points.find(p=>p.event_type==="official_price_effective");
+      note.textContent=officialAnchor
+        ? `历史起点为 ${officialAnchor.date} 的官方发布/价格生效事件；其后连接每日真实快照。`
+        : points.length===1
+          ? `该指标尚无可核验的更早价格，当前展示首次真实收录；系统将每日追加快照。`
+          : `该曲线来自每日真实快照；价格未调整时保持水平。`;
     };
     select.addEventListener("change",draw);
     rangeSelect.addEventListener("change",draw);

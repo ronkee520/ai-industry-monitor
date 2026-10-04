@@ -12,7 +12,7 @@
       "family": "GPT-6",
       "status": "production",
       "modalities": ["text", "image_input", "code"],
-      "release_date": "2026-09-04",
+      "release_date": "2026-09-03",
       "context_window_k": 1050,
       "has_public_pricing": true,
       "pricing_source_url": "https://developers.openai.com/api/docs/models"

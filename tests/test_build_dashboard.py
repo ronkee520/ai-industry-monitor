@@ -48,6 +48,14 @@ class TestBuildDashboard(unittest.TestCase):
             self.assertGreaterEqual(row.get("input_per_m", -1), 0)
             self.assertGreaterEqual(row.get("output_per_m", -1), 0)
 
+    def test_official_price_events_extend_latest_model_history(self):
+        payload = _dash.build_dashboard(self.root)
+        history = payload.get("history", {}).get("token_pricing", [])
+        grok = [row for row in history if row.get("metric_id") == "token_blended_cost::xai::grok47::standard"]
+        self.assertGreaterEqual(len(grok), 2)
+        self.assertEqual(min(row["date"] for row in grok), "2026-09-21")
+        self.assertTrue(any(row.get("event_type") == "official_price_effective" for row in grok))
+
     def test_sample_records_not_mislabeled_as_verified(self):
         """⚠️ sample 数据绝对不能标记为 verified。"""
         payload = _dash.build_dashboard(self.root)

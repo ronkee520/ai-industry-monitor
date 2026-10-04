@@ -65,6 +65,12 @@ body::after {
   pointer-events: none;
   user-select: none;
 }
+.history-note {
+  margin: 2px 0 0;
+  color: var(--ink-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
 a { color: var(--accent); text-decoration: none; }
 a:hover { color: var(--accent-dark); }
 

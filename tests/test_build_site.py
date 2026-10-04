@@ -78,6 +78,9 @@ class TestBuildSite(unittest.TestCase):
         self.assertIn("价格未变", content)
         self.assertIn("history-range", content)
         self.assertIn("coverageDays", content)
+        self.assertIn("official_price_effective", content)
+        self.assertIn("每日真实快照", content)
+        self.assertIn('rawValue===null||rawValue==="" ? NaN', content)
 
     def test_price_history_uses_daily_schedule_and_extended_retention(self):
         dashboard_builder = (self.root / "scripts" / "build_dashboard.py").read_text(encoding="utf-8")
