@@ -82,6 +82,15 @@ class TestBuildSite(unittest.TestCase):
         self.assertIn("每日真实快照", content)
         self.assertIn('rawValue===null||rawValue==="" ? NaN', content)
 
+    def test_cycle_methodology_is_expandable_and_auditable(self):
+        content = (self.site_dir / "app.js").read_text(encoding="utf-8")
+        styles = (self.site_dir / "styles.css").read_text(encoding="utf-8")
+        self.assertIn("评分公式、数据来源与本期完整计算", content)
+        self.assertIn("renderCycleFactorBreakdown", content)
+        self.assertIn("当前阶段如何判定", content)
+        self.assertIn("deterioration_triggers", content)
+        self.assertIn("cycle-methodology", styles)
+
     def test_price_history_uses_daily_schedule_and_extended_retention(self):
         dashboard_builder = (self.root / "scripts" / "build_dashboard.py").read_text(encoding="utf-8")
         workflow = (self.root / ".github" / "workflows" / "update-deploy.yml").read_text(encoding="utf-8")

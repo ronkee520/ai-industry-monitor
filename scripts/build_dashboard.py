@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import statistics
 import sys
 from datetime import date, timedelta
 from pathlib import Path
@@ -122,6 +123,7 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
         key=lambda row: (row.get("date", ""), row.get("metric_id", "")),
     )
     business_history = _shared.read_jsonl(root / "data" / "history" / "business.jsonl")
+    gpu_history = _shared.read_jsonl(root / "data" / "history" / "gpu_pricing.jsonl")
 
     # ── 1. Token 定价模块 ──
     pricing_records = _build_pricing(
@@ -159,7 +161,7 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
     # ── 5. AI Cycle 评分 ──
     cycle_scores = _build_cycle_scores(
         pricing_records, business_records, gpu_records, capex_records, market_snapshot.get("records", []),
-        source_status, cycle_cfg, companies_list, generated_at,
+        price_history, gpu_history, source_status, cycle_cfg, companies_list, models_list, generated_at,
     )
 
     # ── 6. 新闻（前 20 条待复核） ──
@@ -232,7 +234,7 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
             # 约可保留 30 个模型每日快照 22 个月，避免长期曲线被全局截断。
             "token_pricing": price_history[-20000:],
             "business": business_history[-500:],
-            "gpu_pricing": _shared.read_jsonl(root / "data" / "history" / "gpu_pricing.jsonl")[-500:],
+            "gpu_pricing": gpu_history[-500:],
             "cycle_scores": _shared.read_jsonl(root / "data" / "history" / "cycle_scores.jsonl")[-200:],
             "capex": _shared.read_jsonl(root / "data" / "history" / "capex.jsonl")[-300:],
             "runs": _shared.read_jsonl(root / "data" / "history" / "runs.jsonl")[-100:],
@@ -569,128 +571,439 @@ def _build_cycle_scores(
     gpu: list[dict[str, Any]],
     capex: list[dict[str, Any]],
     market: list[dict[str, Any]],
+    price_history: list[dict[str, Any]],
+    gpu_history: list[dict[str, Any]],
     sources: list[dict[str, Any]],
     cycle_cfg: dict[str, Any],
     companies: list[dict[str, Any]],
+    models: list[dict[str, Any]],
     generated_at: str,
 ) -> dict[str, Any]:
-    """计算 AI 产业周期评分。
+    """Build a transparent, reproducible proxy index for the AI cycle.
 
-    第一期使用简化模式：大部分子因子依赖 manual 数据，
-    此处仅建立评分结构框架。缺失因子标记为 insufficient_data。
+    This is deliberately a monitoring index rather than a fitted forecasting
+    model. Every component exposes its raw observation, normalisation rule,
+    sample size, weight, contribution and source references.
     """
     factors = cycle_cfg.get("industry_factors", {})
     stages = cycle_cfg.get("stages", [])
-
-    # ── 统计可用的数据覆盖度 ──
     pricing_with_value = [p for p in pricing if p.get("value") is not None]
     business_with_value = [b for b in business if b.get("value") is not None]
     sources_ok = sum(1 for s in sources if s.get("status") == "ok")
-
-    # 简化评分：只在有最低数据覆盖时输出分数。
-    # 不再用默认 50 冒充真实的产业周期结论。
-    tech_score: float | None = None
-    biz_score: float | None = None
-    capital_score: float | None = None
-
-    # 价格透明度和覆盖度作为技术成熟度的可重复代理。
     real_pricing = [p for p in pricing_with_value if p.get("confidence") != "sample"]
-    if len(real_pricing) >= 5:
-        coverage = min(1.0, len(real_pricing) / max(len(pricing), 1))
-        tech_score = round(40 + coverage * 35, 1)
-
-    # 如果有真实 business 数据，微调 biz_score
     real_business = [b for b in business_with_value if b.get("confidence") != "sample"]
-    if len(real_business) >= 2:
-        biz_score = 55.0
-    if len(real_business) >= 5:
-        biz_score = 65.0
-
-    # 来源页可访问性不等于资本投入强度。使用真实 GPU/CAPEX 数值。
     real_gpu = [g for g in gpu if g.get("value") is not None]
     real_capex = [c for c in capex if c.get("value") is not None]
-    if real_capex:
-        growth_rates = []
-        by_company: dict[str, list[dict[str, Any]]] = {}
-        for rec in real_capex:
-            by_company.setdefault(rec.get("company_id", ""), []).append(rec)
-        for rows in by_company.values():
-            ordered = sorted(rows, key=lambda r: r.get("as_of_date", ""))
-            if len(ordered) >= 2 and ordered[-2].get("value"):
-                growth_rates.append((ordered[-1]["value"] / ordered[-2]["value"] - 1) * 100)
-        if growth_rates:
-            avg_growth = sum(growth_rates) / len(growth_rates)
-            capital_score = round(max(20, min(90, 50 + avg_growth)), 1)
-        else:
-            capital_score = 50.0
-        if real_gpu:
-            capital_score = round(min(90, capital_score + 5), 1)
 
-    total_sources = len(sources)
-    available_factor_scores = [
-        score for score in (tech_score, biz_score, capital_score) if score is not None
+    def clamp(value: float, low: float = 0.0, high: float = 100.0) -> float:
+        return max(low, min(high, value))
+
+    def source_refs(rows: list[dict[str, Any]], limit: int = 4) -> list[dict[str, Any]]:
+        seen: set[str] = set()
+        refs: list[dict[str, Any]] = []
+        for row in rows:
+            url = row.get("source_url") or row.get("pricing_source_url")
+            if not url or url in seen:
+                continue
+            seen.add(url)
+            refs.append({
+                "name": row.get("source_name") or row.get("name") or "公开来源",
+                "url": url,
+                "tier": row.get("source_tier", 1 if row.get("pricing_source_url") else None),
+            })
+            if len(refs) >= limit:
+                break
+        return refs
+
+    def component(
+        component_id: str,
+        label: str,
+        score: float | None,
+        weight: float,
+        raw_display: str,
+        formula: str,
+        sample_size: int,
+        rows: list[dict[str, Any]],
+        note: str = "",
+    ) -> dict[str, Any]:
+        return {
+            "id": component_id,
+            "label": label,
+            "score": round(score, 1) if score is not None else None,
+            "configured_weight": weight,
+            "raw_display": raw_display,
+            "formula": formula,
+            "sample_size": sample_size,
+            "sources": source_refs(rows),
+            "note": note,
+        }
+
+    def aggregate_components(items: list[dict[str, Any]]) -> tuple[float | None, float]:
+        present = [item for item in items if item.get("score") is not None]
+        available_weight = sum(float(item["configured_weight"]) for item in present)
+        for item in items:
+            if item.get("score") is None or available_weight <= 0:
+                item["effective_weight"] = 0.0
+                item["contribution"] = None
+            else:
+                effective = float(item["configured_weight"]) / available_weight
+                item["effective_weight"] = round(effective, 4)
+                item["contribution"] = round(float(item["score"]) * effective, 1)
+        if available_weight <= 0:
+            return None, 0.0
+        score = sum(float(item["score"]) * float(item["configured_weight"]) for item in present) / available_weight
+        return round(score, 1), round(available_weight, 2)
+
+    # ── Technology maturity ──────────────────────────────────
+    production_models = [m for m in models if m.get("status") == "production"]
+    production_ids = {m.get("id") for m in production_models}
+    priced_ids = {p.get("model_id") for p in real_pricing if p.get("model_id") in production_ids}
+    pricing_coverage = (len(priced_ids) / len(production_ids) * 100) if production_ids else None
+
+    multimodal_score = (
+        sum(1 for m in production_models if len(m.get("modalities") or []) >= 2) / len(production_models) * 100
+        if production_models else None
+    )
+    context_known = [m for m in production_models if isinstance(m.get("context_window_k"), (int, float))]
+    frontier_context_score = (
+        sum(1 for m in context_known if float(m["context_window_k"]) >= 1000) / len(context_known) * 100
+        if context_known else None
+    )
+
+    # Prefer one (highest-source-quality) series per model to avoid counting
+    # official and routed versions of the same model twice.
+    chosen_pricing: dict[str, dict[str, Any]] = {}
+    for row in sorted(real_pricing, key=lambda r: (r.get("source_tier", 9), r.get("tier") != "standard")):
+        chosen_pricing.setdefault(str(row.get("model_id")), row)
+    history_by_metric: dict[str, list[dict[str, Any]]] = {}
+    for row in price_history:
+        raw_value = row.get("blended_cost_usd", row.get("value"))
+        if row.get("metric_id") and row.get("date") and isinstance(raw_value, (int, float)):
+            history_by_metric.setdefault(row["metric_id"], []).append(row | {"_score_value": float(raw_value)})
+    price_changes: list[float] = []
+    price_change_rows: list[dict[str, Any]] = []
+    for current in chosen_pricing.values():
+        rows = sorted(history_by_metric.get(current.get("metric_id"), []), key=lambda r: r["date"])
+        by_date = {row["date"]: row for row in rows}
+        rows = [by_date[key] for key in sorted(by_date)]
+        if len(rows) < 2:
+            continue
+        span_days = (date.fromisoformat(rows[-1]["date"]) - date.fromisoformat(rows[0]["date"])).days
+        if span_days < 30 or rows[0]["_score_value"] <= 0:
+            continue
+        latest_date = date.fromisoformat(rows[-1]["date"])
+        cutoff = latest_date - timedelta(days=90)
+        start = next((row for row in rows if date.fromisoformat(row["date"]) >= cutoff), rows[0])
+        change = (rows[-1]["_score_value"] / start["_score_value"] - 1) * 100
+        price_changes.append(change)
+        price_change_rows.extend([start, rows[-1]])
+    median_price_change = statistics.median(price_changes) if price_changes else None
+    price_decline_score = clamp(50 - 2 * median_price_change) if median_price_change is not None else None
+
+    tech_components = [
+        component(
+            "token_price_decline", "90天Token成本变化", price_decline_score, 0.35,
+            f"中位数 {median_price_change:+.1f}%" if median_price_change is not None else "不足30天的可比序列",
+            "score = clip(50 − 2 × 90天价格变化中位数, 0, 100)；下降25%=100，持平=50，上涨25%=0",
+            len(price_changes), price_change_rows,
+            "同一模型只选来源等级最高的一条序列，避免官方价与路由价重复计数。",
+        ),
+        component(
+            "public_price_coverage", "生产模型价格覆盖", pricing_coverage, 0.25,
+            f"{len(priced_ids)} / {len(production_ids)} 个生产模型" if production_ids else "无生产模型",
+            "score = 有真实价格的生产模型数 ÷ 已登记生产模型数 × 100",
+            len(production_ids), list(chosen_pricing.values()),
+            "衡量可获得性与透明度，是技术成熟度的代理，不等同于模型能力。",
+        ),
+        component(
+            "frontier_context_coverage", "百万Token上下文覆盖", frontier_context_score, 0.20,
+            f"{sum(1 for m in context_known if float(m['context_window_k']) >= 1000)} / {len(context_known)} 个已知模型" if context_known else "无可比数据",
+            "score = 上下文窗口≥1000K的生产模型数 ÷ 上下文已披露模型数 × 100",
+            len(context_known), context_known,
+        ),
+        component(
+            "multimodal_coverage", "多模态覆盖", multimodal_score, 0.20,
+            f"{sum(1 for m in production_models if len(m.get('modalities') or []) >= 2)} / {len(production_models)} 个生产模型" if production_models else "无可比数据",
+            "score = 支持至少两种模态的生产模型数 ÷ 生产模型数 × 100",
+            len(production_models), production_models,
+        ),
     ]
-    sufficient_industry_data = len(available_factor_scores) >= 2
+    tech_score, tech_available_weight = aggregate_components(tech_components)
+
+    # ── Commercialisation ────────────────────────────────────
+    arr_rows = [r for r in real_business if str(r.get("metric_id", "")).startswith("arr::") and float(r.get("value") or 0) > 0]
+    user_rows = [r for r in real_business if str(r.get("metric_id", "")).startswith("user_count::") and float(r.get("value") or 0) > 0]
+    enterprise_rows = [r for r in real_business if str(r.get("metric_id", "")).startswith("enterprise_customers::") and float(r.get("value") or 0) > 0]
+    commercial_rows = arr_rows + user_rows + enterprise_rows
+    total_arr = sum(float(r["value"]) for r in arr_rows)
+    max_users = max((float(r["value"]) for r in user_rows), default=0.0)
+    total_enterprise = sum(float(r["value"]) for r in enterprise_rows)
+    disclosed_companies = {r.get("company_id") for r in commercial_rows if r.get("company_id")}
+    arr_score = clamp(total_arr / 200 * 100) if arr_rows else None
+    user_score = clamp(max_users / 1_000_000_000 * 100) if user_rows else None
+    enterprise_score = clamp(total_enterprise / 1_000_000 * 100) if enterprise_rows else None
+    disclosure_score = len(disclosed_companies) / len(companies) * 100 if companies else None
+    biz_components = [
+        component(
+            "arr_scale", "ARR/年化收入规模", arr_score, 0.40,
+            f"合计 ${total_arr:.1f}B；{len(arr_rows)} 条披露" if arr_rows else "暂无有效披露",
+            "score = clip(已披露ARR合计 ÷ $200B × 100, 0, 100)", len(arr_rows), arr_rows,
+            "不同公司口径可能为ARR或年化运行率；仅作规模代理，不视为审计收入。",
+        ),
+        component(
+            "user_adoption", "终端用户采用", user_score, 0.25,
+            f"最高 {max_users/1_000_000:.0f}M 活跃用户" if user_rows else "暂无有效披露",
+            "score = clip(最高已披露活跃用户数 ÷ 10亿 × 100, 0, 100)", len(user_rows), user_rows,
+            "不同公司用户口径不直接相加，取单项最高披露避免重复用户。",
+        ),
+        component(
+            "enterprise_adoption", "企业客户采用", enterprise_score, 0.20,
+            f"合计 {total_enterprise:,.0f} 家" if enterprise_rows else "缺失，不以0代替",
+            "score = clip(企业客户合计 ÷ 100万 × 100, 0, 100)", len(enterprise_rows), enterprise_rows,
+        ),
+        component(
+            "commercial_disclosure_breadth", "商业披露覆盖", disclosure_score, 0.15,
+            f"{len(disclosed_companies)} / {len(companies)} 家监测公司" if companies else "无公司样本",
+            "score = 有ARR/用户/企业客户披露的公司数 ÷ 监测公司数 × 100",
+            len(companies), commercial_rows,
+        ),
+    ]
+    biz_score, biz_available_weight = aggregate_components(biz_components)
+
+    # ── Capital investment ───────────────────────────────────
+    by_company: dict[str, list[dict[str, Any]]] = {}
+    for rec in real_capex:
+        by_company.setdefault(rec.get("company_id", ""), []).append(rec)
+    growth_rates: list[float] = []
+    growth_rows: list[dict[str, Any]] = []
+    for rows in by_company.values():
+        unique_periods = {str(row.get("period")): row for row in rows}
+        ordered = sorted(unique_periods.values(), key=lambda r: r.get("as_of_date", ""))
+        if len(ordered) >= 2 and float(ordered[-2].get("value") or 0) > 0:
+            growth_rates.append((float(ordered[-1]["value"]) / float(ordered[-2]["value"]) - 1) * 100)
+            growth_rows.extend(ordered[-2:])
+    median_capex_growth = statistics.median(growth_rates) if growth_rates else None
+    capex_growth_score = clamp(50 + 1.25 * median_capex_growth) if median_capex_growth is not None else None
+    csp_ids = {"microsoft", "google", "amazon", "meta"}
+    capex_covered = {r.get("company_id") for r in real_capex if r.get("company_id") in csp_ids}
+    capex_coverage_score = len(capex_covered) / len(csp_ids) * 100
+    generated_day = date.fromisoformat(generated_at[:10])
+    recent_funding = [
+        r for r in real_business
+        if str(r.get("metric_id", "")).startswith("funding::")
+        and r.get("as_of_date")
+        and (generated_day - date.fromisoformat(r["as_of_date"])).days <= 365
+    ]
+    funding_total = sum(float(r["value"]) for r in recent_funding)
+    funding_score = clamp(funding_total / 100 * 100) if recent_funding else None
+
+    gpu_by_metric: dict[str, list[dict[str, Any]]] = {}
+    for row in gpu_history:
+        if row.get("metric_id") and isinstance(row.get("value"), (int, float)):
+            gpu_by_metric.setdefault(row["metric_id"], []).append(row)
+    gpu_changes: list[float] = []
+    for rows in gpu_by_metric.values():
+        by_day = {row.get("date"): row for row in rows if row.get("date")}
+        ordered = [by_day[key] for key in sorted(by_day)]
+        if len(ordered) >= 2:
+            span = (date.fromisoformat(ordered[-1]["date"]) - date.fromisoformat(ordered[0]["date"])).days
+            if span >= 30 and float(ordered[0]["value"]) > 0:
+                gpu_changes.append((float(ordered[-1]["value"]) / float(ordered[0]["value"]) - 1) * 100)
+    median_gpu_change = statistics.median(gpu_changes) if gpu_changes else None
+    gpu_tightness_score = clamp(50 + 2 * median_gpu_change) if median_gpu_change is not None else None
+    capital_components = [
+        component(
+            "csp_capex_growth", "CSP资本开支增速", capex_growth_score, 0.50,
+            f"同比中位数 {median_capex_growth:+.1f}%" if median_capex_growth is not None else "缺少至少两期可比数据",
+            "score = clip(50 + 1.25 × CSP公司CAPEX同比中位数, 0, 100)；0%=50，+40%=100，−40%=0",
+            len(growth_rates), growth_rows,
+            "采用公司整体CAPEX，可能包含非AI投入。",
+        ),
+        component(
+            "csp_capex_coverage", "四大CSP披露覆盖", capex_coverage_score, 0.20,
+            f"{len(capex_covered)} / {len(csp_ids)} 家", "score = 有有效CAPEX披露的四大CSP数 ÷ 4 × 100",
+            len(csp_ids), real_capex,
+        ),
+        component(
+            "recent_funding", "近12个月模型公司融资", funding_score, 0.15,
+            f"合计 ${funding_total:.1f}B" if recent_funding else "暂无有效披露",
+            "score = clip(近12个月已披露融资额 ÷ $100B × 100, 0, 100)", len(recent_funding), recent_funding,
+        ),
+        component(
+            "gpu_price_tightness", "GPU租赁价格趋势", gpu_tightness_score, 0.15,
+            f"变化中位数 {median_gpu_change:+.1f}%" if median_gpu_change is not None else "不足30天，不计分",
+            "score = clip(50 + 2 × 至少30天GPU价格变化中位数, 0, 100)", len(gpu_changes), real_gpu,
+            "高分表示租赁价格上涨/供需偏紧，不代表投资回报更高。",
+        ),
+    ]
+    capital_score, capital_available_weight = aggregate_components(capital_components)
+
+    factor_scores = {
+        "technology_maturity": {
+            "score": tech_score, "weight": float(factors.get("technology_maturity", {}).get("weight", 0.30)),
+            "available": tech_score is not None, "available_component_weight": tech_available_weight,
+            "components": tech_components,
+        },
+        "commercialization": {
+            "score": biz_score, "weight": float(factors.get("commercialization", {}).get("weight", 0.35)),
+            "available": biz_score is not None, "available_component_weight": biz_available_weight,
+            "components": biz_components,
+        },
+        "capital_investment": {
+            "score": capital_score, "weight": float(factors.get("capital_investment", {}).get("weight", 0.35)),
+            "available": capital_score is not None, "available_component_weight": capital_available_weight,
+            "components": capital_components,
+        },
+    }
+    available_factors = [factor for factor in factor_scores.values() if factor["available"]]
+    sufficient_industry_data = len(available_factors) >= 2
     if sufficient_industry_data:
-        weighted = [
-            (tech_score, factors.get("technology_maturity", {}).get("weight", 0.30)),
-            (biz_score, factors.get("commercialization", {}).get("weight", 0.35)),
-            (capital_score, factors.get("capital_investment", {}).get("weight", 0.35)),
-        ]
-        present = [(score, weight) for score, weight in weighted if score is not None]
-        weight_sum = sum(weight for _, weight in present)
-        industry_score: float | None = round(
-            sum(float(score) * weight for score, weight in present) / weight_sum, 1
-        )
+        factor_weight_sum = sum(float(factor["weight"]) for factor in available_factors)
+        industry_score = round(sum(float(factor["score"]) * float(factor["weight"]) for factor in available_factors) / factor_weight_sum, 1)
+        for factor in factor_scores.values():
+            effective = float(factor["weight"]) / factor_weight_sum if factor["available"] else 0.0
+            factor["effective_weight"] = round(effective, 4)
+            factor["contribution"] = round(float(factor["score"]) * effective, 1) if factor["available"] else None
     else:
         industry_score = None
+        for factor in factor_scores.values():
+            factor["effective_weight"] = 0.0
+            factor["contribution"] = None
 
-    # Risk overlay — 免费行情只能提供价格拥挤代理，不冒充估值或ETF申赎数据。
+    # ── Market-price crowding proxy ───────────────────────────
     market_3m = [float(r["return_3m_pct"]) for r in market if r.get("return_3m_pct") is not None]
     market_dd = [float(r["drawdown_52w_pct"]) for r in market if r.get("drawdown_52w_pct") is not None]
-    risk_components: dict[str, float] = {}
-    if market_3m:
-        avg_momentum = sum(market_3m) / len(market_3m)
-        breadth = sum(1 for v in market_3m if v > 0) / len(market_3m) * 100
-        risk_components["momentum"] = max(0, min(100, 50 + avg_momentum * 1.5))
-        risk_components["breadth"] = breadth
-    if market_dd:
-        avg_dd = sum(market_dd) / len(market_dd)
-        risk_components["proximity_to_52w_high"] = max(0, min(100, 100 + avg_dd * 2))
-    risk_available = len(risk_components)
-    risk_score = round(sum(risk_components.values()) / risk_available, 1) if risk_available >= 2 else None
+    median_momentum = statistics.median(market_3m) if market_3m else None
+    breadth = sum(1 for value in market_3m if value > 0) / len(market_3m) * 100 if market_3m else None
+    median_drawdown = statistics.median(market_dd) if market_dd else None
+    risk_details = [
+        component(
+            "momentum", "3个月价格动量", clamp(50 + 1.25 * median_momentum) if median_momentum is not None else None,
+            0.40, f"中位收益 {median_momentum:+.1f}%" if median_momentum is not None else "缺失",
+            "score = clip(50 + 1.25 × 观察池3个月收益率中位数, 0, 100)", len(market_3m), market,
+        ),
+        component(
+            "breadth", "上涨广度", breadth, 0.30,
+            f"{sum(1 for value in market_3m if value > 0)} / {len(market_3m)} 个标的上涨" if market_3m else "缺失",
+            "score = 3个月收益为正的标的数 ÷ 有效标的数 × 100", len(market_3m), market,
+        ),
+        component(
+            "proximity_to_52w_high", "距52周高点", clamp(100 + median_drawdown) if median_drawdown is not None else None,
+            0.30, f"距高点中位数 {median_drawdown:.1f}%" if median_drawdown is not None else "缺失",
+            "score = clip(100 + 距52周高点回撤中位数, 0, 100)", len(market_dd), market,
+        ),
+    ]
+    risk_score, risk_available_weight = aggregate_components(risk_details)
+    risk_components = {item["id"]: item["score"] for item in risk_details if item.get("score") is not None}
 
-    # 确定阶段：数据不足时明确返回“数据不足”，不输出伪精确结论。
+    # ── Deterioration triggers and stage decision ─────────────
+    capex_deceleration_available = False
+    capex_deceleration = False
+    for rows in by_company.values():
+        unique_periods = {str(row.get("period")): row for row in rows}
+        ordered = sorted(unique_periods.values(), key=lambda r: r.get("as_of_date", ""))
+        if len(ordered) >= 3 and all(float(row.get("value") or 0) > 0 for row in ordered[-3:]):
+            capex_deceleration_available = True
+            previous_growth = float(ordered[-2]["value"]) / float(ordered[-3]["value"]) - 1
+            latest_growth = float(ordered[-1]["value"]) / float(ordered[-2]["value"]) - 1
+            capex_deceleration = capex_deceleration or latest_growth < previous_growth
+    gpu_decline_available = any(len({row.get("date") for row in rows}) >= 3 for rows in gpu_by_metric.values())
+    gpu_decline = False
+    if gpu_decline_available:
+        gpu_decline = any(
+            len(ordered := sorted({row.get("date"): float(row["value"]) for row in rows if row.get("date")}.items())) >= 3
+            and ordered[-3][1] > ordered[-2][1] > ordered[-1][1]
+            for rows in gpu_by_metric.values()
+        )
+    median_market_return = statistics.median(market_3m) if market_3m else None
+    triggers = [
+        {"id": "capex_deceleration", "label": "CAPEX增速连续放缓", "available": capex_deceleration_available, "triggered": capex_deceleration if capex_deceleration_available else None, "rule": "同一公司至少3期CAPEX，最近一期同比低于前一期同比"},
+        {"id": "gpu_price_decline", "label": "GPU价格连续两期回落", "available": gpu_decline_available, "triggered": gpu_decline if gpu_decline_available else None, "rule": "同一GPU价格序列最近3个有效观察值连续下降"},
+        {"id": "arr_expectation_miss", "label": "ARR低于一致预期", "available": False, "triggered": None, "rule": "需要可授权的一致预期数据，当前未接入"},
+        {"id": "extreme_crowding", "label": "市场拥挤代理≥85", "available": risk_score is not None, "triggered": risk_score >= 85 if risk_score is not None else None, "rule": "risk_crowding_score ≥ 85"},
+        {"id": "market_correction", "label": "观察池显著回撤", "available": median_market_return is not None, "triggered": median_market_return <= -20 if median_market_return is not None else None, "rule": "观察池3个月收益率中位数 ≤ −20%"},
+    ]
+    deterioration_count = sum(1 for item in triggers if item.get("triggered") is True)
     if sufficient_industry_data and industry_score is not None:
-        stage_id, stage_label = _determine_stage(industry_score, risk_score or 50.0, stages)
+        stage_id, stage_label = _determine_stage(industry_score, risk_score or 50.0, stages, deterioration_count)
     else:
         stage_id, stage_label = ("insufficient_data", "数据不足")
 
-    missing_factors = 3 - len(available_factor_scores)
-    capex_growth_companies = sum(
-        1 for rows in by_company.values() if len(rows) >= 2
-    ) if real_capex else 0
-    # 当前仍以公开价格覆盖、披露数量和CAPEX增速为代理，不应给出中/高置信度。
+    stage_checks = [
+        {"stage_id": "insufficient_data", "label": "数据不足", "rule": "三项产业因子中少于2项可计算", "matched": not sufficient_industry_data},
+        {"stage_id": "cyclical_adjustment", "label": "周期调整期", "rule": "5项恶化信号中至少2项触发", "matched": deterioration_count >= 2},
+        {"stage_id": "valuation_crowding", "label": "市场拥挤警戒", "rule": "产业发展强度≥55 且市场拥挤代理≥70", "matched": industry_score is not None and industry_score >= 55 and risk_score is not None and risk_score >= 70},
+        {"stage_id": "commercialization", "label": "商业化兑现期", "rule": "产业发展强度≥55 且市场拥挤代理<70", "matched": industry_score is not None and industry_score >= 55 and (risk_score is None or risk_score < 70)},
+        {"stage_id": "infra_expansion", "label": "基础设施扩张期", "rule": "35≤产业发展强度<55", "matched": industry_score is not None and 35 <= industry_score < 55},
+        {"stage_id": "tech_validation", "label": "技术验证期", "rule": "产业发展强度<35", "matched": industry_score is not None and industry_score < 35},
+    ]
+
+    missing_components = sum(
+        1 for factor in factor_scores.values() for item in factor["components"] if item.get("score") is None
+    )
+    capex_growth_companies = len(growth_rates)
+    confidence_reasons: list[str] = []
+    if len(disclosed_companies) < 3:
+        confidence_reasons.append(f"商业化有效披露仅覆盖 {len(disclosed_companies)} 家公司")
+    if capex_growth_companies < 2:
+        confidence_reasons.append(f"仅 {capex_growth_companies} 家CSP具备两期可比CAPEX")
+    if not enterprise_rows:
+        confidence_reasons.append("企业客户数缺失")
+    if not gpu_changes:
+        confidence_reasons.append("GPU价格历史不足30天")
+    if market and all(int(row.get("source_tier") or 9) >= 3 for row in market):
+        confidence_reasons.append("市场拥挤度仅使用T3免费行情代理")
+    confidence = "missing" if not sufficient_industry_data else ("low" if confidence_reasons else "medium")
+    total_sources = len(sources)
+
     return {
         "generated_at": generated_at,
         "stage_id": stage_id,
         "stage_label": stage_label,
+        "stage_description": next((item.get("description") for item in stages if item.get("id") == stage_id), ""),
         "industry_development_score": industry_score,
         "risk_crowding_score": risk_score,
-        "risk_note": "基于观察池3个月动量、上涨广度和距52周高点的价格拥挤代理；不包含Forward P/E或ETF申赎，不能单独作为交易信号。" if risk_score is not None else "行情覆盖不足，风险Overlay暂不输出。",
-        "risk_components": {k: round(v, 1) for k, v in risk_components.items()},
-        "factor_scores": {
-            "technology_maturity": {"score": tech_score, "weight": 0.30, "available": tech_score is not None},
-            "commercialization": {"score": biz_score, "weight": 0.35, "available": biz_score is not None},
-            "capital_investment": {"score": capital_score, "weight": 0.35, "available": capital_score is not None},
+        "risk_note": "仅为市场价格拥挤代理：使用3个月动量、上涨广度与距52周高点；未接入Forward P/E、EV/EBITDA或ETF净申购，因此不能称为完整估值拥挤度，也不能单独作为交易信号。" if risk_score is not None else "行情覆盖不足，市场拥挤代理暂不输出。",
+        "risk_components": risk_components,
+        "risk_details": {"score": risk_score, "available_component_weight": risk_available_weight, "components": risk_details},
+        "factor_scores": factor_scores,
+        "confidence": confidence,
+        "confidence_reasons": confidence_reasons,
+        "score_method": "transparent_proxy_v2",
+        "methodology": {
+            "positioning": "可复现的产业监测代理指数，不是经回测验证的收益预测模型，也不是投资评级。",
+            "industry_formula": "产业发展强度 = 技术成熟度×30% + 商业化兑现度×35% + 资本投入强度×35%；缺失整项时对可用权重归一化。",
+            "industry_calculation": " + ".join(
+                f"{factor['score']:.1f}×{factor['effective_weight']*100:.0f}%={factor['contribution']:.1f}"
+                for factor in factor_scores.values() if factor["available"]
+            ) + (f" = {industry_score:.1f}" if industry_score is not None else ""),
+            "risk_formula": "市场拥挤代理 = 3个月动量×40% + 上涨广度×30% + 距52周高点×30%。",
+            "risk_calculation": " + ".join(
+                f"{item['score']:.1f}×{item['effective_weight']*100:.0f}%={item['contribution']:.1f}"
+                for item in risk_details if item.get("score") is not None
+            ) + (f" = {risk_score:.1f}" if risk_score is not None else ""),
+            "normalisation": "所有异量纲原始值按预先公开的锚点线性映射到0–100并截尾；不使用当期样本的min-max，避免样本变化导致历史分数漂移。",
+            "missing_policy": "缺失值不填0、不默认50；在同一因子内仅对可用子因子重新归一权重，并披露缺失项。",
+            "method_reference": {
+                "name": "OECD / EC-JRC — Handbook on Constructing Composite Indicators",
+                "url": "https://doi.org/10.1787/9789264043466-en",
+            },
         },
-        "confidence": "missing" if not sufficient_industry_data else "low",
-        "score_method": "proxy_v1",
-        "limitations": "评分使用公开价格覆盖、商业披露数量、CAPEX增速与行情动量代理；尚未纳入模型能力基准、Token真实用量、一致预期估值与ETF申赎。",
+        "stage_decision": {
+            "evaluation_order": "数据充足性 → 周期调整触发 → 市场拥挤警戒 → 商业化兑现 → 基建扩张 → 技术验证",
+            "matched_stage": stage_id,
+            "matched_rule": next((item["rule"] for item in stage_checks if item["stage_id"] == stage_id), ""),
+            "checks": stage_checks,
+            "deterioration_trigger_count": deterioration_count,
+            "deterioration_required": 2,
+            "deterioration_triggers": triggers,
+        },
+        "limitations": "当前仍缺统一模型能力基准、企业客户数、可比Token真实用量、两年以上多公司CAPEX增速、机构级估值与ETF申赎。分数适合监测方向和数据覆盖，不适合直接生成仓位。",
         "insufficient_data": not sufficient_industry_data,
         "sample_based": any(p.get("confidence") == "sample" for p in pricing_with_value),
         "missing_based": not sufficient_industry_data,
-        "missing_factor_count": missing_factors,
+        "missing_factor_count": 3 - len(available_factors),
+        "missing_component_count": missing_components,
         "data_coverage": {
             "pricing_records": len(pricing_with_value),
             "pricing_real": len(real_pricing),
@@ -707,9 +1020,11 @@ def _build_cycle_scores(
 
 
 def _determine_stage(
-    industry: float, risk: float, stages: list[dict[str, Any]]
+    industry: float, risk: float, stages: list[dict[str, Any]], adjustment_trigger_count: int = 0
 ) -> tuple[str, str]:
-    """根据 industry_score 和 risk_score 判定周期阶段。"""
+    """Apply stage rules in explicit priority order."""
+    if adjustment_trigger_count >= 2:
+        return ("cyclical_adjustment", "周期调整期")
     if industry < 35:
         return ("tech_validation", "技术验证期")
     if risk >= 70 and industry >= 55:

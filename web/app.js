@@ -191,12 +191,12 @@
         <article class="card stage-card">
           <span class="stage-label ${isPreliminary ? 'sample-stage' : ''}">当前阶段 · ${esc(c.stage_label || "—")}</span>
           <h2>AI 产业周期：${esc(c.stage_label || "数据不足")}</h2>
-          <p class="lead">${esc(stageDescription(c.stage_id))}</p>
+          <p class="lead">${esc(c.stage_description || stageDescription(c.stage_id))}</p>
           <div class="stage-scores">
             <div class="score-item"><b>${esc(fmtNum(c.industry_development_score, 1))}</b>产业发展强度 / 100</div>
-            <div class="score-item"><b>${hasRisk ? esc(fmtNum(c.risk_crowding_score, 1)) : "—"}</b>风险拥挤度</div>
+            <div class="score-item"><b>${hasRisk ? esc(fmtNum(c.risk_crowding_score, 1)) : "—"}</b>市场拥挤代理</div>
             <div class="score-item"><b>${esc(c.confidence || "—")}</b>评分置信度</div>
-            <div class="score-item"><b>${esc(c.missing_factor_count || 0)}</b>缺失因子</div>
+            <div class="score-item"><b>${esc(c.missing_component_count ?? c.missing_factor_count ?? 0)}</b>缺失子因子</div>
           </div>
         </article>
       </section>
@@ -205,15 +205,15 @@
       <section class="section">
         <div class="section-head"><h2>产业周期因子</h2><p>${c.confidence === 'low' ? '当前覆盖有限' : '技术、商业化、资本投入与市场风险联合观察'}</p></div>
         <div class="grid-2">
-          ${renderFactorCard("技术成熟度", c.factor_scores?.technology_maturity, "Token降价速度·模型能力·开源生态·多模态")}
-          ${renderFactorCard("商业化兑现度", c.factor_scores?.commercialization, "ARR轨迹·Token用量·企业采纳·披露覆盖")}
-          ${renderFactorCard("资本投入强度", c.factor_scores?.capital_investment, "CSP Capex·GPU供需·数据中心·融资")}
+          ${renderFactorCard("技术成熟度", c.factor_scores?.technology_maturity, "Token成本·价格覆盖·百万Token上下文·多模态")}
+          ${renderFactorCard("商业化兑现度", c.factor_scores?.commercialization, "ARR/年化收入·活跃用户·企业客户·披露覆盖")}
+          ${renderFactorCard("资本投入强度", c.factor_scores?.capital_investment, "CSP CAPEX·披露覆盖·融资·GPU价格趋势")}
           <article class="card">
-            <h3>估值/市场拥挤度 Overlay</h3>
-            <p class="subtitle">AI股票估值·ETF资金流·市场情绪·价基背离</p>
+            <h3>市场价格拥挤度（代理）</h3>
+            <p class="subtitle">3个月动量·上涨广度·距52周高点</p>
             <div class="bar-list">
               <div class="bar-row">
-                <div class="bar-label">风险拥挤度</div>
+                <div class="bar-label">市场拥挤代理</div>
                 <div class="bar-track"><div class="bar-fill" style="width:${hasRisk ? c.risk_crowding_score : 0}%;background:var(--warn)"></div></div>
                 <div class="bar-value">${hasRisk ? fmtNum(c.risk_crowding_score, 0) + " / 100" : "待数据完善"}</div>
               </div>
@@ -221,6 +221,7 @@
             ${c.risk_note ? `<p style="font-size:11px;color:var(--muted);margin-top:8px">${esc(c.risk_note)}</p>` : ""}
           </article>
         </div>
+        ${renderCycleMethodology(c)}
       </section>
 
       <!-- KPIs -->
@@ -254,6 +255,67 @@
     </article>`;
   }
 
+  function renderCycleMethodology(c) {
+    const method=c.methodology||{}, factors=c.factor_scores||{}, risk=c.risk_details||{};
+    const factorSections=[
+      ["技术成熟度",factors.technology_maturity],
+      ["商业化兑现度",factors.commercialization],
+      ["资本投入强度",factors.capital_investment],
+      ["市场价格拥挤代理",risk],
+    ].filter(([,factor])=>factor);
+    const confidenceReasons=(c.confidence_reasons||[]).map(x=>`<li>${esc(x)}</li>`).join("");
+    const stage=c.stage_decision||{};
+    const checks=(stage.checks||[]).map(row=>`<tr class="${row.matched?'method-match':''}">
+      <td><strong>${esc(row.label)}</strong></td><td>${esc(row.rule)}</td>
+      <td>${row.matched?'<span class="tag verified">本期命中</span>':'<span class="tag missing">未命中</span>'}</td>
+    </tr>`).join("");
+    const triggers=(stage.deterioration_triggers||[]).map(row=>`<tr>
+      <td>${esc(row.label)}</td><td>${esc(row.rule)}</td><td>${row.available?(row.triggered?'<span class="tag error">触发</span>':'<span class="tag verified">未触发</span>'):'<span class="tag missing">数据不可用</span>'}</td>
+    </tr>`).join("");
+    return `<details class="cycle-methodology">
+      <summary><span>评分公式、数据来源与本期完整计算</span><small>展开查看每个原始值、标准化、权重、贡献和阶段判定</small></summary>
+      <div class="cycle-method-body">
+        <div class="method-callout"><strong>先说结论：</strong>${esc(method.positioning||"")} 当前置信度为 <b>${esc(c.confidence||"—")}</b>。${esc(c.limitations||"")}</div>
+        <div class="method-formulas">
+          <div><span>产业发展强度</span><b>${esc(method.industry_calculation||"—")}</b><small>${esc(method.industry_formula||"")}</small></div>
+          <div><span>市场拥挤代理</span><b>${esc(method.risk_calculation||"—")}</b><small>${esc(method.risk_formula||"")}</small></div>
+        </div>
+        ${factorSections.map(([title,factor])=>renderCycleFactorBreakdown(title,factor)).join("")}
+        <section class="method-subsection">
+          <h4>当前阶段如何判定</h4>
+          <p class="method-note">按固定优先级判断：${esc(stage.evaluation_order||"—")}。本期命中规则：<strong>${esc(stage.matched_rule||"—")}</strong>。</p>
+          <div class="table-wrap"><table class="cycle-method-table"><thead><tr><th>候选阶段</th><th>判定规则</th><th>本期结果</th></tr></thead><tbody>${checks}</tbody></table></div>
+        </section>
+        <section class="method-subsection">
+          <h4>周期调整期的恶化信号</h4>
+          <p class="method-note">至少 ${esc(stage.deterioration_required??2)} 项明确触发才进入周期调整期；缺失数据不会被当作“未触发”。本期触发 ${esc(stage.deterioration_trigger_count??0)} 项。</p>
+          <div class="table-wrap"><table class="cycle-method-table"><thead><tr><th>信号</th><th>规则</th><th>状态</th></tr></thead><tbody>${triggers}</tbody></table></div>
+        </section>
+        <section class="method-subsection method-grid-2">
+          <div><h4>缺失与归一化规则</h4><p>${esc(method.normalisation||"")}</p><p>${esc(method.missing_policy||"")}</p></div>
+          <div><h4>为什么置信度仍是 ${esc(c.confidence||"—")}</h4>${confidenceReasons?`<ul>${confidenceReasons}</ul>`:'<p>当前未发现额外置信度降级项。</p>'}</div>
+        </section>
+        <p class="method-reference">方法设计参考：${method.method_reference?sourceLink(method.method_reference.url,method.method_reference.name):"—"}</p>
+      </div>
+    </details>`;
+  }
+
+  function renderCycleFactorBreakdown(title, factor) {
+    const rows=(factor.components||[]).map(item=>{
+      const sources=(item.sources||[]).map(s=>`${sourceLink(s.url,s.name)}${s.tier?` ${badgeSourceTier(s.tier)}`:""}`).join("<br>")||'<span class="tag missing">暂无来源</span>';
+      return `<tr>
+        <td><strong>${esc(item.label)}</strong><small>${esc(item.formula||"")}</small></td>
+        <td>${esc(item.raw_display||"—")}<small>样本 ${esc(item.sample_size??0)}</small></td>
+        <td class="num">${item.score==null?"—":esc(fmtNum(item.score,1))}</td>
+        <td class="num">${item.score==null?"—":esc(fmtNum((item.effective_weight||0)*100,1))+"%"}</td>
+        <td class="num">${item.contribution==null?"—":esc(fmtNum(item.contribution,1))}</td>
+        <td>${sources}${item.note?`<small>${esc(item.note)}</small>`:""}</td>
+      </tr>`;
+    }).join("");
+    return `<section class="method-subsection"><h4>${esc(title)}：${factor.score==null?"—":esc(fmtNum(factor.score,1))+" / 100"}${factor.contribution!=null?` · 对产业总分贡献 ${esc(fmtNum(factor.contribution,1))}`:""}</h4>
+      <div class="table-wrap"><table class="cycle-method-table"><thead><tr><th>子因子与公式</th><th>本期原始值</th><th>分数</th><th>有效权重</th><th>贡献</th><th>来源/说明</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+  }
+
   function kpiCard(label, value, suffix) {
     return `<article class="kpi-card">
       <div class="kpi-label">${esc(label)}</div>
@@ -284,8 +346,8 @@
     const m = {
       tech_validation: "技术路线探索期。Token价格处于高位，商业模式未成形，资本投入相对谨慎。",
       infra_expansion: "Capex快速增长，GPU供不应求，Token价格开始快速下降。基础设施层持续受益。",
-      commercialization: "ARR加速增长，Token使用量爆发，部分公司实现盈利。技术成熟与商业闭环共振。",
-      valuation_crowding: "⚠️ 估值处于高位，资金拥挤。需警惕基本面与价格的背离。这不代表产业更成熟。",
+      commercialization: "产业发展代理达到55以上且市场拥挤代理低于70；表示技术、商业与资本投入证据较强，不等同于全行业已经盈利。",
+      valuation_crowding: "⚠️ 产业发展代理较强，同时市场价格拥挤代理达到70以上。当前未纳入完整估值与ETF申赎，只作为价格风险警戒。",
       cyclical_adjustment: "⚠️ 产能过剩担忧，Capex增速放缓。行业进入出清或再平衡。由边际恶化信号触发。",
       insufficient_data: "当前的真实定价、商业化与资本开支数据覆盖不足，暂不输出产业周期判断。",
     };

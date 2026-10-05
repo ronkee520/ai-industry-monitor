@@ -103,6 +103,16 @@ class TestBuildDashboard(unittest.TestCase):
         self.assertIn("confidence", cycle)
         # 第一期只有 sample 数据或无数据时，应标记 confidence=low
         self.assertIn(cycle.get("confidence", ""), ("low", "medium", "missing"))
+        self.assertEqual(cycle.get("score_method"), "transparent_proxy_v2")
+        self.assertIn("industry_calculation", cycle.get("methodology", {}))
+        self.assertIn("risk_calculation", cycle.get("methodology", {}))
+        self.assertIn("stage_decision", cycle)
+        for factor in cycle.get("factor_scores", {}).values():
+            self.assertIn("components", factor)
+            for component in factor["components"]:
+                self.assertIn("formula", component)
+                self.assertIn("raw_display", component)
+                self.assertIn("sample_size", component)
 
     def test_cycle_does_not_claim_stage_without_data(self):
         payload = _dash.build_dashboard(self.root)
@@ -145,6 +155,13 @@ class TestBuildDashboard(unittest.TestCase):
         ).get("stages", [])
         sid, _ = _dash._determine_stage(65, 75, stages)
         self.assertEqual(sid, "valuation_crowding")
+
+    def test_adjustment_signals_have_priority(self):
+        stages = _dash._shared.load_json(
+            self.root / "config" / "cycle_factors.json", {}
+        ).get("stages", [])
+        sid, _ = _dash._determine_stage(65, 40, stages, adjustment_trigger_count=2)
+        self.assertEqual(sid, "cyclical_adjustment")
 
 
 if __name__ == "__main__":
