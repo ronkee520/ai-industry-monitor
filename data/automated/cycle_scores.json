@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-10-04T01:35:15+08:00",
+  "generated_at": "2026-10-05T14:29:42+08:00",
   "stage_id": "commercialization",
   "stage_label": "商业化兑现期",
   "industry_development_score": 76.4,
-  "risk_crowding_score": 58.2,
+  "risk_crowding_score": 57.4,
   "risk_note": "基于观察池3个月动量、上涨广度和距52周高点的价格拥挤代理；不包含Forward P/E或ETF申赎，不能单独作为交易信号。",
   "risk_components": {
-    "momentum": 56.5,
+    "momentum": 54.1,
     "breadth": 57.9,
     "proximity_to_52w_high": 60.1
   },
@@ -42,7 +42,7 @@
     "gpu_real": 10,
     "capex_real": 4,
     "capex_growth_companies": 1,
-    "sources_ok": 15,
+    "sources_ok": 16,
     "sources_total": 18
   },
   "stages_reference": [

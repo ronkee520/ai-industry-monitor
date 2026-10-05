@@ -6,3 +6,7 @@
 {"date":"2026-10-04","metric_id":"capex_total::microsoft::fy2024","value":44.477,"company_id":"microsoft","period":"FY2024"}
 {"date":"2026-10-04","metric_id":"capex_total::meta::fy2025","value":72.22,"company_id":"meta","period":"FY2025"}
 {"date":"2026-10-04","metric_id":"capex_total::alphabet::fy2025","value":91.0,"company_id":"google","period":"FY2025"}
+{"date":"2026-10-05","metric_id":"capex_total::microsoft::fy2025","value":64.551,"company_id":"microsoft","period":"FY2025"}
+{"date":"2026-10-05","metric_id":"capex_total::microsoft::fy2024","value":44.477,"company_id":"microsoft","period":"FY2024"}
+{"date":"2026-10-05","metric_id":"capex_total::meta::fy2025","value":72.22,"company_id":"meta","period":"FY2025"}
+{"date":"2026-10-05","metric_id":"capex_total::alphabet::fy2025","value":91.0,"company_id":"google","period":"FY2025"}
