@@ -222,36 +222,36 @@
     "last_successful_check": "2026-10-05T14:29:32+08:00"
   },
   {
-    "source_id": "lambda_cloud_pricing",
-    "provider": "Lambda Cloud",
-    "kind": "gpu_rental",
-    "name": "Lambda Cloud On-Demand GPU Pricing",
-    "url": "https://lambda.ai/instances",
-    "checked_at": "2026-10-05T14:29:37+08:00",
-    "status": "ok",
-    "http_status": 200,
-    "final_url": "https://lambda.ai/instances",
-    "content_hash": "a4da58a9bb47e44117246d02fa16220e254e2a764687773fba9ac7dc290839f8",
-    "changed": null,
-    "text_chars": 97803,
-    "error": null,
-    "last_successful_check": "2026-10-05T14:29:37+08:00"
-  },
-  {
     "source_id": "vast_ai",
     "provider": "Vast.ai",
     "kind": "gpu_rental",
     "name": "Vast.ai GPU Pricing",
     "url": "https://vast.ai/",
-    "checked_at": "2026-10-05T14:29:37+08:00",
+    "checked_at": "2026-10-06T00:11:43+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://vast.ai/",
     "content_hash": "d16c3cf6169e58b7a7a194d057a713cf3614978506b78bb47331c239a3660254",
-    "changed": null,
+    "changed": false,
     "text_chars": 101410,
     "error": null,
-    "last_successful_check": "2026-10-05T14:29:37+08:00"
+    "last_successful_check": "2026-10-06T00:11:43+08:00"
+  },
+  {
+    "source_id": "lambda_cloud_pricing",
+    "provider": "Lambda Cloud",
+    "kind": "gpu_rental",
+    "name": "Lambda Cloud On-Demand GPU Pricing",
+    "url": "https://lambda.ai/instances",
+    "checked_at": "2026-10-06T00:11:43+08:00",
+    "status": "ok",
+    "http_status": 200,
+    "final_url": "https://lambda.ai/instances",
+    "content_hash": "a4da58a9bb47e44117246d02fa16220e254e2a764687773fba9ac7dc290839f8",
+    "changed": false,
+    "text_chars": 97803,
+    "error": null,
+    "last_successful_check": "2026-10-06T00:11:43+08:00"
   },
   {
     "source_id": "runpod_pricing",
@@ -259,15 +259,15 @@
     "kind": "gpu_rental",
     "name": "RunPod GPU Pricing",
     "url": "https://www.runpod.io/pricing",
-    "checked_at": "2026-10-05T14:29:37+08:00",
+    "checked_at": "2026-10-06T00:11:44+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://www.runpod.io/pricing",
     "content_hash": "cb34628e8bd3da9ce1e2555709f81e902ea474bf4044c6387a82b459a04c8e53",
-    "changed": null,
+    "changed": false,
     "text_chars": 320981,
     "error": null,
-    "last_successful_check": "2026-10-05T14:29:37+08:00"
+    "last_successful_check": "2026-10-06T00:11:44+08:00"
   },
   {
     "source_id": "aliyun_gpu",
@@ -275,14 +275,14 @@
     "kind": "gpu_rental_cloud",
     "name": "阿里云GPU定价",
     "url": "https://help.aliyun.com/en/cs/product-overview/product-billing-rules",
-    "checked_at": "2026-10-05T14:29:39+08:00",
+    "checked_at": "2026-10-06T00:11:44+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://help.aliyun.com/en/cs/product-overview/product-billing-rules",
-    "content_hash": "4930d4d87b12714d5167c2c3aabfdf6ed1f23a11ffbfd98fbea563202280bd00",
-    "changed": null,
+    "content_hash": "c8fbcec01294c1c174da6802170a3c343d557b5af032bee8cd261d6858ea26d5",
+    "changed": true,
     "text_chars": 119932,
     "error": null,
-    "last_successful_check": "2026-10-05T14:29:39+08:00"
+    "last_successful_check": "2026-10-06T00:11:44+08:00"
   }
 ]

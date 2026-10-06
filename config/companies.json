@@ -226,6 +226,50 @@
       "description": "上海AI Lab，InternLM系列开源模型的发布者"
     },
     {
+      "id": "tsmc",
+      "name": "TSMC",
+      "name_zh": "台积电",
+      "region": "overseas",
+      "type": "semiconductor",
+      "status": "active",
+      "listed": true,
+      "ticker": "TSM",
+      "description": "全球领先晶圆代工厂，先进制程是AI加速器制造核心环节"
+    },
+    {
+      "id": "asml",
+      "name": "ASML",
+      "name_zh": "ASML",
+      "region": "overseas",
+      "type": "semiconductor_equipment",
+      "status": "active",
+      "listed": true,
+      "ticker": "ASML",
+      "description": "EUV与DUV光刻系统供应商，先进制程关键设备环节"
+    },
+    {
+      "id": "micron",
+      "name": "Micron",
+      "name_zh": "美光科技",
+      "region": "overseas",
+      "type": "semiconductor",
+      "status": "active",
+      "listed": true,
+      "ticker": "MU",
+      "description": "DRAM、NAND与HBM供应商，AI服务器高带宽内存核心环节"
+    },
+    {
+      "id": "intel",
+      "name": "Intel",
+      "name_zh": "英特尔",
+      "region": "overseas",
+      "type": "semiconductor",
+      "status": "active",
+      "listed": true,
+      "ticker": "INTC",
+      "description": "CPU、AI加速器与晶圆代工平台供应商"
+    },
+    {
       "id": "nvidia",
       "name": "NVIDIA",
       "name_zh": "英伟达",

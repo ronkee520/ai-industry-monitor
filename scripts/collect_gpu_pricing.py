@@ -84,6 +84,8 @@ def collect_gpu_pricing(
             gpu_states.append(state)
             if r.get("ok") and src.get("parser") == "lambda_price_table":
                 parsed_records.extend(_parse_lambda_pricing(src, r.get("text", "")))
+            if r.get("ok") and src.get("parser") == "runpod_price_table":
+                parsed_records.extend(_parse_runpod_pricing(src, r.get("text", "")))
             if state["status"] == "ok":
                 ok += 1
             else:
@@ -150,6 +152,75 @@ def _parse_lambda_pricing(src: dict[str, Any], html: str) -> list[dict[str, Any]
             "evidence_status": "official_pricing", "confidence": "verified",
             "note": "取官方页面不同实例规模中展示的每GPU小时最低价；不含税，不代表任一区域实时可用性。",
             "tags": ["automated", "official", "on_demand"]
+        })
+    return out
+
+
+def _parse_runpod_pricing(src: dict[str, Any], html: str) -> list[dict[str, Any]]:
+    """Extract RunPod public Pods prices, normalized to USD/GPU-hour.
+
+    The official page also lists Serverless and cluster prices.  For each GPU
+    we retain the lowest public hourly price found on the page and identify the
+    record explicitly as a displayed minimum, so it is not mistaken for a
+    region-specific guaranteed quote.
+    """
+    text = _shared.visible_text(html)
+    # RunPod 页面同时包含 Pods、Serverless 与 Clusters；本看板只比较
+    # Pods 的单卡按小时价格，避免把另一产品线的价格串入同名 GPU。
+    pods_start = text.find("Thousands of GPUs across")
+    pods_end = text.find("Serverless", pods_start if pods_start >= 0 else 0)
+    if pods_start >= 0 and pods_end > pods_start:
+        text = text[pods_start:pods_end]
+    names = [
+        ("B300", 288), ("B200", 180), ("H200", 141),
+        ("RTX Pro 6000", 96), ("H100 NVL", 94), ("H100 PCIe", 80),
+        ("H100 SXM", 80), ("A100 PCIe", 80), ("A100 SXM", 80),
+        ("Pro 6000 MIG 48GB", 48), ("L40S", 48), ("RTX 6000 Ada", 48),
+        ("A40", 48), ("L40", 48),
+        ("RTX A6000", 48), ("RTX 5090", 32), ("L4", 24),
+        ("Pro 6000 MIG 24GB", 24), ("RTX 3090", 24),
+        ("RTX 4090", 24), ("RTX A5000", 24),
+    ]
+    now = _shared.now_shanghai().isoformat(timespec="seconds")
+    today = now[:10]
+    out: list[dict[str, Any]] = []
+    model_pattern = re.compile(
+        r"(?<![A-Za-z0-9])(?:" + "|".join(
+            re.escape(name) for name, _ in sorted(names, key=lambda item: len(item[0]), reverse=True)
+        ) + r")(?![A-Za-z0-9])",
+        re.I,
+    )
+    for name, vram in names:
+        prices: list[float] = []
+        name_pattern = re.compile(
+            rf"(?<![A-Za-z0-9]){re.escape(name)}(?![A-Za-z0-9])", re.I
+        )
+        for match in name_pattern.finditer(text):
+            next_model = model_pattern.search(text, match.end())
+            block_end = min(next_model.start() if next_model else len(text), match.end() + 520)
+            block = text[match.end():block_end]
+            prices.extend(
+                float(value)
+                for value in re.findall(r"\$\s*([0-9]+(?:\.[0-9]+)?)\s*/?\s*(?:hr|hour)", block, re.I)
+            )
+        if not prices:
+            continue
+        value = min(prices)
+        slug = re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")
+        out.append({
+            "metric_id": f"gpu_rental_hourly::runpod::{slug}::ondemand_min",
+            "metric_name": f"RunPod {name} 按需最低展示价",
+            "metric_category": "gpu_pricing",
+            "value": value, "unit": "USD_per_GPU_hour", "currency": "USD",
+            "company_id": None, "provider": src.get("provider", "RunPod"),
+            "gpu_model": f"NVIDIA {name}", "vram_gb": vram,
+            "price_type": "on_demand_displayed_min", "region": "global",
+            "period": today, "as_of_date": today, "collected_at": now,
+            "source_name": src.get("name"), "source_url": src.get("url"),
+            "source_tier": src.get("tier", 1),
+            "evidence_status": "official_pricing", "confidence": "verified",
+            "note": "取RunPod官方Pods页面公开展示的每GPU小时最低价；不同区域、安全云/社区云、实时库存和税费可能不同。",
+            "tags": ["automated", "official", "on_demand", "displayed_min"],
         })
     return out
 

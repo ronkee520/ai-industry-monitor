@@ -2,6 +2,7 @@
 
 import importlib.util
 import unittest
+from datetime import date, timedelta
 from pathlib import Path
 
 _SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
@@ -64,18 +65,24 @@ class TestBuildDashboard(unittest.TestCase):
         self.assertEqual(min(row["date"] for row in sonnet), "2026-02-17")
         self.assertTrue(any(row.get("event_type") == "official_price_effective" for row in sonnet))
 
-    def test_every_available_price_option_has_more_than_two_history_days(self):
+    def test_available_price_options_have_truthful_history(self):
         payload = _dash.build_dashboard(self.root)
         history = payload.get("history", {}).get("token_pricing", [])
         counts = {}
         for row in history:
             counts.setdefault(row.get("metric_id"), set()).add(row.get("date"))
-        available = [
-            row["metric_id"] for row in payload.get("token_pricing", {}).get("records", [])
-            if row.get("blended_cost_usd") is not None
-        ]
-        missing = {metric_id: len(counts.get(metric_id, set())) for metric_id in available
-                   if len(counts.get(metric_id, set())) <= 2}
+        today = date.today()
+        missing = {}
+        for row in payload.get("token_pricing", {}).get("records", []):
+            if row.get("blended_cost_usd") is None:
+                continue
+            metric_id = row["metric_id"]
+            observed_days = len(counts.get(metric_id, set()))
+            first_verified = date.fromisoformat(row.get("as_of_date") or today.isoformat())
+            # 新增官方型号不能拿今天价格倒填未知历史；首次核验不足3天时至少应有当日快照。
+            required_days = 1 if first_verified > today - timedelta(days=2) else 3
+            if observed_days < required_days:
+                missing[metric_id] = {"observed": observed_days, "required": required_days}
         self.assertEqual(missing, {})
 
     def test_sample_records_not_mislabeled_as_verified(self):
@@ -101,8 +108,9 @@ class TestBuildDashboard(unittest.TestCase):
         self.assertIn("stage_label", cycle)
         self.assertIn("industry_development_score", cycle)
         self.assertIn("confidence", cycle)
-        # 第一期只有 sample 数据或无数据时，应标记 confidence=low
-        self.assertIn(cycle.get("confidence", ""), ("low", "medium", "missing"))
+        self.assertIn(cycle.get("confidence", ""), ("high", "medium", "limited", "missing"))
+        self.assertIsInstance(cycle.get("confidence_score"), (int, float))
+        self.assertIn("component_coverage_pct", cycle.get("confidence_dimensions", {}))
         self.assertEqual(cycle.get("score_method"), "transparent_proxy_v2")
         self.assertIn("industry_calculation", cycle.get("methodology", {}))
         self.assertIn("risk_calculation", cycle.get("methodology", {}))
@@ -132,8 +140,23 @@ class TestBuildDashboard(unittest.TestCase):
 
     def test_second_phase_records_are_present(self):
         payload = _dash.build_dashboard(self.root)
-        self.assertGreaterEqual(len(payload["compute"].get("capex", [])), 2)
-        self.assertGreaterEqual(len(payload["supply_chain"].get("records", [])), 3)
+        self.assertGreaterEqual(len(payload["compute"].get("capex", [])), 8)
+        self.assertGreaterEqual(len({row["company_id"] for row in payload["compute"]["capex"]}), 4)
+        self.assertGreaterEqual(len(payload["supply_chain"].get("records", [])), 10)
+        self.assertGreaterEqual(len({row["company_id"] for row in payload["supply_chain"]["records"]}), 7)
+
+    def test_business_matrix_has_broad_company_coverage(self):
+        payload = _dash.build_dashboard(self.root)
+        self.assertGreaterEqual(len(payload["business"].get("companies", [])), 20)
+        self.assertGreaterEqual(len({row["company_id"] for row in payload["business"]["records"]}), 8)
+
+    def test_doubao_current_official_price_is_available(self):
+        payload = _dash.build_dashboard(self.root)
+        row = next(row for row in payload["token_pricing"]["records"]
+                   if row["model_id"] == "doubao_seed21_pro")
+        self.assertEqual(row["confidence"], "verified")
+        self.assertEqual(row["source_tier"], 1)
+        self.assertAlmostEqual(row["value"], 14.4)
 
     def test_determine_stage_low_industry(self):
         stages = _dash._shared.load_json(

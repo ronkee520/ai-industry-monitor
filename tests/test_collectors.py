@@ -168,6 +168,21 @@ class TestStructuredCollectors(unittest.TestCase):
         self.assertEqual(rows[0]["gpu_model"], "NVIDIA H100 SXM")
         self.assertEqual(rows[0]["value"], 3.99)
 
+    def test_runpod_parser_extracts_displayed_minimum(self):
+        html = """<section>Thousands of GPUs across 30+ regions
+        B300 288 GB HBM3e $7.89/hr H200 141 GB VRAM $4.59/hr
+        H100 SXM secure cloud $3.49/hr community cloud $2.69/hr
+        A100 SXM $1.59/hr Pro 6000 MIG 48GB $1.09/hr Serverless $9.99/hr</section>"""
+        rows = _gpu._parse_runpod_pricing(
+            {"provider":"RunPod","name":"RunPod","url":"https://www.runpod.io/pricing","tier":1}, html
+        )
+        by_model = {row["gpu_model"]: row for row in rows}
+        self.assertEqual(by_model["NVIDIA B300"]["value"], 7.89)
+        self.assertEqual(by_model["NVIDIA H200"]["value"], 4.59)
+        self.assertEqual(by_model["NVIDIA H100 SXM"]["value"], 2.69)
+        self.assertEqual(by_model["NVIDIA A100 SXM"]["value"], 1.59)
+        self.assertEqual(by_model["NVIDIA H100 SXM"]["price_type"], "on_demand_displayed_min")
+
     def test_market_dry_run(self):
         result = _market.collect_market_data(_resolve_root(), dry_run=True)
         self.assertGreater(result["symbols"], 10)

@@ -141,6 +141,20 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
         company_by_id,
         today,
     )
+    business_companies = [
+        {
+            "id": company.get("id"),
+            "name": company.get("name_zh") or company.get("name"),
+            "name_en": company.get("name"),
+            "region": company.get("region"),
+            "type": company.get("type"),
+            "listed": company.get("listed", False),
+            "ticker": company.get("ticker"),
+        }
+        for company in companies_list
+        if company.get("status") == "active"
+        and company.get("type") in {"independent_model", "tech_group", "research_lab"}
+    ]
 
     # ── 3. Compute 模块（GPU + Capex） ──
     gpu_records = _build_gpu(root, company_by_id, today)
@@ -196,6 +210,7 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
             "models_with_pricing": models_with_pricing,
             "source_ok": health["sources_ok"],
             "source_total": health["sources_total"],
+            "business_disclosures": arr_disclosed,
             "arr_disclosures": arr_disclosed,
         },
         "overview": {
@@ -212,8 +227,9 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
         },
         "business": {
             "records": business_records,
+            "companies": business_companies,
             "methodology": {
-                "note": "ARR、年化收入、年度收入分开展示，不强行合并。未披露≠0。",
+                "note": "ARR/年化运行率、财务收入、用户、企业采用、融资和估值按统一列展示；不同口径不强行合并，未披露≠0。",
             },
         },
         "compute": {
@@ -223,7 +239,7 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
         },
         "supply_chain": {
             "records": supply_chain_records,
-            "note": "SEC数据为公司整体口径，不等同于AI业务收入；用于观察产业链经营趋势。"
+            "note": "公司年报、业绩公告与监管披露均为公司整体口径，不等同于AI业务收入；保留原币种与财年边界，用于观察产业链经营趋势。"
         },
         "investment": {
             "watchlist": _shared.load_json(root / "config" / "watchlist.json", {}),
@@ -734,6 +750,11 @@ def _build_cycle_scores(
     arr_rows = [r for r in real_business if str(r.get("metric_id", "")).startswith("arr::") and float(r.get("value") or 0) > 0]
     user_rows = [r for r in real_business if str(r.get("metric_id", "")).startswith("user_count::") and float(r.get("value") or 0) > 0]
     enterprise_rows = [r for r in real_business if str(r.get("metric_id", "")).startswith("enterprise_customers::") and float(r.get("value") or 0) > 0]
+    business_company_ids = {
+        c.get("id") for c in companies
+        if c.get("status") == "active"
+        and c.get("type") in {"independent_model", "tech_group", "research_lab"}
+    }
     commercial_rows = arr_rows + user_rows + enterprise_rows
     total_arr = sum(float(r["value"]) for r in arr_rows)
     max_users = max((float(r["value"]) for r in user_rows), default=0.0)
@@ -742,7 +763,7 @@ def _build_cycle_scores(
     arr_score = clamp(total_arr / 200 * 100) if arr_rows else None
     user_score = clamp(max_users / 1_000_000_000 * 100) if user_rows else None
     enterprise_score = clamp(total_enterprise / 1_000_000 * 100) if enterprise_rows else None
-    disclosure_score = len(disclosed_companies) / len(companies) * 100 if companies else None
+    disclosure_score = len(disclosed_companies) / len(business_company_ids) * 100 if business_company_ids else None
     biz_components = [
         component(
             "arr_scale", "ARR/年化收入规模", arr_score, 0.40,
@@ -763,9 +784,9 @@ def _build_cycle_scores(
         ),
         component(
             "commercial_disclosure_breadth", "商业披露覆盖", disclosure_score, 0.15,
-            f"{len(disclosed_companies)} / {len(companies)} 家监测公司" if companies else "无公司样本",
+            f"{len(disclosed_companies)} / {len(business_company_ids)} 家模型与AI公司" if business_company_ids else "无公司样本",
             "score = 有ARR/用户/企业客户披露的公司数 ÷ 监测公司数 × 100",
-            len(companies), commercial_rows,
+            len(business_company_ids), commercial_rows,
         ),
     ]
     biz_score, biz_available_weight = aggregate_components(biz_components)
@@ -791,6 +812,7 @@ def _build_cycle_scores(
     recent_funding = [
         r for r in real_business
         if str(r.get("metric_id", "")).startswith("funding::")
+        and r.get("unit") == "USD_billion"
         and r.get("as_of_date")
         and (generated_day - date.fromisoformat(r["as_of_date"])).days <= 365
     ]
@@ -943,8 +965,8 @@ def _build_cycle_scores(
     )
     capex_growth_companies = len(growth_rates)
     confidence_reasons: list[str] = []
-    if len(disclosed_companies) < 3:
-        confidence_reasons.append(f"商业化有效披露仅覆盖 {len(disclosed_companies)} 家公司")
+    if len(disclosed_companies) < 5:
+        confidence_reasons.append(f"商业采用类有效披露覆盖 {len(disclosed_companies)} 家公司，仍需继续扩展")
     if capex_growth_companies < 2:
         confidence_reasons.append(f"仅 {capex_growth_companies} 家CSP具备两期可比CAPEX")
     if not enterprise_rows:
@@ -953,8 +975,32 @@ def _build_cycle_scores(
         confidence_reasons.append("GPU价格历史不足30天")
     if market and all(int(row.get("source_tier") or 9) >= 3 for row in market):
         confidence_reasons.append("市场拥挤度仅使用T3免费行情代理")
-    confidence = "missing" if not sufficient_industry_data else ("low" if confidence_reasons else "medium")
     total_sources = len(sources)
+    all_components = [
+        item for factor in factor_scores.values() for item in factor["components"]
+    ] + risk_details
+    available_components = sum(1 for item in all_components if item.get("score") is not None)
+    component_coverage = available_components / len(all_components) if all_components else 0.0
+    evidence_rows = real_pricing + real_business + real_gpu + real_capex
+    strong_evidence_rows = [
+        row for row in evidence_rows
+        if int(row.get("source_tier") or 9) <= 2
+        and row.get("confidence") in {"verified", "reported", "inferred"}
+    ]
+    evidence_quality = len(strong_evidence_rows) / len(evidence_rows) if evidence_rows else 0.0
+    source_reliability = sources_ok / total_sources if total_sources else 0.0
+    confidence_score = round(
+        (component_coverage * 0.45 + evidence_quality * 0.40 + source_reliability * 0.15) * 100,
+        1,
+    )
+    if not sufficient_industry_data:
+        confidence = "missing"
+    elif confidence_score >= 85:
+        confidence = "high"
+    elif confidence_score >= 65:
+        confidence = "medium"
+    else:
+        confidence = "limited"
 
     return {
         "generated_at": generated_at,
@@ -968,6 +1014,13 @@ def _build_cycle_scores(
         "risk_details": {"score": risk_score, "available_component_weight": risk_available_weight, "components": risk_details},
         "factor_scores": factor_scores,
         "confidence": confidence,
+        "confidence_score": confidence_score,
+        "confidence_dimensions": {
+            "component_coverage_pct": round(component_coverage * 100, 1),
+            "strong_evidence_pct": round(evidence_quality * 100, 1),
+            "source_reliability_pct": round(source_reliability * 100, 1),
+            "formula": "证据覆盖分 = 可计算子因子覆盖×45% + T1/T2强证据占比×40% + 自动数据源成功率×15%",
+        },
         "confidence_reasons": confidence_reasons,
         "score_method": "transparent_proxy_v2",
         "methodology": {
@@ -998,7 +1051,7 @@ def _build_cycle_scores(
             "deterioration_required": 2,
             "deterioration_triggers": triggers,
         },
-        "limitations": "当前仍缺统一模型能力基准、企业客户数、可比Token真实用量、两年以上多公司CAPEX增速、机构级估值与ETF申赎。分数适合监测方向和数据覆盖，不适合直接生成仓位。",
+        "limitations": "已补充多公司商业化、企业采用与两期CAPEX数据，但统一模型能力基准、可比Token真实用量、机构级Forward估值与ETF申赎仍未接入。指数用于产业阶段监测与研究复核，不直接生成仓位。",
         "insufficient_data": not sufficient_industry_data,
         "sample_based": any(p.get("confidence") == "sample" for p in pricing_with_value),
         "missing_based": not sufficient_industry_data,

@@ -1,7 +1,7 @@
 ﻿company_id,model_id,model_name,source_url,source_name,fetched_at,extraction_status,input_price_per_m_candidate,output_price_per_m_candidate,cached_input_price_per_m_candidate,currency_candidate,confidence,reason
 deepseek,deepseek_v3,DeepSeek-V3,https://api-docs.deepseek.com/quick_start/pricing,DeepSeek API Pricing,2026-07-29T16:11:32+08:00,partial,1.0,,,USD,needs_review,found input=1.0 but no clear output price. May need manual extraction.
 deepseek,deepseek_r1,DeepSeek-R1,https://api-docs.deepseek.com/quick_start/pricing,DeepSeek API Pricing,2026-07-29T16:11:32+08:00,partial,1.0,,,USD,needs_review,found input=1.0 but no clear output price. May need manual extraction.
-bytedance,doubao_seed20,豆包 Seed 2.0,https://www.volcengine.com/docs/84458/1585097,火山方舟模型服务计费,2026-07-29T16:11:33+08:00,parsed,9.6,10.8,,CNY,candidate,"extracted input=9.6, output=10.8 from visible text. Model name found in page. MUST verify manually."
+bytedance,doubao_seed21_pro,豆包 Seed 2.1 Pro,https://docs.volcengine.com/docs/ark/model-pricing?lang=zh,火山方舟模型服务计费,2026-10-05T00:00:00+08:00,verified,6.0,30.0,1.2,CNY,verified_in_manual_dataset,"Seed 2.0 Pro已停止服务；当前官方价已在token_pricing.json人工复核。"
 baidu,ernie4,ERNIE 4.0,https://cloud.baidu.com/product-s/qianfan.html,百度千帆模型定价,2026-07-29T16:11:33+08:00,failed,,,,,failed,fetch failed: HTTPError: HTTP Error 404: Not Found
 tencent,hunyuan_turbo,混元 Turbo,https://cloud.tencent.com/product/hunyuan,腾讯混元定价,2026-07-29T16:11:34+08:00,ambiguous,,,,USD,needs_review,found price-like numbers but could not reliably assign to input/output.
 zhipu,glm4,GLM-4,https://bigmodel.cn/pricing,智谱开放平台定价,2026-07-29T16:11:34+08:00,ambiguous,,,,USD,needs_review,found price-like numbers but could not reliably assign to input/output.

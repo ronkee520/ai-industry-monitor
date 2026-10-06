@@ -1,7 +1,7 @@
 {
   "_description": "AI Industry Monitor — 模型注册表",
-  "_version": "2.0.0",
-  "_last_updated": "2026-10-04",
+  "_version": "2.1.0",
+  "_last_updated": "2026-10-05",
   "_note": "status枚举: production=已核验的生产模型, watchlist=待跟踪但未核验, pending=无公开定价/抓取失败, manual_required=需人工采集, sample=仅用于开发占位",
 
   "models": [
@@ -275,14 +275,14 @@
     {
       "id": "mistral_large",
       "company_id": "mistral",
-      "name": "Mistral Large 2",
+      "name": "Mistral Large 3",
       "family": "Mistral",
       "status": "production",
       "modalities": ["text", "code"],
-      "release_date": "2024-07-24",
-      "context_window_k": 128,
+      "release_date": "2025-12-02",
+      "context_window_k": 256,
       "has_public_pricing": true,
-      "pricing_source_url": "https://mistral.ai/technology/"
+      "pricing_source_url": "https://docs.mistral.ai/inference/pricing"
     },
     {
       "id": "command_r_plus",
@@ -345,17 +345,17 @@
       "pricing_source_url": "https://help.aliyun.com/zh/model-studio/model-pricing"
     },
     {
-      "id": "doubao_seed20",
+      "id": "doubao_seed21_pro",
       "company_id": "bytedance",
-      "name": "豆包 Seed 2.0",
+      "name": "豆包 Seed 2.1 Pro",
       "family": "Doubao",
-      "status": "watchlist",
+      "status": "production",
       "modalities": ["text"],
-      "release_date": null,
-      "context_window_k": null,
+      "release_date": "2026-09-15",
+      "context_window_k": 256,
       "has_public_pricing": true,
-      "pricing_source_url": "https://www.volcengine.com/docs/84458/1585097",
-      "_note": "火山方舟定价页面为JS动态渲染，自动抓取可能失败，需要 manual 采集"
+      "pricing_source_url": "https://docs.volcengine.com/docs/ark/model-pricing?lang=zh",
+      "_note": "Seed 2.0 Pro已停止服务，更新为Seed 2.1 Pro；官方动态定价页由人工核验回退。"
     },
     {
       "id": "ernie4",
@@ -399,14 +399,14 @@
     {
       "id": "kimi_k2",
       "company_id": "moonshot",
-      "name": "Kimi K2",
+      "name": "Kimi K2.6",
       "family": "Kimi",
       "status": "production",
       "modalities": ["text", "code"],
       "release_date": null,
       "context_window_k": 128,
       "has_public_pricing": true,
-      "pricing_source_url": "https://platform.kimi.com/",
+      "pricing_source_url": "https://platform.kimi.com/docs/pricing/chat",
       "_note": "具体发布日待确认"
     }
   ],

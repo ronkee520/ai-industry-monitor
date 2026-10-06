@@ -267,6 +267,26 @@ tr:last-child td { border-bottom: 0; }
 .num.negative { color:var(--down); font-weight:650; }
 td .source-link { font-size: 11px; }
 
+.business-matrix { min-width: 1500px; }
+.business-matrix th:first-child, .business-matrix td:first-child {
+  position: sticky; left: 0; z-index: 2; background: #fff; min-width: 180px;
+}
+.business-matrix th:first-child { z-index: 4; background: #f6f8fc; }
+.business-matrix td { min-width: 170px; }
+.business-matrix tbody tr:hover td:first-child { background: #f7faff; }
+.matrix-company strong, .matrix-company small { display: block; }
+.matrix-company strong { margin-top: 7px; font-size: 13px; }
+.matrix-company small, .metric-cell small, .matrix-coverage small, .metric-note {
+  color: var(--muted); font-size: 9px; line-height: 1.45; margin-top: 4px; display: block;
+}
+.metric-cell strong { display:block; color:var(--ink); font:700 14px ui-monospace,Consolas,monospace; }
+.metric-cell > span { display:flex; align-items:center; gap:5px; margin-top:7px; }
+.metric-cell .source-link { font-size:9px; }
+.metric-missing { color:var(--missing); font-size:10px; }
+.matrix-coverage strong { display:block; color:var(--accent); font-size:14px; }
+.matrix-legend { color:var(--muted); font-size:10px; align-self:center; margin-left:auto; }
+.business-detail { margin-top:0; }
+
 /* ── Tags / Badges ──────────────────────────────────────────── */
 
 .tag {

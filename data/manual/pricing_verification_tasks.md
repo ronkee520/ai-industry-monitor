@@ -85,12 +85,12 @@
 - **currency**: CNY（元/百万tokens）
 - **注意事项**: 阿里云百炼国内版以人民币计价。可能存在 DashScope 国际版（USD），不要混淆。
 
-### 10. 字节豆包 Seed 2.0
-- **source_url**: https://www.volcengine.com/docs/84458/1585097
-- **model_id**: `doubao_seed20`
+### 10. 字节豆包 Seed 2.1 Pro
+- **source_url**: https://docs.volcengine.com/docs/ark/model-pricing?lang=zh
+- **model_id**: `doubao_seed21_pro`
 - **company_id**: `bytedance`
 - **currency**: CNY
-- **注意事项**: 火山方舟页面为 JS 动态渲染，可能需打开浏览器开发者工具确认。
+- **注意事项**: Seed 2.0 Pro 已停止服务；火山方舟页面为动态渲染，当前官方价已人工核验并保留来源链接。
 
 ### 11. 百度 ERNIE 4.0
 - **source_url**: https://cloud.baidu.com/product-s/qianfan.html

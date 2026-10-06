@@ -1,7 +1,7 @@
 {
   "_description": "AI Industry Monitor — 数据源定义",
-  "_version": "1.0.0",
-  "_last_updated": "2026-07-29",
+  "_version": "1.1.0",
+  "_last_updated": "2026-10-05",
 
   "pricing_sources": [
     {
@@ -20,7 +20,7 @@
       "company_id": "anthropic",
       "kind": "official_pricing",
       "name": "Anthropic API Pricing",
-      "url": "https://www.anthropic.com/pricing",
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
       "tier": 1,
       "parser": "html_visible_text",
       "enabled": true
@@ -30,7 +30,7 @@
       "company_id": "google",
       "kind": "official_pricing",
       "name": "Gemini Developer API Pricing",
-      "url": "https://ai.google.dev/pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
       "tier": 1,
       "parser": "html_visible_text",
       "enabled": true
@@ -50,7 +50,7 @@
       "company_id": "mistral",
       "kind": "official_pricing",
       "name": "Mistral API Pricing",
-      "url": "https://mistral.ai/technology/",
+      "url": "https://docs.mistral.ai/inference/pricing",
       "tier": 1,
       "parser": "html_visible_text",
       "enabled": true
@@ -60,7 +60,7 @@
       "company_id": "cohere",
       "kind": "official_pricing",
       "name": "Cohere API Pricing",
-      "url": "https://cohere.com/pricing",
+      "url": "https://docs.cohere.com/v2/docs/command-r-plus",
       "tier": 1,
       "parser": "html_visible_text",
       "enabled": true
@@ -100,7 +100,7 @@
       "company_id": "bytedance",
       "kind": "official_pricing",
       "name": "火山方舟模型服务计费",
-      "url": "https://www.volcengine.com/docs/84458/1585097",
+      "url": "https://docs.volcengine.com/docs/ark/model-pricing?lang=zh",
       "tier": 1,
       "parser": "js_dynamic",
       "enabled": true,
@@ -144,7 +144,7 @@
       "company_id": "moonshot",
       "kind": "official_pricing",
       "name": "Kimi 开放平台",
-      "url": "https://platform.kimi.com/",
+      "url": "https://platform.kimi.com/docs/pricing/chat",
       "tier": 1,
       "parser": "html_visible_text",
       "enabled": true
@@ -169,7 +169,7 @@
       "name": "RunPod GPU Pricing",
       "url": "https://www.runpod.io/pricing",
       "tier": 1,
-      "parser": "html_visible_text",
+      "parser": "runpod_price_table",
       "enabled": true
     },
     {

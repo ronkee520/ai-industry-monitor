@@ -22,7 +22,7 @@ _shared_spec.loader.exec_module(_sh)
 
 _WORKING_CSV = """company_id,company_name,model_id,model_name,source_url,input_price_per_m,output_price_per_m,cached_input_price_per_m,currency,tier,as_of_date,source_name,note
 openai,OpenAI,gpt4o,GPT-4o,https://platform.openai.com/docs/pricing,2.50,10.00,1.25,USD,standard,,OpenAI,Test entry
-anthropic,Anthropic,claude_opus4,Claude Opus 4,https://www.anthropic.com/pricing,,,,USD,standard,,Anthropic,No price filled
+baidu,百度文心,ernie4,ERNIE 4.0,https://cloud.baidu.com/product-s/qianfan.html,,,,CNY,standard,,百度千帆,No price filled
 """
 
 
@@ -119,12 +119,12 @@ class TestUpdateManualPricing(unittest.TestCase):
         try:
             _upd.update_pricing(self.root, str(tmp), dry_run=False)
             data = _sh.load_json(self.pricing_path, {})
-            # Claude Opus 4 未填价格，应保持 manual_required
-            opus4 = [r for r in data["records"]
-                      if r["company_id"] == "anthropic" and r["model_id"] == "claude_opus4"]
-            self.assertEqual(len(opus4), 1)
-            self.assertEqual(opus4[0]["confidence"], "manual_required")
-            self.assertIsNone(opus4[0]["value"])
+            # ERNIE 4.0 未填价格，应保持 manual_required
+            ernie4 = [r for r in data["records"]
+                      if r["company_id"] == "baidu" and r["model_id"] == "ernie4"]
+            self.assertEqual(len(ernie4), 1)
+            self.assertEqual(ernie4[0]["confidence"], "manual_required")
+            self.assertIsNone(ernie4[0]["value"])
         finally:
             tmp.unlink()
 

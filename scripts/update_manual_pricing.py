@@ -175,14 +175,14 @@ def update_pricing(
             rec = record_index[k]
             print(f"  [UPDATE] {k}: input={rec['input_per_m']}, output={rec['output_per_m']}, blended={rec['value']}, confidence={rec['confidence']}")
         for k in skipped:
-            print(f"  [SKIP]   {k}: 未填写 input/output 价格，保持 manual_required")
+            print(f"  [SKIP]   {k}: 未填写 input/output 价格，保持现有记录状态")
         return summary
 
     # 写入
     pricing_data["records"] = records
     pricing_data["_last_updated"] = today_str
     _shared.atomic_write(pricing_path, pricing_data)
-    print(f"[OK] 已写入 {pricing_path} ({len(updated)} 条 verified, {len(skipped)} 条保持 manual_required)")
+    print(f"[OK] 已写入 {pricing_path} ({len(updated)} 条 verified, {len(skipped)} 条保持现有状态)")
     return summary
 
 
