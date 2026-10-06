@@ -2,7 +2,7 @@
   "meta": {
     "title": "AI Industry Monitor",
     "subtitle": "AI产业与大模型商业化监测 Dashboard",
-    "generated_at": "2026-10-06T15:06:01+08:00",
+    "generated_at": "2026-10-06T18:03:44+08:00",
     "schedule": "每日 09:00 (Asia/Shanghai)",
     "data_policy": "公开可引用数据。sample/missing/manual_required 标记明确。",
     "fx": {
@@ -13,14 +13,14 @@
   "kpis": {
     "companies": 28,
     "models_with_pricing": 31,
-    "source_ok": 16,
+    "source_ok": 17,
     "source_total": 18,
     "business_disclosures": 18,
     "arr_disclosures": 18
   },
   "overview": {
     "cycle": {
-      "generated_at": "2026-10-06T15:06:01+08:00",
+      "generated_at": "2026-10-06T18:03:44+08:00",
       "stage_id": "commercialization",
       "stage_label": "商业化兑现期",
       "stage_description": "产业发展代理不低于55且价格动量/过热代理低于70。它表示技术、商业化和资本投入的综合证据较强，不等同于全行业已盈利。",
@@ -607,11 +607,11 @@
         }
       },
       "confidence": "high",
-      "confidence_score": 88.1,
+      "confidence_score": 89.9,
       "confidence_dimensions": {
         "component_coverage_pct": 86.7,
         "strong_evidence_pct": 88.6,
-        "source_reliability_pct": 88.9,
+        "source_reliability_pct": 94.4,
         "formula": "证据完整度（等权几何平均） = (可计算子因子覆盖 × T1/T2强证据占比 × 自动数据源成功率)^(1/3)",
         "aggregation": "等权几何平均；任一维度偏低都会约束总分，避免高维度完全补偿低维度。该分数不是统计置信概率。"
       },
@@ -818,7 +818,7 @@
         "gpu_real": 31,
         "capex_real": 8,
         "capex_growth_companies": 4,
-        "sources_ok": 16,
+        "sources_ok": 17,
         "sources_total": 18
       },
       "stages_reference": [
@@ -1208,7 +1208,7 @@
           "aggregator",
           "indicative"
         ],
-        "official_source_url": "https://cloud.baidu.com/product-s/qianfan.html",
+        "official_source_url": "https://cloud.baidu.com/product/wenxinworkshop.html",
         "company_name": "百度文心",
         "model_status": "production",
         "blended_cost_usd": 0.7105,
@@ -27335,28 +27335,28 @@
       },
       {
         "date": "2026-10-06",
-        "generated_at": "2026-10-06T15:05:49+08:00",
+        "generated_at": "2026-10-06T15:06:01+08:00",
         "stage_id": "commercialization",
         "stage_label": "商业化兑现期",
         "stage_description": "产业发展代理不低于55且价格动量/过热代理低于70。它表示技术、商业化和资本投入的综合证据较强，不等同于全行业已盈利。",
         "industry_development_score": 76.3,
-        "risk_crowding_score": 64.2,
+        "risk_crowding_score": 66.2,
         "risk_note": "仅为市场价格动量/过热代理：使用3个月动量、上涨广度与距52周高点；未接入Forward P/E、EV/EBITDA、ETF净申购或融资拥挤，不能称为完整市场拥挤度，也不能单独作为交易信号。",
         "risk_components": {
-          "momentum": 53.1,
+          "momentum": 57.8,
           "breadth": 57.9,
-          "proximity_to_52w_high": 85.4
+          "proximity_to_52w_high": 85.7
         },
         "risk_details": {
-          "score": 64.2,
+          "score": 66.2,
           "available_component_weight": 1.0,
           "components": [
             {
               "id": "momentum",
               "label": "3个月价格动量",
-              "score": 53.1,
+              "score": 57.8,
               "configured_weight": 0.4,
-              "raw_display": "中位收益 +2.5%",
+              "raw_display": "中位收益 +6.2%",
               "formula": "score = clip(50 + 1.25 × 观察池3个月收益率中位数, 0, 100)",
               "sample_size": 19,
               "sources": [
@@ -27385,7 +27385,7 @@
               "minimum_sample_size": null,
               "inclusion_status": "included",
               "effective_weight": 0.4,
-              "contribution": 21.2,
+              "contribution": 23.1,
               "weight_amplification": 1.0
             },
             {
@@ -27428,9 +27428,9 @@
             {
               "id": "proximity_to_52w_high",
               "label": "距52周高点",
-              "score": 85.4,
+              "score": 85.7,
               "configured_weight": 0.3,
-              "raw_display": "距高点中位数 -14.6%",
+              "raw_display": "距高点中位数 -14.3%",
               "formula": "score = clip(100 + 距52周高点回撤中位数, 0, 100)",
               "sample_size": 19,
               "sources": [
@@ -27459,7 +27459,7 @@
               "minimum_sample_size": null,
               "inclusion_status": "included",
               "effective_weight": 0.3,
-              "contribution": 25.6,
+              "contribution": 25.7,
               "weight_amplification": 1.0
             }
           ]
@@ -27941,7 +27941,7 @@
           "industry_formula": "产业发展强度 = 技术成熟度×30% + 商业化兑现度×35% + 资本投入强度×35%；缺失整项时对可用权重归一化。",
           "industry_calculation": "68.1×30%=20.4 + 59.6×35%=20.9 + 100.0×35%=35.0 = 76.3",
           "risk_formula": "价格动量/过热代理 = 3个月动量×40% + 上涨广度×30% + 距52周高点×30%。",
-          "risk_calculation": "53.1×40%=21.2 + 57.9×30%=17.4 + 85.4×30%=25.6 = 64.2",
+          "risk_calculation": "57.8×40%=23.1 + 57.9×30%=17.4 + 85.7×30%=25.7 = 66.2",
           "normalisation": "所有异量纲原始值按预先公开的锚点线性映射到0–100并截尾；不使用当期样本的min-max，避免样本变化导致历史分数漂移。",
           "missing_policy": "缺失值不填0、不默认50；在同一因子内仅对可用子因子重新归一权重，并披露权重放大倍数；企业客户等口径不一指标低于3家公司时退出计分。",
           "threshold_calibration": "35/55/70/85为透明的研究型经验阈值，尚未经长历史回测或德尔菲专家法校准；因此同步披露50–60发展阈值、65–75过热阈值的敏感性结果。",
@@ -28073,7 +28073,7 @@
             {
               "development_threshold": 50,
               "overheating_threshold": 65,
-              "stage": "商业化兑现期"
+              "stage": "价格过热警戒"
             },
             {
               "development_threshold": 50,
@@ -28088,7 +28088,7 @@
             {
               "development_threshold": 55,
               "overheating_threshold": 65,
-              "stage": "商业化兑现期"
+              "stage": "价格过热警戒"
             },
             {
               "development_threshold": 55,
@@ -28103,7 +28103,7 @@
             {
               "development_threshold": 60,
               "overheating_threshold": 65,
-              "stage": "商业化兑现期"
+              "stage": "价格过热警戒"
             },
             {
               "development_threshold": 60,
@@ -28116,7 +28116,7 @@
               "stage": "商业化兑现期"
             }
           ],
-          "threshold_stage_stable": true,
+          "threshold_stage_stable": false,
           "interpretation": "若不同权重、非线性聚合或合理阈值区间产生不同阶段，当前判定应视为边界状态。"
         },
         "limitations": "已补充多公司商业化、企业采用与两期CAPEX数据，但统一模型能力基准、可比Token真实用量、机构级Forward估值与ETF申赎仍未接入。指数用于产业阶段监测与研究复核，不直接生成仓位。",
@@ -28512,13 +28512,13 @@
     {
       "source_id": "baidu_pricing",
       "name": "百度千帆模型定价",
-      "url": "https://cloud.baidu.com/product-s/qianfan.html",
+      "url": "https://cloud.baidu.com/product/wenxinworkshop.html",
       "kind": "official_pricing",
-      "status": "error",
-      "checked_at": "2026-10-06T15:05:55+08:00",
-      "changed": null,
-      "text_chars": null,
-      "error": "HTTPError: HTTP Error 404: Not Found"
+      "status": "ok",
+      "checked_at": "2026-10-06T17:56:36+08:00",
+      "changed": false,
+      "text_chars": 81776,
+      "error": null
     },
     {
       "source_id": "tencent_pricing",
@@ -28822,11 +28822,11 @@
   ],
   "health": {
     "status": "degraded",
-    "generated_at": "2026-10-06T15:06:01+08:00",
-    "sources_ok": 16,
+    "generated_at": "2026-10-06T18:03:44+08:00",
+    "sources_ok": 17,
     "sources_total": 18,
-    "sources_failed": 2,
-    "source_success_rate": "16/18",
+    "sources_failed": 1,
+    "source_success_rate": "17/18",
     "pricing_total": 31,
     "pricing_missing": 0,
     "pricing_sample": 0,
@@ -28838,7 +28838,7 @@
     "market_records": 19,
     "warnings": [
       "2 business records have null values",
-      "2 sources are unavailable or using stale fallback"
+      "1 sources are unavailable or using stale fallback"
     ]
   },
   "methodology": {

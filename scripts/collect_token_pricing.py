@@ -138,7 +138,19 @@ def _fetch_source(
 ) -> dict[str, Any]:
     """抓取单个定价源，返回状态记录。"""
     prev = prev_by_id.get(source["id"], {})
-    result = _shared.fetch_url(source["url"])
+    candidate_urls = [source["url"], *source.get("fallback_urls", [])]
+    attempts: list[dict[str, Any]] = []
+    result: dict[str, Any] | None = None
+    successful_url: str | None = None
+    for candidate_url in candidate_urls:
+        attempt = _shared.fetch_url(candidate_url)
+        attempts.append(attempt)
+        if attempt.get("ok"):
+            result = attempt
+            successful_url = candidate_url
+            break
+    if result is None:
+        result = attempts[-1]
     checked_at = _shared.now_shanghai().isoformat(timespec="seconds")
 
     state: dict[str, Any] = {
@@ -147,6 +159,9 @@ def _fetch_source(
         "kind": source.get("kind"),
         "name": source.get("name", source["id"]),
         "url": source["url"],
+        "checked_url": successful_url,
+        "fallback_used": bool(successful_url and successful_url != source["url"]),
+        "attempted_urls": [attempt.get("url") for attempt in attempts],
         "checked_at": checked_at,
         "status": "error",
         "http_status": None,
@@ -177,7 +192,11 @@ def _fetch_source(
                      else "页面主要内容可能由前端动态加载，可见文本过少",
         })
     else:
-        state["error"] = result.get("error", "unknown")
+        failures = [
+            f"{attempt.get('url')}: {attempt.get('error', 'unknown')}"
+            for attempt in attempts
+        ]
+        state["error"] = " | ".join(failures)[:400]
         if prev.get("content_hash"):
             state.update({
                 "status": "stale_fallback",

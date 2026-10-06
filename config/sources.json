@@ -111,7 +111,11 @@
       "company_id": "baidu",
       "kind": "official_pricing",
       "name": "百度千帆模型定价",
-      "url": "https://cloud.baidu.com/product-s/qianfan.html",
+      "url": "https://cloud.baidu.com/product/wenxinworkshop.html",
+      "fallback_urls": [
+        "https://cloud.baidu.com/price/all",
+        "https://cloud.baidu.com/doc/qianfan/index.html"
+      ],
       "tier": 1,
       "parser": "html_visible_text",
       "enabled": true,

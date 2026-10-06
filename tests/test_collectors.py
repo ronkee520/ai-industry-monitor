@@ -58,6 +58,33 @@ class TestTokenPricingCollector(unittest.TestCase):
         self.assertEqual(state["content_hash"], "abc")
         self.assertEqual(state["last_successful_check"], "2026-01-01T00:00:00+08:00")
 
+    def test_fetch_uses_official_fallback_url(self):
+        source = {
+            "id": "test",
+            "company_id": "test",
+            "kind": "official_pricing",
+            "name": "Test",
+            "url": "https://example.com/old",
+            "fallback_urls": ["https://example.com/current"],
+        }
+        failed = {"ok": False, "url": source["url"], "error": "HTTP 404"}
+        succeeded = {
+            "ok": True,
+            "url": source["fallback_urls"][0],
+            "status": 200,
+            "final_url": source["fallback_urls"][0],
+            "content_hash": "new-hash",
+            "text": "official pricing " * 20,
+            "text_chars": 340,
+            "error": None,
+        }
+        with mock.patch.object(_token._shared, "fetch_url", side_effect=[failed, succeeded]):
+            state = _token._fetch_source(source, {})
+        self.assertEqual(state["status"], "ok")
+        self.assertTrue(state["fallback_used"])
+        self.assertEqual(state["checked_url"], source["fallback_urls"][0])
+        self.assertEqual(state["attempted_urls"], [source["url"], source["fallback_urls"][0]])
+
 
 class TestGpuPricingCollector(unittest.TestCase):
     def test_import(self):

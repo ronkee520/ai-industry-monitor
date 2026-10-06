@@ -163,15 +163,21 @@
     "company_id": "baidu",
     "kind": "official_pricing",
     "name": "百度千帆模型定价",
-    "url": "https://cloud.baidu.com/product-s/qianfan.html",
-    "checked_at": "2026-10-06T15:05:55+08:00",
-    "status": "error",
-    "http_status": null,
-    "final_url": null,
-    "content_hash": null,
-    "changed": null,
-    "text_chars": null,
-    "error": "HTTPError: HTTP Error 404: Not Found"
+    "url": "https://cloud.baidu.com/product/wenxinworkshop.html",
+    "checked_url": "https://cloud.baidu.com/product/wenxinworkshop.html",
+    "fallback_used": false,
+    "attempted_urls": [
+      "https://cloud.baidu.com/product/wenxinworkshop.html"
+    ],
+    "checked_at": "2026-10-06T17:56:36+08:00",
+    "status": "ok",
+    "http_status": 200,
+    "final_url": "https://cloud.baidu.com/product-s/qianfan_home",
+    "content_hash": "004ae279175370c9a8ba9789954052c88074a69ea5d03015987988e1f7170bb2",
+    "changed": false,
+    "text_chars": 81776,
+    "error": null,
+    "last_successful_check": "2026-10-06T17:56:36+08:00"
   },
   {
     "source_id": "tencent_pricing",
