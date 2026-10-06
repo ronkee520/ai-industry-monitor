@@ -134,6 +134,28 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
         price_history,
         today,
     )
+    # 当前构建日也必须出现在本次返回的 history 中。历史文件在函数末尾才落盘，
+    # 若只依赖落盘后的下一次构建，新加入型号首次部署时会出现“有现价、无曲线点”。
+    snapshot_date = today.isoformat()
+    for rec in pricing_records:
+        current_snapshot = {
+            "date": snapshot_date,
+            "metric_id": rec["metric_id"],
+            "value": rec.get("value"),
+            "currency": rec.get("currency"),
+            "blended_cost_usd": rec.get("blended_cost_usd"),
+            "provider_model_id": rec.get("provider_model_id"),
+            "source_name": rec.get("source_name"),
+            "source_url": rec.get("source_url"),
+            "source_tier": rec.get("source_tier"),
+            "evidence_status": rec.get("evidence_status"),
+            "event_type": "daily_snapshot",
+        }
+        price_history_by_key[(snapshot_date, rec["metric_id"])] = current_snapshot
+    price_history = sorted(
+        price_history_by_key.values(),
+        key=lambda row: (row.get("date", ""), row.get("metric_id", "")),
+    )
 
     # ── 2. 商业化模块 ──
     business_records = _build_business(
