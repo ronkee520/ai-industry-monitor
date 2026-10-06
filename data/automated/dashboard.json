@@ -2,7 +2,7 @@
   "meta": {
     "title": "AI Industry Monitor",
     "subtitle": "AI产业与大模型商业化监测 Dashboard",
-    "generated_at": "2026-10-06T11:24:10+08:00",
+    "generated_at": "2026-10-06T15:06:01+08:00",
     "schedule": "每日 09:00 (Asia/Shanghai)",
     "data_policy": "公开可引用数据。sample/missing/manual_required 标记明确。",
     "fx": {
@@ -20,28 +20,28 @@
   },
   "overview": {
     "cycle": {
-      "generated_at": "2026-10-06T11:24:10+08:00",
+      "generated_at": "2026-10-06T15:06:01+08:00",
       "stage_id": "commercialization",
       "stage_label": "商业化兑现期",
       "stage_description": "产业发展代理不低于55且价格动量/过热代理低于70。它表示技术、商业化和资本投入的综合证据较强，不等同于全行业已盈利。",
       "industry_development_score": 76.3,
-      "risk_crowding_score": 64.2,
+      "risk_crowding_score": 66.2,
       "risk_note": "仅为市场价格动量/过热代理：使用3个月动量、上涨广度与距52周高点；未接入Forward P/E、EV/EBITDA、ETF净申购或融资拥挤，不能称为完整市场拥挤度，也不能单独作为交易信号。",
       "risk_components": {
-        "momentum": 53.1,
+        "momentum": 57.8,
         "breadth": 57.9,
-        "proximity_to_52w_high": 85.4
+        "proximity_to_52w_high": 85.7
       },
       "risk_details": {
-        "score": 64.2,
+        "score": 66.2,
         "available_component_weight": 1.0,
         "components": [
           {
             "id": "momentum",
             "label": "3个月价格动量",
-            "score": 53.1,
+            "score": 57.8,
             "configured_weight": 0.4,
-            "raw_display": "中位收益 +2.5%",
+            "raw_display": "中位收益 +6.2%",
             "formula": "score = clip(50 + 1.25 × 观察池3个月收益率中位数, 0, 100)",
             "sample_size": 19,
             "sources": [
@@ -70,7 +70,7 @@
             "minimum_sample_size": null,
             "inclusion_status": "included",
             "effective_weight": 0.4,
-            "contribution": 21.2,
+            "contribution": 23.1,
             "weight_amplification": 1.0
           },
           {
@@ -113,9 +113,9 @@
           {
             "id": "proximity_to_52w_high",
             "label": "距52周高点",
-            "score": 85.4,
+            "score": 85.7,
             "configured_weight": 0.3,
-            "raw_display": "距高点中位数 -14.6%",
+            "raw_display": "距高点中位数 -14.3%",
             "formula": "score = clip(100 + 距52周高点回撤中位数, 0, 100)",
             "sample_size": 19,
             "sources": [
@@ -144,7 +144,7 @@
             "minimum_sample_size": null,
             "inclusion_status": "included",
             "effective_weight": 0.3,
-            "contribution": 25.6,
+            "contribution": 25.7,
             "weight_amplification": 1.0
           }
         ]
@@ -626,7 +626,7 @@
         "industry_formula": "产业发展强度 = 技术成熟度×30% + 商业化兑现度×35% + 资本投入强度×35%；缺失整项时对可用权重归一化。",
         "industry_calculation": "68.1×30%=20.4 + 59.6×35%=20.9 + 100.0×35%=35.0 = 76.3",
         "risk_formula": "价格动量/过热代理 = 3个月动量×40% + 上涨广度×30% + 距52周高点×30%。",
-        "risk_calculation": "53.1×40%=21.2 + 57.9×30%=17.4 + 85.4×30%=25.6 = 64.2",
+        "risk_calculation": "57.8×40%=23.1 + 57.9×30%=17.4 + 85.7×30%=25.7 = 66.2",
         "normalisation": "所有异量纲原始值按预先公开的锚点线性映射到0–100并截尾；不使用当期样本的min-max，避免样本变化导致历史分数漂移。",
         "missing_policy": "缺失值不填0、不默认50；在同一因子内仅对可用子因子重新归一权重，并披露权重放大倍数；企业客户等口径不一指标低于3家公司时退出计分。",
         "threshold_calibration": "35/55/70/85为透明的研究型经验阈值，尚未经长历史回测或德尔菲专家法校准；因此同步披露50–60发展阈值、65–75过热阈值的敏感性结果。",
@@ -758,7 +758,7 @@
           {
             "development_threshold": 50,
             "overheating_threshold": 65,
-            "stage": "商业化兑现期"
+            "stage": "价格过热警戒"
           },
           {
             "development_threshold": 50,
@@ -773,7 +773,7 @@
           {
             "development_threshold": 55,
             "overheating_threshold": 65,
-            "stage": "商业化兑现期"
+            "stage": "价格过热警戒"
           },
           {
             "development_threshold": 55,
@@ -788,7 +788,7 @@
           {
             "development_threshold": 60,
             "overheating_threshold": 65,
-            "stage": "商业化兑现期"
+            "stage": "价格过热警戒"
           },
           {
             "development_threshold": 60,
@@ -801,7 +801,7 @@
             "stage": "商业化兑现期"
           }
         ],
-        "threshold_stage_stable": true,
+        "threshold_stage_stable": false,
         "interpretation": "若不同权重、非线性聚合或合理阈值区间产生不同阶段，当前判定应视为边界状态。"
       },
       "limitations": "已补充多公司商业化、企业采用与两期CAPEX数据，但统一模型能力基准、可比Token真实用量、机构级Forward估值与ETF申赎仍未接入。指数用于产业阶段监测与研究复核，不直接生成仓位。",
@@ -958,9 +958,9 @@
         "model_id": "hunyuan_turbo",
         "region": "domestic",
         "tier": "aggregator_route",
-        "period": "2026-10-05",
-        "as_of_date": "2026-10-05",
-        "collected_at": "2026-10-05T14:29:36+08:00",
+        "period": "2026-10-06",
+        "as_of_date": "2026-10-06",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "OpenRouter public model catalog",
         "source_url": "https://openrouter.ai/api/v1/models",
         "source_tier": 3,
@@ -981,7 +981,7 @@
         "change_pct": 0.0,
         "freshness": {
           "status": "fresh",
-          "age_days": 1
+          "age_days": 0
         }
       },
       {
@@ -998,9 +998,9 @@
         "model_id": "gpt4o_mini",
         "region": "overseas",
         "tier": "aggregator_route",
-        "period": "2026-10-05",
-        "as_of_date": "2026-10-05",
-        "collected_at": "2026-10-05T14:29:36+08:00",
+        "period": "2026-10-06",
+        "as_of_date": "2026-10-06",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "OpenRouter public model catalog",
         "source_url": "https://openrouter.ai/api/v1/models",
         "source_tier": 3,
@@ -1021,7 +1021,7 @@
         "change_pct": 0.0,
         "freshness": {
           "status": "fresh",
-          "age_days": 1
+          "age_days": 0
         }
       },
       {
@@ -1038,9 +1038,9 @@
         "model_id": "llama4",
         "region": "overseas",
         "tier": "aggregator_route",
-        "period": "2026-10-05",
-        "as_of_date": "2026-10-05",
-        "collected_at": "2026-10-05T14:29:36+08:00",
+        "period": "2026-10-06",
+        "as_of_date": "2026-10-06",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "OpenRouter public model catalog",
         "source_url": "https://openrouter.ai/api/v1/models",
         "source_tier": 3,
@@ -1060,7 +1060,7 @@
         "change_pct": 0.0,
         "freshness": {
           "status": "fresh",
-          "age_days": 1
+          "age_days": 0
         }
       },
       {
@@ -1077,9 +1077,9 @@
         "model_id": "deepseek_v3",
         "region": "domestic",
         "tier": "aggregator_route",
-        "period": "2026-10-05",
-        "as_of_date": "2026-10-05",
-        "collected_at": "2026-10-05T14:29:36+08:00",
+        "period": "2026-10-06",
+        "as_of_date": "2026-10-06",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "OpenRouter public model catalog",
         "source_url": "https://openrouter.ai/api/v1/models",
         "source_tier": 3,
@@ -1100,7 +1100,7 @@
         "change_pct": 0.0,
         "freshness": {
           "status": "fresh",
-          "age_days": 1
+          "age_days": 0
         }
       },
       {
@@ -1192,9 +1192,9 @@
         "model_id": "ernie4",
         "region": "domestic",
         "tier": "aggregator_route",
-        "period": "2026-10-05",
-        "as_of_date": "2026-10-05",
-        "collected_at": "2026-10-05T14:29:36+08:00",
+        "period": "2026-10-06",
+        "as_of_date": "2026-10-06",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "OpenRouter public model catalog",
         "source_url": "https://openrouter.ai/api/v1/models",
         "source_tier": 3,
@@ -1215,7 +1215,7 @@
         "change_pct": 0.0,
         "freshness": {
           "status": "fresh",
-          "age_days": 1
+          "age_days": 0
         }
       },
       {
@@ -1308,9 +1308,9 @@
         "model_id": "deepseek_r1",
         "region": "domestic",
         "tier": "aggregator_route",
-        "period": "2026-10-05",
-        "as_of_date": "2026-10-05",
-        "collected_at": "2026-10-05T14:29:36+08:00",
+        "period": "2026-10-06",
+        "as_of_date": "2026-10-06",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "OpenRouter public model catalog",
         "source_url": "https://openrouter.ai/api/v1/models",
         "source_tier": 3,
@@ -1331,7 +1331,7 @@
         "change_pct": 0.0,
         "freshness": {
           "status": "fresh",
-          "age_days": 1
+          "age_days": 0
         }
       },
       {
@@ -1348,9 +1348,9 @@
         "model_id": "glm4",
         "region": "domestic",
         "tier": "aggregator_route",
-        "period": "2026-10-05",
-        "as_of_date": "2026-10-05",
-        "collected_at": "2026-10-05T14:29:36+08:00",
+        "period": "2026-10-06",
+        "as_of_date": "2026-10-06",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "OpenRouter public model catalog",
         "source_url": "https://openrouter.ai/api/v1/models",
         "source_tier": 3,
@@ -1371,7 +1371,7 @@
         "change_pct": 0.0,
         "freshness": {
           "status": "fresh",
-          "age_days": 1
+          "age_days": 0
         }
       },
       {
@@ -1614,9 +1614,9 @@
         "model_id": "grok4",
         "region": "overseas",
         "tier": "aggregator_route",
-        "period": "2026-10-05",
-        "as_of_date": "2026-10-05",
-        "collected_at": "2026-10-05T14:29:36+08:00",
+        "period": "2026-10-06",
+        "as_of_date": "2026-10-06",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "OpenRouter public model catalog",
         "source_url": "https://openrouter.ai/api/v1/models",
         "source_tier": 3,
@@ -1636,7 +1636,7 @@
         "change_pct": 0.0,
         "freshness": {
           "status": "fresh",
-          "age_days": 1
+          "age_days": 0
         }
       },
       {
@@ -1765,9 +1765,9 @@
         "model_id": "glm53_prime",
         "region": "domestic",
         "tier": "aggregator_route",
-        "period": "2026-10-05",
-        "as_of_date": "2026-10-05",
-        "collected_at": "2026-10-05T14:29:36+08:00",
+        "period": "2026-10-06",
+        "as_of_date": "2026-10-06",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "OpenRouter public model catalog",
         "source_url": "https://openrouter.ai/api/v1/models",
         "source_tier": 3,
@@ -1787,7 +1787,7 @@
         "change_pct": 0.0,
         "freshness": {
           "status": "fresh",
-          "age_days": 1
+          "age_days": 0
         }
       },
       {
@@ -1804,9 +1804,9 @@
         "model_id": "gpt4o",
         "region": "overseas",
         "tier": "aggregator_route",
-        "period": "2026-10-05",
-        "as_of_date": "2026-10-05",
-        "collected_at": "2026-10-05T14:29:36+08:00",
+        "period": "2026-10-06",
+        "as_of_date": "2026-10-06",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "OpenRouter public model catalog",
         "source_url": "https://openrouter.ai/api/v1/models",
         "source_tier": 3,
@@ -1827,7 +1827,7 @@
         "change_pct": 0.0,
         "freshness": {
           "status": "fresh",
-          "age_days": 1
+          "age_days": 0
         }
       },
       {
@@ -2200,9 +2200,9 @@
         "name": "DeepSeek: DeepSeek V4.1 Flash",
         "provider_model_id": "deepseek/deepseek-v4.1-flash",
         "released_at": "2026-09-10",
-        "input_per_m": 0.3,
-        "output_per_m": 1.2,
-        "cached_input_per_m": 0.006,
+        "input_per_m": 0.003,
+        "output_per_m": 2.4,
+        "cached_input_per_m": 0.003,
         "context_window_k": 1048.6,
         "source_name": "OpenRouter public model catalog",
         "source_url": "https://openrouter.ai/api/v1/models",
@@ -2275,9 +2275,9 @@
         "name": "MoonshotAI: Kimi K3",
         "provider_model_id": "moonshotai/kimi-k3",
         "released_at": "2026-07-16",
-        "input_per_m": 0.67,
+        "input_per_m": 0.83,
         "output_per_m": 14.0,
-        "cached_input_per_m": 0.22,
+        "cached_input_per_m": 0.27,
         "context_window_k": 1048.6,
         "source_name": "OpenRouter public model catalog",
         "source_url": "https://openrouter.ai/api/v1/models",
@@ -3083,7 +3083,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:43+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "Lambda Cloud On-Demand GPU Pricing",
         "source_url": "https://lambda.ai/instances",
         "source_tier": 1,
@@ -3116,7 +3116,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:43+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "Lambda Cloud On-Demand GPU Pricing",
         "source_url": "https://lambda.ai/instances",
         "source_tier": 1,
@@ -3149,7 +3149,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:43+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "Lambda Cloud On-Demand GPU Pricing",
         "source_url": "https://lambda.ai/instances",
         "source_tier": 1,
@@ -3182,7 +3182,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:43+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "Lambda Cloud On-Demand GPU Pricing",
         "source_url": "https://lambda.ai/instances",
         "source_tier": 1,
@@ -3215,7 +3215,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:43+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "Lambda Cloud On-Demand GPU Pricing",
         "source_url": "https://lambda.ai/instances",
         "source_tier": 1,
@@ -3248,7 +3248,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:43+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "Lambda Cloud On-Demand GPU Pricing",
         "source_url": "https://lambda.ai/instances",
         "source_tier": 1,
@@ -3281,7 +3281,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:43+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "Lambda Cloud On-Demand GPU Pricing",
         "source_url": "https://lambda.ai/instances",
         "source_tier": 1,
@@ -3314,7 +3314,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:43+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "Lambda Cloud On-Demand GPU Pricing",
         "source_url": "https://lambda.ai/instances",
         "source_tier": 1,
@@ -3347,7 +3347,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:43+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "Lambda Cloud On-Demand GPU Pricing",
         "source_url": "https://lambda.ai/instances",
         "source_tier": 1,
@@ -3380,7 +3380,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:43+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "Lambda Cloud On-Demand GPU Pricing",
         "source_url": "https://lambda.ai/instances",
         "source_tier": 1,
@@ -3413,7 +3413,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3447,7 +3447,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3481,7 +3481,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3515,7 +3515,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3549,7 +3549,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3583,7 +3583,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3617,7 +3617,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3651,7 +3651,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3685,7 +3685,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3719,7 +3719,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3753,7 +3753,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3787,7 +3787,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3821,7 +3821,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3855,7 +3855,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3889,7 +3889,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3923,7 +3923,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3957,7 +3957,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -3991,7 +3991,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -4025,7 +4025,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -4059,7 +4059,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -4093,7 +4093,7 @@
         "region": "global",
         "period": "2026-10-06",
         "as_of_date": "2026-10-06",
-        "collected_at": "2026-10-06T00:11:44+08:00",
+        "collected_at": "2026-10-06T15:05:56+08:00",
         "source_name": "RunPod GPU Pricing",
         "source_url": "https://www.runpod.io/pricing",
         "source_tier": 1,
@@ -4747,7 +4747,7 @@
       ]
     },
     "market": {
-      "generated_at": "2026-10-05T14:29:40+08:00",
+      "generated_at": "2026-10-06T15:05:59+08:00",
       "records": [
         {
           "symbol": "002230.SZ",
@@ -4756,9 +4756,9 @@
           "close": 37.220001220703125,
           "currency": "CNY",
           "as_of_date": "2026-09-30",
-          "return_1w_pct": -0.08,
+          "return_1w_pct": 0.05,
           "return_1m_pct": -5.77,
-          "return_3m_pct": -8.23,
+          "return_3m_pct": -6.62,
           "return_1y_pct": -33.44,
           "return_ytd_pct": -30.71,
           "drawdown_52w_pct": -41.43,
@@ -4777,9 +4777,9 @@
           "close": 1.659000039100647,
           "currency": "CNY",
           "as_of_date": "2026-09-30",
-          "return_1w_pct": -1.31,
+          "return_1w_pct": -1.54,
           "return_1m_pct": -2.7,
-          "return_3m_pct": -17.91,
+          "return_3m_pct": -17.67,
           "return_1y_pct": 7.73,
           "return_ytd_pct": 5.0,
           "drawdown_52w_pct": -25.67,
@@ -4798,9 +4798,9 @@
           "close": 50.709999084472656,
           "currency": "CNY",
           "as_of_date": "2026-09-30",
-          "return_1w_pct": -2.67,
+          "return_1w_pct": -1.53,
           "return_1m_pct": 1.04,
-          "return_3m_pct": -12.7,
+          "return_3m_pct": -13.98,
           "return_1y_pct": -38.72,
           "return_ytd_pct": -31.47,
           "drawdown_52w_pct": -38.87,
@@ -4819,9 +4819,9 @@
           "close": 79.5199966430664,
           "currency": "CNY",
           "as_of_date": "2026-09-30",
-          "return_1w_pct": -0.62,
+          "return_1w_pct": -1.09,
           "return_1m_pct": -3.83,
-          "return_3m_pct": -15.91,
+          "return_3m_pct": -14.95,
           "return_1y_pct": -32.97,
           "return_ytd_pct": -8.96,
           "drawdown_52w_pct": -36.31,
@@ -4840,9 +4840,9 @@
           "close": 226.8000030517578,
           "currency": "CNY",
           "as_of_date": "2026-09-30",
-          "return_1w_pct": -5.7,
+          "return_1w_pct": -3.85,
           "return_1m_pct": -6.92,
-          "return_3m_pct": -33.1,
+          "return_3m_pct": -33.8,
           "return_1y_pct": -10.14,
           "return_ytd_pct": 0.43,
           "drawdown_52w_pct": -38.75,
@@ -4861,9 +4861,9 @@
           "close": 218.8000030517578,
           "currency": "CNY",
           "as_of_date": "2026-09-30",
-          "return_1w_pct": -1.44,
+          "return_1w_pct": 0.88,
           "return_1m_pct": -9.96,
-          "return_3m_pct": 5.28,
+          "return_3m_pct": 6.24,
           "return_1y_pct": -30.47,
           "return_ytd_pct": -32.7,
           "drawdown_52w_pct": -42.09,
@@ -4882,9 +4882,9 @@
           "close": 1009.010009765625,
           "currency": "CNY",
           "as_of_date": "2026-09-30",
-          "return_1w_pct": -1.08,
+          "return_1w_pct": -3.54,
           "return_1m_pct": -5.88,
-          "return_3m_pct": -26.34,
+          "return_3m_pct": -27.3,
           "return_1y_pct": 13.6,
           "return_ytd_pct": 8.29,
           "drawdown_52w_pct": -36.76,
@@ -4900,16 +4900,16 @@
           "symbol": "AMD",
           "name": "AMD",
           "role": "GPU/CPU",
-          "close": 633.9099731445312,
+          "close": 631.75,
           "currency": "USD",
-          "as_of_date": "2026-10-02",
-          "return_1w_pct": 4.28,
-          "return_1m_pct": 32.74,
-          "return_3m_pct": 14.83,
-          "return_1y_pct": 284.96,
-          "return_ytd_pct": 183.67,
-          "drawdown_52w_pct": 0.0,
-          "volatility_1y_pct": 72.9,
+          "as_of_date": "2026-10-05",
+          "return_1w_pct": 3.98,
+          "return_1m_pct": 32.28,
+          "return_3m_pct": 22.41,
+          "return_1y_pct": 210.12,
+          "return_ytd_pct": 182.7,
+          "drawdown_52w_pct": -0.34,
+          "volatility_1y_pct": 72.8,
           "source_name": "Yahoo Finance chart snapshot",
           "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/AMD?range=2y&interval=1d&events=div%2Csplits",
           "source_tier": 3,
@@ -4921,16 +4921,16 @@
           "symbol": "AMZN",
           "name": "Amazon",
           "role": "云/AI平台",
-          "close": 251.52000427246094,
+          "close": 251.39999389648438,
           "currency": "USD",
-          "as_of_date": "2026-10-02",
-          "return_1w_pct": 2.18,
-          "return_1m_pct": -2.7,
-          "return_3m_pct": 3.01,
-          "return_1y_pct": 14.58,
-          "return_ytd_pct": 11.05,
-          "drawdown_52w_pct": -11.44,
-          "volatility_1y_pct": 34.4,
+          "as_of_date": "2026-10-05",
+          "return_1w_pct": 1.92,
+          "return_1m_pct": -2.75,
+          "return_3m_pct": 2.2,
+          "return_1y_pct": 13.81,
+          "return_ytd_pct": 10.99,
+          "drawdown_52w_pct": -11.49,
+          "volatility_1y_pct": 34.3,
           "source_name": "Yahoo Finance chart snapshot",
           "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/AMZN?range=2y&interval=1d&events=div%2Csplits",
           "source_tier": 3,
@@ -4942,16 +4942,16 @@
           "symbol": "ASML",
           "name": "ASML",
           "role": "光刻设备",
-          "close": 1867.31005859375,
+          "close": 1859.8599853515625,
           "currency": "USD",
-          "as_of_date": "2026-10-02",
-          "return_1w_pct": 5.41,
-          "return_1m_pct": 8.89,
-          "return_3m_pct": 2.45,
-          "return_1y_pct": 82.09,
-          "return_ytd_pct": 61.22,
-          "drawdown_52w_pct": -6.02,
-          "volatility_1y_pct": 46.5,
+          "as_of_date": "2026-10-05",
+          "return_1w_pct": 1.39,
+          "return_1m_pct": 8.45,
+          "return_3m_pct": 6.58,
+          "return_1y_pct": 79.44,
+          "return_ytd_pct": 60.58,
+          "drawdown_52w_pct": -6.39,
+          "volatility_1y_pct": 46.4,
           "source_name": "Yahoo Finance chart snapshot",
           "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/ASML?range=2y&interval=1d&events=div%2Csplits",
           "source_tier": 3,
@@ -4963,15 +4963,15 @@
           "symbol": "AVGO",
           "name": "Broadcom",
           "role": "ASIC/网络",
-          "close": 355.1400146484375,
+          "close": 362.510009765625,
           "currency": "USD",
-          "as_of_date": "2026-10-02",
-          "return_1w_pct": 1.59,
-          "return_1m_pct": -0.59,
-          "return_3m_pct": -4.84,
-          "return_1y_pct": 5.74,
-          "return_ytd_pct": 2.73,
-          "drawdown_52w_pct": -26.0,
+          "as_of_date": "2026-10-05",
+          "return_1w_pct": 2.09,
+          "return_1m_pct": 1.47,
+          "return_3m_pct": -2.05,
+          "return_1y_pct": 8.86,
+          "return_ytd_pct": 4.86,
+          "drawdown_52w_pct": -24.47,
           "volatility_1y_pct": 46.6,
           "source_name": "Yahoo Finance chart snapshot",
           "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/AVGO?range=2y&interval=1d&events=div%2Csplits",
@@ -4984,15 +4984,15 @@
           "symbol": "GOOGL",
           "name": "Alphabet",
           "role": "云/AI模型",
-          "close": 343.5,
+          "close": 346.4700012207031,
           "currency": "USD",
-          "as_of_date": "2026-10-02",
-          "return_1w_pct": 0.22,
-          "return_1m_pct": 1.49,
-          "return_3m_pct": -6.21,
-          "return_1y_pct": 40.37,
-          "return_ytd_pct": 9.21,
-          "drawdown_52w_pct": -14.58,
+          "as_of_date": "2026-10-05",
+          "return_1w_pct": 1.63,
+          "return_1m_pct": 2.37,
+          "return_3m_pct": -5.54,
+          "return_1y_pct": 38.71,
+          "return_ytd_pct": 10.15,
+          "drawdown_52w_pct": -13.84,
           "volatility_1y_pct": 31.7,
           "source_name": "Yahoo Finance chart snapshot",
           "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/GOOGL?range=2y&interval=1d&events=div%2Csplits",
@@ -5005,15 +5005,15 @@
           "symbol": "META",
           "name": "Meta",
           "role": "AI模型/开源",
-          "close": 728.0800170898438,
+          "close": 741.9000244140625,
           "currency": "USD",
-          "as_of_date": "2026-10-02",
-          "return_1w_pct": 1.74,
-          "return_1m_pct": 18.14,
-          "return_3m_pct": 21.38,
-          "return_1y_pct": 2.81,
-          "return_ytd_pct": 12.23,
-          "drawdown_52w_pct": -6.37,
+          "as_of_date": "2026-10-05",
+          "return_1w_pct": 0.42,
+          "return_1m_pct": 20.38,
+          "return_3m_pct": 20.62,
+          "return_1y_pct": 4.02,
+          "return_ytd_pct": 14.36,
+          "drawdown_52w_pct": -4.59,
           "volatility_1y_pct": 41.8,
           "source_name": "Yahoo Finance chart snapshot",
           "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/META?range=2y&interval=1d&events=div%2Csplits",
@@ -5026,15 +5026,15 @@
           "symbol": "MRVL",
           "name": "Marvell",
           "role": "AI网络/ASIC",
-          "close": 272.2900085449219,
+          "close": 271.25,
           "currency": "USD",
-          "as_of_date": "2026-10-02",
-          "return_1w_pct": 8.09,
-          "return_1m_pct": 21.8,
-          "return_3m_pct": 9.26,
-          "return_1y_pct": 216.48,
-          "return_ytd_pct": 205.06,
-          "drawdown_52w_pct": -13.93,
+          "as_of_date": "2026-10-05",
+          "return_1w_pct": 3.03,
+          "return_1m_pct": 21.34,
+          "return_3m_pct": 17.61,
+          "return_1y_pct": 205.7,
+          "return_ytd_pct": 203.89,
+          "drawdown_52w_pct": -14.26,
           "volatility_1y_pct": 79.2,
           "source_name": "Yahoo Finance chart snapshot",
           "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/MRVL?range=2y&interval=1d&events=div%2Csplits",
@@ -5047,15 +5047,15 @@
           "symbol": "MSFT",
           "name": "Microsoft",
           "role": "云/AI平台",
-          "close": 517.530029296875,
+          "close": 525.1799926757812,
           "currency": "USD",
-          "as_of_date": "2026-10-02",
-          "return_1w_pct": 1.63,
-          "return_1m_pct": 3.57,
-          "return_3m_pct": 34.07,
-          "return_1y_pct": 0.86,
-          "return_ytd_pct": 10.12,
-          "drawdown_52w_pct": -3.74,
+          "as_of_date": "2026-10-05",
+          "return_1w_pct": 3.19,
+          "return_1m_pct": 5.1,
+          "return_3m_pct": 35.32,
+          "return_1y_pct": 0.18,
+          "return_ytd_pct": 11.75,
+          "drawdown_52w_pct": -2.32,
           "volatility_1y_pct": 32.7,
           "source_name": "Yahoo Finance chart snapshot",
           "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/MSFT?range=2y&interval=1d&events=div%2Csplits",
@@ -5068,15 +5068,15 @@
           "symbol": "NVDA",
           "name": "NVIDIA",
           "role": "GPU/算力核心",
-          "close": 233.9499969482422,
+          "close": 238.89999389648438,
           "currency": "USD",
-          "as_of_date": "2026-10-02",
-          "return_1w_pct": 2.22,
-          "return_1m_pct": 1.67,
-          "return_3m_pct": 19.77,
-          "return_1y_pct": 24.99,
-          "return_ytd_pct": 24.17,
-          "drawdown_52w_pct": -0.53,
+          "as_of_date": "2026-10-05",
+          "return_1w_pct": 5.15,
+          "return_1m_pct": 3.82,
+          "return_3m_pct": 21.45,
+          "return_1y_pct": 29.07,
+          "return_ytd_pct": 26.8,
+          "drawdown_52w_pct": 0.0,
           "volatility_1y_pct": 37.7,
           "source_name": "Yahoo Finance chart snapshot",
           "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/NVDA?range=2y&interval=1d&events=div%2Csplits",
@@ -5089,15 +5089,15 @@
           "symbol": "SMCI",
           "name": "Super Micro",
           "role": "AI服务器",
-          "close": 43.689998626708984,
+          "close": 43.189998626708984,
           "currency": "USD",
-          "as_of_date": "2026-10-02",
-          "return_1w_pct": 4.57,
-          "return_1m_pct": 10.36,
-          "return_3m_pct": 60.68,
-          "return_1y_pct": -15.92,
-          "return_ytd_pct": 41.12,
-          "drawdown_52w_pct": -25.55,
+          "as_of_date": "2026-10-05",
+          "return_1w_pct": 5.29,
+          "return_1m_pct": 9.09,
+          "return_3m_pct": 64.53,
+          "return_1y_pct": -20.93,
+          "return_ytd_pct": 39.5,
+          "drawdown_52w_pct": -26.4,
           "volatility_1y_pct": 92.2,
           "source_name": "Yahoo Finance chart snapshot",
           "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/SMCI?range=2y&interval=1d&events=div%2Csplits",
@@ -5110,16 +5110,16 @@
           "symbol": "SOXQ",
           "name": "SOXQ ETF",
           "role": "半导体ETF代理",
-          "close": 103.41000366210938,
+          "close": 103.70999908447266,
           "currency": "USD",
-          "as_of_date": "2026-10-02",
-          "return_1w_pct": 5.43,
-          "return_1m_pct": 12.02,
-          "return_3m_pct": 1.94,
-          "return_1y_pct": 100.29,
-          "return_ytd_pct": 78.82,
-          "drawdown_52w_pct": -10.08,
-          "volatility_1y_pct": 45.3,
+          "as_of_date": "2026-10-05",
+          "return_1w_pct": 4.36,
+          "return_1m_pct": 12.34,
+          "return_3m_pct": 7.26,
+          "return_1y_pct": 95.26,
+          "return_ytd_pct": 79.33,
+          "drawdown_52w_pct": -9.82,
+          "volatility_1y_pct": 45.2,
           "source_name": "Yahoo Finance chart snapshot",
           "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/SOXQ?range=2y&interval=1d&events=div%2Csplits",
           "source_tier": 3,
@@ -5131,16 +5131,16 @@
           "symbol": "TSM",
           "name": "TSMC",
           "role": "先进制程代工",
-          "close": 472.7799987792969,
+          "close": 485.79998779296875,
           "currency": "USD",
-          "as_of_date": "2026-10-02",
-          "return_1w_pct": 4.39,
-          "return_1m_pct": 10.52,
-          "return_3m_pct": 4.93,
-          "return_1y_pct": 63.52,
-          "return_ytd_pct": 49.09,
-          "drawdown_52w_pct": -0.74,
-          "volatility_1y_pct": 40.1,
+          "as_of_date": "2026-10-05",
+          "return_1w_pct": 6.32,
+          "return_1m_pct": 13.57,
+          "return_3m_pct": 12.61,
+          "return_1y_pct": 62.35,
+          "return_ytd_pct": 53.19,
+          "drawdown_52w_pct": 0.0,
+          "volatility_1y_pct": 40.2,
           "source_name": "Yahoo Finance chart snapshot",
           "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/TSM?range=2y&interval=1d&events=div%2Csplits",
           "source_tier": 3,
@@ -24495,7 +24495,7 @@
         "input_per_m": 0.3,
         "output_per_m": 1.2,
         "currency": "USD",
-        "event_type": "archived_price_interval",
+        "event_type": "archived_price_change",
         "provider_model_id": "deepseek/deepseek-v4.1-flash",
         "source_name": "OpenRouter daily price-change archive",
         "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
@@ -24523,7 +24523,7 @@
         "input_per_m": 0.45,
         "output_per_m": 5.0,
         "currency": "USD",
-        "event_type": "archived_price_interval",
+        "event_type": "archived_price_change",
         "provider_model_id": "deepseek/deepseek-v4-pro-0813",
         "source_name": "OpenRouter daily price-change archive",
         "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
@@ -24889,6 +24889,22 @@
       },
       {
         "date": "2026-10-06",
+        "metric_id": "token_blended_cost::alibaba::qwen38_max_prime::market_route",
+        "value": 6.8,
+        "blended_cost_usd": 6.8,
+        "input_per_m": 4.0,
+        "output_per_m": 12.0,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "qwen/qwen3.8-max-prime",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+      },
+      {
+        "date": "2026-10-06",
         "metric_id": "token_blended_cost::alibaba::qwen38_max_prime::standard",
         "value": 20.4,
         "currency": "CNY",
@@ -24899,6 +24915,22 @@
         "source_tier": 1,
         "evidence_status": "official_pricing",
         "event_type": "daily_snapshot"
+      },
+      {
+        "date": "2026-10-06",
+        "metric_id": "token_blended_cost::alibaba::qwen3_max::market_route",
+        "value": 1.872,
+        "blended_cost_usd": 1.872,
+        "input_per_m": 0.78,
+        "output_per_m": 3.9,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "qwen/qwen3-max",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
       },
       {
         "date": "2026-10-06",
@@ -24915,6 +24947,22 @@
       },
       {
         "date": "2026-10-06",
+        "metric_id": "token_blended_cost::amazon::amazon_nova_pro::market_route",
+        "value": 1.64,
+        "blended_cost_usd": 1.64,
+        "input_per_m": 0.8,
+        "output_per_m": 3.2,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "amazon/nova-pro-v1",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+      },
+      {
+        "date": "2026-10-06",
         "metric_id": "token_blended_cost::amazon::amazon_nova_pro::standard",
         "value": 1.64,
         "currency": "USD",
@@ -24928,6 +24976,22 @@
       },
       {
         "date": "2026-10-06",
+        "metric_id": "token_blended_cost::anthropic::claude_opus4::market_route",
+        "value": 12.0,
+        "blended_cost_usd": 12.0,
+        "input_per_m": 5.0,
+        "output_per_m": 25.0,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "anthropic/claude-opus-4.8",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+      },
+      {
+        "date": "2026-10-06",
         "metric_id": "token_blended_cost::anthropic::claude_opus4::standard",
         "value": 36.0,
         "currency": "USD",
@@ -24938,6 +25002,22 @@
         "source_tier": 1,
         "evidence_status": "official_pricing",
         "event_type": "daily_snapshot"
+      },
+      {
+        "date": "2026-10-06",
+        "metric_id": "token_blended_cost::anthropic::claude_opus55::market_route",
+        "value": 9.6,
+        "blended_cost_usd": 9.6,
+        "input_per_m": 4.0,
+        "output_per_m": 20.0,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "anthropic/claude-opus-5.5",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
       },
       {
         "date": "2026-10-06",
@@ -24980,6 +25060,22 @@
       },
       {
         "date": "2026-10-06",
+        "metric_id": "token_blended_cost::anthropic::claude_sonnet55::market_route",
+        "value": 4.8,
+        "blended_cost_usd": 4.8,
+        "input_per_m": 2.0,
+        "output_per_m": 10.0,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "anthropic/claude-sonnet-5.5",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+      },
+      {
+        "date": "2026-10-06",
         "metric_id": "token_blended_cost::anthropic::claude_sonnet55::standard",
         "value": 4.8,
         "currency": "USD",
@@ -25016,6 +25112,22 @@
         "source_tier": 1,
         "evidence_status": "official_pricing",
         "event_type": "daily_snapshot"
+      },
+      {
+        "date": "2026-10-06",
+        "metric_id": "token_blended_cost::cohere::command_r_plus::market_route",
+        "value": 5.125,
+        "blended_cost_usd": 5.125,
+        "input_per_m": 2.5,
+        "output_per_m": 10.0,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "cohere/command-r-plus-08-2024",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
       },
       {
         "date": "2026-10-06",
@@ -25058,6 +25170,22 @@
       },
       {
         "date": "2026-10-06",
+        "metric_id": "token_blended_cost::deepseek::deepseek_v4_flash::market_route",
+        "value": 0.84195,
+        "blended_cost_usd": 0.84195,
+        "input_per_m": 0.003,
+        "output_per_m": 2.4,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "deepseek/deepseek-v4.1-flash",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+      },
+      {
+        "date": "2026-10-06",
         "metric_id": "token_blended_cost::deepseek::deepseek_v4_flash::standard",
         "value": 0.189,
         "currency": "USD",
@@ -25068,6 +25196,22 @@
         "source_tier": 1,
         "evidence_status": "official_pricing",
         "event_type": "daily_snapshot"
+      },
+      {
+        "date": "2026-10-06",
+        "metric_id": "token_blended_cost::deepseek::deepseek_v4_pro::market_route",
+        "value": 2.244,
+        "blended_cost_usd": 2.244,
+        "input_per_m": 1.32,
+        "output_per_m": 3.96,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "deepseek/deepseek-v4-pro-0813",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
       },
       {
         "date": "2026-10-06",
@@ -25084,6 +25228,22 @@
       },
       {
         "date": "2026-10-06",
+        "metric_id": "token_blended_cost::google::gemini25_flash::market_route",
+        "value": 1.07,
+        "blended_cost_usd": 1.07,
+        "input_per_m": 0.3,
+        "output_per_m": 2.5,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "google/gemini-2.5-flash",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+      },
+      {
+        "date": "2026-10-06",
         "metric_id": "token_blended_cost::google::gemini25_flash::standard",
         "value": 1.07,
         "currency": "USD",
@@ -25097,6 +25257,22 @@
       },
       {
         "date": "2026-10-06",
+        "metric_id": "token_blended_cost::google::gemini25_pro::market_route",
+        "value": 4.3125,
+        "blended_cost_usd": 4.3125,
+        "input_per_m": 1.25,
+        "output_per_m": 10.0,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "google/gemini-2.5-pro",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+      },
+      {
+        "date": "2026-10-06",
         "metric_id": "token_blended_cost::google::gemini25_pro::standard",
         "value": 4.3125,
         "currency": "USD",
@@ -25107,6 +25283,22 @@
         "source_tier": 1,
         "evidence_status": "official_pricing",
         "event_type": "daily_snapshot"
+      },
+      {
+        "date": "2026-10-06",
+        "metric_id": "token_blended_cost::google::gemini38_flash::market_route",
+        "value": 1.8,
+        "blended_cost_usd": 1.8,
+        "input_per_m": 0.75,
+        "output_per_m": 3.75,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "google/gemini-3.8-flash",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
       },
       {
         "date": "2026-10-06",
@@ -25136,6 +25328,22 @@
       },
       {
         "date": "2026-10-06",
+        "metric_id": "token_blended_cost::mistral::mistral_large::market_route",
+        "value": 0.85,
+        "blended_cost_usd": 0.85,
+        "input_per_m": 0.5,
+        "output_per_m": 1.5,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "mistralai/mistral-large-2512",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+      },
+      {
+        "date": "2026-10-06",
         "metric_id": "token_blended_cost::mistral::mistral_large::standard",
         "value": 0.85,
         "currency": "USD",
@@ -25149,6 +25357,22 @@
       },
       {
         "date": "2026-10-06",
+        "metric_id": "token_blended_cost::moonshot::kimi_k2::market_route",
+        "value": 2.0175,
+        "blended_cost_usd": 2.0175,
+        "input_per_m": 0.95,
+        "output_per_m": 4.0,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "moonshotai/kimi-k2.6",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+      },
+      {
+        "date": "2026-10-06",
         "metric_id": "token_blended_cost::moonshot::kimi_k2::standard",
         "value": 13.675,
         "currency": "CNY",
@@ -25159,6 +25383,22 @@
         "source_tier": 1,
         "evidence_status": "official_pricing",
         "event_type": "daily_snapshot"
+      },
+      {
+        "date": "2026-10-06",
+        "metric_id": "token_blended_cost::moonshot::kimi_k3::market_route",
+        "value": 5.4395,
+        "blended_cost_usd": 5.4395,
+        "input_per_m": 0.83,
+        "output_per_m": 14.0,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "moonshotai/kimi-k3",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
       },
       {
         "date": "2026-10-06",
@@ -25201,6 +25441,22 @@
       },
       {
         "date": "2026-10-06",
+        "metric_id": "token_blended_cost::openai::gpt61_sol::market_route",
+        "value": 4.8,
+        "blended_cost_usd": 4.8,
+        "input_per_m": 2.0,
+        "output_per_m": 10.0,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "openai/gpt-6.1-sol",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+      },
+      {
+        "date": "2026-10-06",
         "metric_id": "token_blended_cost::openai::gpt61_sol::standard",
         "value": 4.8,
         "currency": "USD",
@@ -25214,6 +25470,22 @@
       },
       {
         "date": "2026-10-06",
+        "metric_id": "token_blended_cost::openai::gpt6_astra::market_route",
+        "value": 24.0,
+        "blended_cost_usd": 24.0,
+        "input_per_m": 10.0,
+        "output_per_m": 50.0,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "openai/gpt-6-astra",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+      },
+      {
+        "date": "2026-10-06",
         "metric_id": "token_blended_cost::openai::gpt6_astra::standard",
         "value": 24.0,
         "currency": "USD",
@@ -25224,6 +25496,22 @@
         "source_tier": 1,
         "evidence_status": "official_pricing",
         "event_type": "daily_snapshot"
+      },
+      {
+        "date": "2026-10-06",
+        "metric_id": "token_blended_cost::openai::gpt6_luna::market_route",
+        "value": 0.24,
+        "blended_cost_usd": 0.24,
+        "input_per_m": 0.1,
+        "output_per_m": 0.5,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "openai/gpt-6-luna",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
       },
       {
         "date": "2026-10-06",
@@ -25250,6 +25538,22 @@
         "source_tier": 3,
         "evidence_status": "aggregator_snapshot",
         "event_type": "daily_snapshot"
+      },
+      {
+        "date": "2026-10-06",
+        "metric_id": "token_blended_cost::xai::grok47::market_route",
+        "value": 3.4,
+        "blended_cost_usd": 3.4,
+        "input_per_m": 2.0,
+        "output_per_m": 6.0,
+        "currency": "USD",
+        "event_type": "archived_price_interval",
+        "provider_model_id": "x-ai/grok-4.7",
+        "source_name": "OpenRouter daily price-change archive",
+        "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+        "source_tier": 3,
+        "evidence_status": "public_price_archive",
+        "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
       },
       {
         "date": "2026-10-06",
@@ -27031,7 +27335,7 @@
       },
       {
         "date": "2026-10-06",
-        "generated_at": "2026-10-06T11:24:08+08:00",
+        "generated_at": "2026-10-06T15:05:49+08:00",
         "stage_id": "commercialization",
         "stage_label": "商业化兑现期",
         "stage_description": "产业发展代理不低于55且价格动量/过热代理低于70。它表示技术、商业化和资本投入的综合证据较强，不等同于全行业已盈利。",
@@ -28075,6 +28379,22 @@
           "build_dashboard": "ok",
           "build_site": "ok"
         }
+      },
+      {
+        "generated_at": "2026-10-06T15:06:01+08:00",
+        "elapsed_seconds": 11.7,
+        "status": "partial",
+        "phases": {
+          "collect_token_pricing": "partial",
+          "collect_model_market_pricing": "ok",
+          "collect_gpu_pricing": "ok",
+          "collect_sec_fundamentals": "partial",
+          "collect_market_data": "ok",
+          "collect_news": "ok",
+          "collect_business_metrics": "ok",
+          "build_dashboard": "ok",
+          "build_site": "ok"
+        }
       }
     ]
   },
@@ -28085,31 +28405,31 @@
       "url": "https://platform.openai.com/docs/pricing",
       "kind": "official_pricing",
       "status": "ok",
-      "checked_at": "2026-10-05T14:29:30+08:00",
-      "changed": false,
-      "text_chars": 580791,
+      "checked_at": "2026-10-06T15:05:50+08:00",
+      "changed": true,
+      "text_chars": 581504,
       "error": null
     },
     {
       "source_id": "anthropic_pricing",
       "name": "Anthropic API Pricing",
-      "url": "https://www.anthropic.com/pricing",
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
       "kind": "official_pricing",
       "status": "ok",
-      "checked_at": "2026-10-05T14:29:30+08:00",
+      "checked_at": "2026-10-06T15:05:50+08:00",
       "changed": true,
-      "text_chars": 1187222,
+      "text_chars": 864247,
       "error": null
     },
     {
       "source_id": "google_pricing",
       "name": "Gemini Developer API Pricing",
-      "url": "https://ai.google.dev/pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
       "kind": "official_pricing",
       "status": "ok",
-      "checked_at": "2026-10-05T14:29:30+08:00",
+      "checked_at": "2026-10-06T15:05:50+08:00",
       "changed": true,
-      "text_chars": 238321,
+      "text_chars": 238317,
       "error": null
     },
     {
@@ -28118,7 +28438,7 @@
       "url": "https://x.ai/pricing",
       "kind": "official_pricing",
       "status": "error",
-      "checked_at": "2026-10-05T14:29:30+08:00",
+      "checked_at": "2026-10-06T15:05:50+08:00",
       "changed": null,
       "text_chars": null,
       "error": "HTTPError: HTTP Error 403: Forbidden"
@@ -28126,23 +28446,23 @@
     {
       "source_id": "mistral_pricing",
       "name": "Mistral API Pricing",
-      "url": "https://mistral.ai/technology/",
+      "url": "https://docs.mistral.ai/inference/pricing",
       "kind": "official_pricing",
       "status": "ok",
-      "checked_at": "2026-10-05T14:29:30+08:00",
-      "changed": false,
-      "text_chars": 344221,
+      "checked_at": "2026-10-06T15:05:50+08:00",
+      "changed": true,
+      "text_chars": 1129551,
       "error": null
     },
     {
       "source_id": "cohere_pricing",
       "name": "Cohere API Pricing",
-      "url": "https://cohere.com/pricing",
+      "url": "https://docs.cohere.com/v2/docs/command-r-plus",
       "kind": "official_pricing",
       "status": "ok",
-      "checked_at": "2026-10-05T14:29:30+08:00",
-      "changed": false,
-      "text_chars": 535472,
+      "checked_at": "2026-10-06T15:05:50+08:00",
+      "changed": true,
+      "text_chars": 676612,
       "error": null
     },
     {
@@ -28151,9 +28471,9 @@
       "url": "https://aws.amazon.com/bedrock/pricing/",
       "kind": "official_pricing",
       "status": "ok",
-      "checked_at": "2026-10-05T14:29:30+08:00",
+      "checked_at": "2026-10-06T15:05:50+08:00",
       "changed": true,
-      "text_chars": 847431,
+      "text_chars": 827810,
       "error": null
     },
     {
@@ -28162,7 +28482,7 @@
       "url": "https://api-docs.deepseek.com/quick_start/pricing",
       "kind": "official_pricing",
       "status": "ok",
-      "checked_at": "2026-10-05T14:29:33+08:00",
+      "checked_at": "2026-10-06T15:05:51+08:00",
       "changed": false,
       "text_chars": 23908,
       "error": null
@@ -28173,7 +28493,7 @@
       "url": "https://help.aliyun.com/zh/model-studio/model-pricing",
       "kind": "official_pricing",
       "status": "ok",
-      "checked_at": "2026-10-05T14:29:34+08:00",
+      "checked_at": "2026-10-06T15:05:55+08:00",
       "changed": true,
       "text_chars": 1800655,
       "error": null
@@ -28181,10 +28501,10 @@
     {
       "source_id": "doubao_pricing",
       "name": "火山方舟模型服务计费",
-      "url": "https://www.volcengine.com/docs/84458/1585097",
+      "url": "https://docs.volcengine.com/docs/ark/model-pricing?lang=zh",
       "kind": "official_pricing",
       "status": "ok",
-      "checked_at": "2026-10-05T14:29:35+08:00",
+      "checked_at": "2026-10-06T15:05:55+08:00",
       "changed": true,
       "text_chars": 11902,
       "error": null
@@ -28195,7 +28515,7 @@
       "url": "https://cloud.baidu.com/product-s/qianfan.html",
       "kind": "official_pricing",
       "status": "error",
-      "checked_at": "2026-10-05T14:29:36+08:00",
+      "checked_at": "2026-10-06T15:05:55+08:00",
       "changed": null,
       "text_chars": null,
       "error": "HTTPError: HTTP Error 404: Not Found"
@@ -28206,7 +28526,7 @@
       "url": "https://cloud.tencent.com/product/hunyuan",
       "kind": "official_pricing",
       "status": "ok",
-      "checked_at": "2026-10-05T14:29:30+08:00",
+      "checked_at": "2026-10-06T15:05:51+08:00",
       "changed": true,
       "text_chars": 29182,
       "error": null
@@ -28217,7 +28537,7 @@
       "url": "https://bigmodel.cn/pricing",
       "kind": "official_pricing",
       "status": "ok",
-      "checked_at": "2026-10-05T14:29:32+08:00",
+      "checked_at": "2026-10-06T15:05:52+08:00",
       "changed": true,
       "text_chars": 3853,
       "error": null
@@ -28225,23 +28545,12 @@
     {
       "source_id": "moonshot_pricing",
       "name": "Kimi 开放平台",
-      "url": "https://platform.kimi.com/",
+      "url": "https://platform.kimi.com/docs/pricing/chat",
       "kind": "official_pricing",
       "status": "ok",
-      "checked_at": "2026-10-05T14:29:32+08:00",
-      "changed": false,
-      "text_chars": 92955,
-      "error": null
-    },
-    {
-      "source_id": "vast_ai",
-      "name": "Vast.ai GPU Pricing",
-      "url": "https://vast.ai/",
-      "kind": "gpu_rental",
-      "status": "ok",
-      "checked_at": "2026-10-06T00:11:43+08:00",
-      "changed": false,
-      "text_chars": 101410,
+      "checked_at": "2026-10-06T15:05:55+08:00",
+      "changed": true,
+      "text_chars": 268423,
       "error": null
     },
     {
@@ -28250,9 +28559,20 @@
       "url": "https://lambda.ai/instances",
       "kind": "gpu_rental",
       "status": "ok",
-      "checked_at": "2026-10-06T00:11:43+08:00",
-      "changed": false,
+      "checked_at": "2026-10-06T15:05:56+08:00",
+      "changed": null,
       "text_chars": 97803,
+      "error": null
+    },
+    {
+      "source_id": "vast_ai",
+      "name": "Vast.ai GPU Pricing",
+      "url": "https://vast.ai/",
+      "kind": "gpu_rental",
+      "status": "ok",
+      "checked_at": "2026-10-06T15:05:56+08:00",
+      "changed": null,
+      "text_chars": 101410,
       "error": null
     },
     {
@@ -28261,8 +28581,8 @@
       "url": "https://www.runpod.io/pricing",
       "kind": "gpu_rental",
       "status": "ok",
-      "checked_at": "2026-10-06T00:11:44+08:00",
-      "changed": false,
+      "checked_at": "2026-10-06T15:05:56+08:00",
+      "changed": null,
       "text_chars": 320981,
       "error": null
     },
@@ -28272,13 +28592,145 @@
       "url": "https://help.aliyun.com/en/cs/product-overview/product-billing-rules",
       "kind": "gpu_rental_cloud",
       "status": "ok",
-      "checked_at": "2026-10-06T00:11:44+08:00",
-      "changed": true,
+      "checked_at": "2026-10-06T15:05:58+08:00",
+      "changed": null,
       "text_chars": 119932,
       "error": null
     }
   ],
   "news": [
+    {
+      "title": "DeepSeek’s funding round could approach $15 billion as investor demand surges - calcalistech.com",
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5wOTV4cTA0T291WTByeUo3Ync3YzBJdTd4S1ZtcEhzOVdkd2Iyb1JtTHU0YTRvNWRGTXI2M3NLZnBEWnFpeTdnQW1NcTFYQnVlMHZDVnhkcFMwdFl3U2N5dHpkZDFXZ1k?oc=5",
+      "publisher": "calcalistech.com",
+      "published_at": "2026-10-06T14:51:00+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "DeepSeek set to raise at least $12 bln in Tencent, CATL-led round- Bloomberg - Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPME9jQmVpOFJYVVU5OFRhU2dfUzdXR3ZjUkQxeWtGbnR0QmxUaU8zZ2J3d2k4WWZhdlFhaUxoTU94ZlJBUjBseU1jTDFWamtmVU9zSGV5UkstMmREcEJTZm9JTmd1V3VKTDJNNmhOck5MX1RsNDJ0MVZGQUpGeFVNZ250VHBTNThLcUtiYTA4NWQ0bDZIUHc?oc=5",
+      "publisher": "Yahoo Finance",
+      "published_at": "2026-10-06T13:56:00+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "OpenAI Reportedly In Talks With UAE Funds For $30B Funding – Even As Its AI Agents Raise Fresh Concerns - TradingView",
+      "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxORnZtQlJ6SXYyZGd3VE5CVUNJSUo3aVNZdzc2OG8wNkZzajVIczVYaWhVVVFYTVNaTlFlWkhjSFpkZ1pYVk5Dczh5RF9aUzZ6bnFpaENUaU40ZV8yc0VfU3NXaGFJTWxMVmlQb1VBbXBhNlBNN1h5NlhRQkhPRy1YTF9CaVJrYTFWeGtGTWFfUmViRmdHUVBZd3Fyc1AzN0M4cDlRcGF6d2tPQ2NDTnF1STlXU093bjVPOXJZdGc5bTR3aUtxYzVPWG4tRktadXFIUFdVMV9GaUk3UVpzcVBhWXp3Z3pRemt3TGFhai1nUUo3X2c?oc=5",
+      "publisher": "TradingView",
+      "published_at": "2026-10-06T13:38:00+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "DeepSeek to raise at least $12 billion in Tencent-backed funding, Bloomberg News reports - Reuters",
+      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPQ0hfa1A1NjJCNExCcDJkTmFQOTMtOTV5MU9ZSDQ4M0pUTDBBUzdTNjVTMHpkMUROdG5qWVBXaVcza29USWdhRHd0dDcyRmdBSDBYYVYzYzVSeVN4WlhkN2pURGk4blpRaFpTYUpjeHhwTDBuQ0dmTWJKNnJIM3dmSEhFUC1TQWltODdoY1ZLSmh4MmNMakhOOXl4RHAzTXM5ckx0NTVoZ2dwc0dDaDRRVVRjSTFBc053cjVMOTl6b1VVcW5rNU9MWk9CdGk?oc=5",
+      "publisher": "Reuters",
+      "published_at": "2026-10-06T13:25:00+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "DeepSeek to Raise at Least $12 Billion in Tencent-Backed Funding - Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQQXVsa1AtZXBYRFRpZG9IQ1JKcW5qVjZiLVNsUDhRc2hJRWJVYlZ1cXR3TGdKS2NOb3hkZ3dFM1lCdjFEWW05YjJPMl85cGwxWFZhbWdWSnNMVGJTem1RY2c5azlLbS1kRnhqdE5tY1NBWVZwM1BDUHV4RWxvcmVzdkdNVEY3VXlqQVF4N0diNU9WUjVJT3VGOU9lNVFEY0VhZlIyMG1yaE96Ui1xOFlwYlJLS28?oc=5",
+      "publisher": "Bloomberg.com",
+      "published_at": "2026-10-06T13:00:00+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "新增“收入渠道”刺激！全球大模型第一股拉升 - 搜狐网",
+      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPZmhTVVMtOEFUWE1jY19yQmk5WDZFMW9BakNnaUtPa0RVSHhjZ00zT2lmTEZFZm8tQkVTZnBZZmd2REczZWF2Z2h0UkRPS2xmbHVONlFwbG4xRWUxMVdDUE1rOTFJR3hPQmoydGJ5a1ZyQml4bkxXM0RBTWtWZVFMMTRpRnhSeS13bjdaanhsRQ?oc=5",
+      "publisher": "搜狐网",
+      "published_at": "2026-10-06T11:49:09+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "GLM-5.3上架亚马逊AWS旗下大模型平台，智谱打开海外收入分成通道 - 搜狐网",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxORG4xaFVBUmRuVEpGMHU2NlFDLUgyVlo1SldOdm9TSXktdkIzYko2VktBUEh4bFRVbVh0a1BSZzNucTdLZVBMUXI1WVptTFAxclA3NHFyYU15cFdwLUdmVmt5bldlTTdyUmtMTTVfckFYYkFIUFVmaWtpUHVSOHlJamI3RkpoWXRq?oc=5",
+      "publisher": "搜狐网",
+      "published_at": "2026-10-06T09:34:19+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "Moreno Blasts Anthropic CEO for Hypocritical Approach to Super Intelligence - U.S. Senate (.gov)",
+      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOZUpORXdlbHVLZDZBNTlJT1dtUGhvdjZxdE5CZUNvN0Q5MjVrVm5sZVh3aG9yc2ZpTVozS283SXVOdXhkd1dBS1NRc2VsUUxJaTJoM1V3NFdsbXdXOWo4YWZtckpILXNXUXVOMWxibUFxaXpJQ3dINW1Ja2JuckxjWWF5LVpFdGhaNlJWaFdfQ09wOVlmcDB5Uk55b0tUdHlzbkEzcWZQR0ZDR2R1QWxOVE0zNXBqOUtLcEV4dF9KX0VmSlNTRFpiZ2Z3?oc=5",
+      "publisher": "U.S. Senate (.gov)",
+      "published_at": "2026-10-06T08:23:51+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "The Key Anthropic Numbers You Need To Know Ahead Of Its IPO - Big Technology | Alex Kantrowitz",
+      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE0wakY1aDlWbHZtNmFpVENqZ0pmQk9oTDA2X3VSUWxRb0ZoMHF6ZlpGMFhrUE11YjJBV2ZCX2Y1bGkwRDh3S2t4WkVPM2psdTVjV213TjBXU25NcDdFQTlGdlFzald1RUQwYjh6R2VYcUZ1SGdO?oc=5",
+      "publisher": "Big Technology | Alex Kantrowitz",
+      "published_at": "2026-10-06T05:55:07+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "Anthropic Subscriptions Offer 5x+ More Value Than OpenAI - SemiAnalysis",
+      "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE1obmlsblJmOTI4SDVYR1hzd3lzNEVkM0JONGV0ZUJjZXpWRjdzaW85cjNIclpLZXJVbzQyU0VkbFVzX3VuM0M5VkZ2MlowRG1DaVc0ZllobllaLTBDaFlrSllvRmpqZVBMS0E2b1NNRkdwMkNnT0xxSFhn?oc=5",
+      "publisher": "SemiAnalysis",
+      "published_at": "2026-10-06T04:01:09+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "快手旗下视频生成大模型可灵AI计划最早明年赴港上市，至少融资10亿美元 - 东方财富",
+      "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBMUFl3bTBCalpOc2Q5c25yaVR1UXRSdWtiUnkxQkh1STdhTTBBOGtralFBcGxLX2YzQmFERTZmemJhOG5sVTlzdVRqbEFURGk1TDlZNHpvUjdqUjVPdnV2Yg?oc=5",
+      "publisher": "东方财富",
+      "published_at": "2026-10-05T10:31:39+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
+    {
+      "title": "智谱 VS MiniMax 通用大模型双雄差异化融资：主动刚需募资与被动防御性募资 - 新浪财经",
+      "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxPVjJ4bTlBYW5hcElHLWl2ZEZQYWt4Tl9kQ3VrYXBzMngybHZTNFdxcXJrcW9MQkhxcEUtVWJyODNxX2NleXEtZ0U0SjJINkZkRjdaSVRyLTdGZjJ4a3pSYWhYVEdKSXdsbW5RNTF0ZWx4UHBjQTlCcDYzQ0FUdnJmem5GOWNEUlFPWXc0VW9CQThGcDBoX0hpM2h3Wm81ZDBua08wTTJ4LWlKalRYdnkxNlE3RkxfSzFpQ0pIUkMySHdsYjlqVHVFQVNpcy1fMHVqeEo4Uk9ib25SM2pIUnJCVzRYUy1OdkJrM2xmMm1sUnotTVNw?oc=5",
+      "publisher": "新浪财经",
+      "published_at": "2026-10-04T13:44:44+08:00",
+      "status": "pending_review",
+      "tags": [
+        "news",
+        "rss"
+      ]
+    },
     {
       "title": "Anthropic’s $2 trillion IPO comes with a $518 billion bill - thestreet.com",
       "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPamNkNl91eDNhNlB5N0J0WVZRWVlyaVZFeGZqd0FCS3NCRkh1SDhuQnVoVVJVaWFrUVRjLTAzTGNSNkNKOGxsaEJSTkYxa0RjeVZlLVppdVdDVElpOWdLMGhqNk1UbEdidmM3UXhpdTNYM1IyQUVzNWpTMnNFWkNCbUVEMTJiLXdXeUVBRk9uWDF5VFIxYXc?oc=5",
@@ -28302,9 +28754,9 @@
       ]
     },
     {
-      "title": "对比了20家大模型API价格后，我发现最坑的不是贵而是藏得太深 - CSDN",
+      "title": "对比了20家大模型API价格后，我发现最坑的不是贵而是藏得太深 - csdn.net",
       "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE5fa0wybmxabnVOYTZWTG1xN05zeF9pWlpDd25FcEJ5RnZVU1I1ZzBTOFJrWlBDM2RERHlBUjlqU0hWZGhTbEs0UG53ZVhHc2hiWUp3T1JUb29Ca0lnTVE?oc=5",
-      "publisher": "CSDN",
+      "publisher": "csdn.net",
       "published_at": "2026-10-03T17:29:16+08:00",
       "status": "pending_review",
       "tags": [
@@ -28366,143 +28818,11 @@
         "news",
         "rss"
       ]
-    },
-    {
-      "title": "Anthropic is targeting a pre-Thanksgiving IPO at up to a $2 trillion valuation - qz.com",
-      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBDbk5RZUZxQXF2UDdJOWpUU3V5dXR2SmdYeEg3cS0zU3BiQzlFNm5qb0xNR2RvcUVwTVZ5b2JLc3JHckRxNTFoTk5uRWkxY2pLRFZVY0lDNVBQVm9GMzRpekpKUlRGZ05kNXc?oc=5",
-      "publisher": "qz.com",
-      "published_at": "2026-10-02T19:15:18+08:00",
-      "status": "pending_review",
-      "tags": [
-        "news",
-        "rss"
-      ]
-    },
-    {
-      "title": "PitchBook: Anthropic’s Leaked Financials Reflect Fast Growth, but Not a $2 Trillion Valuation - Morningstar",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOZG5rTkw5OThUUU9UbEl2NTk4X1RpQUJBTFVRdF92RGFzd1N5MzRTTklySlktTHF0M1FFdkY4a2VwUnBidWIzVFRpR2VQTnozbFJTX0dXMlJRTnVrWVJGaUdmckNvekQ4T1dPZG1Mb3ZfTm9KNHhVT3BSdVZ4cC11d1lEalJBZ2QydS0wcEg0Y0paUkpDaVBmS1NLNGwydUdHRVdpS295ME1KS0ta?oc=5",
-      "publisher": "Morningstar",
-      "published_at": "2026-10-02T18:10:14+08:00",
-      "status": "pending_review",
-      "tags": [
-        "news",
-        "rss"
-      ]
-    },
-    {
-      "title": "Anthropic Targets Pre-Thanksgiving IPO at $2 Trillion Valuation - PYMNTS.com",
-      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQVURFX2V0VTVRVXUwdGp5M2wxMjVYbnVtN0h5b0xpUzJTTExRSU04SkJUeGJydmpUcXYzc0Q5VVZFTVFDaHY5d25kcjlkcWZ5aUpyN25XNFFJY1luaGVOZ3c1dFpEOVZJYnBVRkhWUU5VUHZUd0ZLLWJmaTA4cjVjY0ppYmlYVk1JQjNXaWlZLTVPdVJSVzV0N19ROXdqUHJqQlNjY19CbWNRdmo0ald2Tk1GVEVmQU11VmJQRg?oc=5",
-      "publisher": "PYMNTS.com",
-      "published_at": "2026-10-02T07:25:05+08:00",
-      "status": "pending_review",
-      "tags": [
-        "news",
-        "rss"
-      ]
-    },
-    {
-      "title": "Your AI Bill Is a Toll Booth. Stop Paying Twice. - Towards Data Science",
-      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOY00zMFN1MzNwT05sRlFwX3plb3QxQmVCRDA0blI1WUxod1V3Q25CYm05amxDb3dSbXYxTjNGM2FWdFhjdGs4ZU1Va1lvUlotYmFMXzBhOGEwN0NpQVlwYWU5b2RZTll1UGpXbFpXbERMWDRWeTBEWVc3MnhrQVFjc0xTS1M?oc=5",
-      "publisher": "Towards Data Science",
-      "published_at": "2026-10-01T19:21:15+08:00",
-      "status": "pending_review",
-      "tags": [
-        "news",
-        "rss"
-      ]
-    },
-    {
-      "title": "新思科技(SNPS.US)携手OpenAI开发芯片设计AI模型，收入分成模式推动股价一度涨7%_全球市场 - finance.stockstar.com",
-      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBxVVVpaTIzeEpIdnlUT0ZfN1dHSHFvTlh3T0NJa2tMeHViaGRmQzgyVWZlRC1VekQ5ZkhrNGxFZ01DNnBzSkxqRGJQLTNfNlRxTXAteVh5ajl0eTc2T1FhYmtLWWk?oc=5",
-      "publisher": "finance.stockstar.com",
-      "published_at": "2026-10-01T08:17:15+08:00",
-      "status": "pending_review",
-      "tags": [
-        "news",
-        "rss"
-      ]
-    },
-    {
-      "title": "Anthropic’s $11.6 Billion Quarter Just Changed How the Market Should Read the S-1 - Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPWDNQVUtxQlR0MTFnZFJiQlZGOXNrTXRZczBvSkZ3Nmh5ZHpEdHo2TzBGZ2hocUQ5Zko1TVYwX3RjMWxHN0hQbDBQSENDMTdhb3V0YWJGVkpfS0NMamFJako3UmdjMkpwelI0RG1CcURMV1FpQkN0ZjdXSW1lbzJCWklKZVI5dDJFQV9yX01JZU5VaWhfMFlLTk1R?oc=5",
-      "publisher": "Yahoo Finance",
-      "published_at": "2026-10-01T03:44:12+08:00",
-      "status": "pending_review",
-      "tags": [
-        "news",
-        "rss"
-      ]
-    },
-    {
-      "title": "Billionaire Bill Ackman calls Anthropic “perhaps the greatest business story I've ever seen” - Yahoo Finance",
-      "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxNcGRnTWlfUFJSNmVrUjJwbWgtYWRQR053OEZoZi1BVTJzRWN4SkI5ZkFpVFNkWFNKSU5jSnNvTy1zeXVsbWpVSGNwOHJ2QVJZRlUzdlJMOWkyR2ZZVnNTMkloWXd0ajg0MHNkNmliUmZzOXUtem9hbjhsNEJVR05RU1BaRjk5T040SVpKZFhRQ051cHNTVXdDUmVzWmt4VGMxc1ZRdV9RODZRVEF0R1pYcXBPMVNuaUlOLVdNTHRheDZ6c2ZKbkhIOVMxVXB3cUJJUXVrVlBmWW54Q3RKMVg0?oc=5",
-      "publisher": "Yahoo Finance",
-      "published_at": "2026-10-01T02:37:46+08:00",
-      "status": "pending_review",
-      "tags": [
-        "news",
-        "rss"
-      ]
-    },
-    {
-      "title": "大模型降价推动商业化落地，恒生科技ETF南方（520570）覆盖AI变现主线 - 东方财富",
-      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE9oMlBmcXYyTWlZbEg1S0U4c2YzdW1qV2NBTG50TzNGeEhzeUhjVXNMM2laaUNIMGo1SkFfZXRITlNKTm5PclBWcnU0Q0JyQVpEcEEzVGNKbjhvOGp0cDJhSE1uU001Zw?oc=5",
-      "publisher": "东方财富",
-      "published_at": "2026-09-30T23:57:01+08:00",
-      "status": "pending_review",
-      "tags": [
-        "news",
-        "rss"
-      ]
-    },
-    {
-      "title": "Context Windows: How Much Context Does an LLM Really Need, and What Are the Trade-Offs? - Snowflake",
-      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOU2wwRG10UzZwS2l3OTRBOVMwT08taEc1NlctT1dTbWx6THVtUndJeHpsdDhxYjA4TTRJM1B6TnJiSUNVMnhHdW04Y1JQVzFSUnJPc2NpN3dwUDI2LUhRUkUyd3VYQkVqMndIWWZEUGs2NWU4aHBwNENMcy1YUUxNcXM2V1hUanRvc3RaUGxQTEZtMzdEM3l0Nm1QejlOU2FxNWFDaFdZR3BHSndQMlE5QV9GUUNDenJoNUE?oc=5",
-      "publisher": "Snowflake",
-      "published_at": "2026-09-30T17:33:41+08:00",
-      "status": "pending_review",
-      "tags": [
-        "news",
-        "rss"
-      ]
-    },
-    {
-      "title": "AI Gateways for OpenAI: OpenRouter Alternatives - AIMultiple",
-      "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE12bjNfUnloNWJjTkE3bVJvTlVtaXB6MTlsX2N3LWp2Q0trSUtnbFVzLW1pekdKSGhJZ0pOQ2lZYXpUMHM3MTE0bA?oc=5",
-      "publisher": "AIMultiple",
-      "published_at": "2026-09-30T15:00:00+08:00",
-      "status": "pending_review",
-      "tags": [
-        "news",
-        "rss"
-      ]
-    },
-    {
-      "title": "EXCLUSIVE: Anthropic's IPO prospectus shows sweeping AI vision, surging costs - Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNbVlPeVROc0FBWTl6a0ZCZXdPVF93WjdPT1BFV2xkQmlyRE9oYS1wRF9yWk0zV1EwSlJ5Vmt0UkpucHdQWUpSbGdzUmdVeC1EWm5sMzBkTUNQMkg3ekVYMkMtemVySUxhWnRCTWRNLTA1Vl8tZVZkRU80ZVk4TjdZbE5LdjJ5VzJXbUlmM1FvMnJqTFE4TkZVeEJFVndEMmpIbGN5WDRxclhHX0JZdHp6LWlad3JTakZr?oc=5",
-      "publisher": "Reuters",
-      "published_at": "2026-09-30T09:16:47+08:00",
-      "status": "pending_review",
-      "tags": [
-        "news",
-        "rss"
-      ]
-    },
-    {
-      "title": "从1.3万亿到3000亿，市值蒸发万亿，智谱AI资本狂欢落幕？ - 手机新浪网",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPTXpmeV93TVJkWFZnaERkM0Q5SW1oaDU2SU1NNHdXTXJ3M180aDRIWHk4ZEJnZTZmMTNzbExHa1ZHc1dhX0RDWG9GcHA2Q1BjQjBlLWo2QlBKTzJlWVRQcnJZdGxhY1NNYXNGa0tSTWljZGpQcGVwSWJWQ1l6M0N1WWIxUkpadHdHOWxXblBn?oc=5",
-      "publisher": "手机新浪网",
-      "published_at": "2026-09-30T08:07:00+08:00",
-      "status": "pending_review",
-      "tags": [
-        "news",
-        "rss"
-      ]
     }
   ],
   "health": {
     "status": "degraded",
-    "generated_at": "2026-10-06T11:24:10+08:00",
+    "generated_at": "2026-10-06T15:06:01+08:00",
     "sources_ok": 16,
     "sources_total": 18,
     "sources_failed": 2,
