@@ -106,6 +106,9 @@ class TestBuildSite(unittest.TestCase):
         self.assertNotIn("{{ROOT_PREFIX}}", content)
         self.assertNotIn("{{ASSET_PREFIX}}", content)
         self.assertNotIn("{{ASSET_VERSION}}", content)
+        self.assertNotIn("{{PRERENDERED_CONTENT}}", content)
+        self.assertIn("BUILD-TIME SNAPSHOT", content)
+        self.assertIn("数据截止", content)
 
     def test_no_template_vars_in_any_page(self):
         for html_file in self.site_dir.rglob("*.html"):
@@ -116,6 +119,16 @@ class TestBuildSite(unittest.TestCase):
                 f"{html_file.relative_to(self.site_dir)} 残留 ASSET_PREFIX")
             self.assertNotIn("{{ASSET_VERSION}}", content,
                 f"{html_file.relative_to(self.site_dir)} 残留 ASSET_VERSION")
+            self.assertNotIn("{{PRERENDERED_CONTENT}}", content,
+                f"{html_file.relative_to(self.site_dir)} 残留 PRERENDERED_CONTENT")
+
+    def test_methodology_exposes_governance_and_disclaimer(self):
+        app = (self.site_dir / "app.js").read_text(encoding="utf-8")
+        html = (self.site_dir / "index.html").read_text(encoding="utf-8")
+        self.assertIn("企业采用少于3家公司时退出计分", app)
+        self.assertIn("稳健性检验", app)
+        self.assertIn("证据完整度不是概率", app)
+        self.assertIn("不构成投资建议", html)
 
     # ── Path correctness ───────────────────────────────────────
     def test_home_uses_relative_assets(self):

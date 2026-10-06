@@ -374,7 +374,9 @@ td .source-link { font-size: 11px; }
 .method-subsection { margin-top:20px; }
 .method-subsection h4 { margin:0 0 9px; font-size:14px; color:var(--ink); }
 .method-note, .method-subsection p, .method-subsection li { color:#52627a; font-size:11px; line-height:1.65; }
+.method-warning { padding:9px 11px; border-left:3px solid var(--warn); border-radius:6px; background:#fff8e8; color:#7c5200; }
 .cycle-method-table { min-width:900px; }
+.compact-method-table { min-width:620px; }
 .cycle-method-table th { cursor:default; }
 .cycle-method-table th:hover { background:#f6f8fc; }
 .cycle-method-table td { font-size:11px; }
@@ -388,6 +390,11 @@ td .source-link { font-size: 11px; }
 .method-card { background: rgba(255,255,255,.94); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow); }
 .method-card h3 { font-size: 15px; margin: 0 0 10px; }
 .method-card p, .method-card li { font-size: 12px; color: #475569; margin: 4px 0; }
+.method-card ul { margin:8px 0 0; padding-left:18px; }
+.prerendered-snapshot { text-align:left; max-width:980px; margin:0 auto; }
+.prerendered-snapshot h1 { margin:4px 0 18px; color:var(--ink); }
+.prerendered-snapshot h2 { color:var(--ink); }
+.cycle-trend { min-height:250px; }
 
 .chain-flow { display:grid; grid-template-columns:1fr auto 1fr auto 1fr auto 1fr; gap:10px; align-items:stretch; }
 .chain-flow div { position:relative; overflow:hidden; background:linear-gradient(145deg,#fff,#f8faff); border:1px solid var(--line); border-radius:var(--radius-lg); padding:18px; box-shadow:var(--shadow); }

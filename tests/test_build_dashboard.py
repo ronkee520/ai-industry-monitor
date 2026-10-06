@@ -111,7 +111,7 @@ class TestBuildDashboard(unittest.TestCase):
         self.assertIn(cycle.get("confidence", ""), ("high", "medium", "limited", "missing"))
         self.assertIsInstance(cycle.get("confidence_score"), (int, float))
         self.assertIn("component_coverage_pct", cycle.get("confidence_dimensions", {}))
-        self.assertEqual(cycle.get("score_method"), "transparent_proxy_v2")
+        self.assertEqual(cycle.get("score_method"), "transparent_proxy_v3")
         self.assertIn("industry_calculation", cycle.get("methodology", {}))
         self.assertIn("risk_calculation", cycle.get("methodology", {}))
         self.assertIn("stage_decision", cycle)
@@ -121,6 +121,24 @@ class TestBuildDashboard(unittest.TestCase):
                 self.assertIn("formula", component)
                 self.assertIn("raw_display", component)
                 self.assertIn("sample_size", component)
+
+    def test_cycle_methodology_quality_controls(self):
+        payload = _dash.build_dashboard(self.root)
+        cycle = payload["overview"]["cycle"]
+        self.assertIn("robustness", cycle)
+        self.assertGreaterEqual(len(cycle["robustness"]["weight_scenarios"]), 5)
+        self.assertGreaterEqual(len(cycle["robustness"]["threshold_grid"]), 9)
+        self.assertIn("几何平均", cycle["confidence_dimensions"]["formula"])
+        enterprise = next(
+            item for item in cycle["factor_scores"]["commercialization"]["components"]
+            if item["id"] == "enterprise_adoption"
+        )
+        self.assertEqual(enterprise["minimum_sample_size"], 3)
+        if enterprise["sample_size"] < 3:
+            self.assertIsNone(enterprise["score"])
+            self.assertEqual(enterprise["inclusion_status"], "excluded_insufficient_sample")
+        for factor in cycle["factor_scores"].values():
+            self.assertIn("stability", factor)
 
     def test_cycle_does_not_claim_stage_without_data(self):
         payload = _dash.build_dashboard(self.root)

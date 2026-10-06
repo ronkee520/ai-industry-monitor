@@ -197,12 +197,14 @@
           <p class="lead">${esc(c.stage_description || stageDescription(c.stage_id))}</p>
           <div class="stage-scores">
             <div class="score-item"><b>${esc(fmtNum(c.industry_development_score, 1))}</b>产业发展强度 / 100</div>
-            <div class="score-item"><b>${hasRisk ? esc(fmtNum(c.risk_crowding_score, 1)) : "—"}</b>市场拥挤代理</div>
+            <div class="score-item"><b>${hasRisk ? esc(fmtNum(c.risk_crowding_score, 1)) : "—"}</b>价格动量/过热代理</div>
             <div class="score-item"><b>${c.confidence_score != null ? esc(fmtNum(c.confidence_score, 1)) : "—"}</b>证据覆盖度 / 100</div>
             <div class="score-item"><b>${esc(c.missing_component_count ?? c.missing_factor_count ?? 0)}</b>缺失子因子</div>
           </div>
         </article>
       </section>
+
+      ${renderCycleTrend(c, D.history?.cycle_scores || [])}
 
       <!-- Factor Scores -->
       <section class="section">
@@ -212,11 +214,11 @@
           ${renderFactorCard("商业化兑现度", c.factor_scores?.commercialization, "ARR/年化收入·活跃用户·企业客户·披露覆盖")}
           ${renderFactorCard("资本投入强度", c.factor_scores?.capital_investment, "CSP CAPEX·披露覆盖·融资·GPU价格趋势")}
           <article class="card">
-            <h3>市场价格拥挤度（代理）</h3>
+            <h3>市场价格动量/过热代理</h3>
             <p class="subtitle">3个月动量·上涨广度·距52周高点</p>
             <div class="bar-list">
               <div class="bar-row">
-                <div class="bar-label">市场拥挤代理</div>
+                <div class="bar-label">价格过热代理</div>
                 <div class="bar-track"><div class="bar-fill" style="width:${hasRisk ? c.risk_crowding_score : 0}%;background:var(--warn)"></div></div>
                 <div class="bar-value">${hasRisk ? fmtNum(c.risk_crowding_score, 0) + " / 100" : "待数据完善"}</div>
               </div>
@@ -264,7 +266,7 @@
       ["技术成熟度",factors.technology_maturity],
       ["商业化兑现度",factors.commercialization],
       ["资本投入强度",factors.capital_investment],
-      ["市场价格拥挤代理",risk],
+      ["市场价格动量/过热代理",risk],
     ].filter(([,factor])=>factor);
     const confidenceReasons=(c.confidence_reasons||[]).map(x=>`<li>${esc(x)}</li>`).join("");
     const stage=c.stage_decision||{};
@@ -281,7 +283,7 @@
         <div class="method-callout"><strong>先说结论：</strong>${esc(method.positioning||"")} 本期证据覆盖度为 <b>${esc(fmtNum(c.confidence_score,1))}/100（${esc((c.confidence||"—").toUpperCase())}）</b>。${esc(c.limitations||"")}</div>
         <div class="method-formulas">
           <div><span>产业发展强度</span><b>${esc(method.industry_calculation||"—")}</b><small>${esc(method.industry_formula||"")}</small></div>
-          <div><span>市场拥挤代理</span><b>${esc(method.risk_calculation||"—")}</b><small>${esc(method.risk_formula||"")}</small></div>
+          <div><span>价格动量/过热代理</span><b>${esc(method.risk_calculation||"—")}</b><small>${esc(method.risk_formula||"")}</small></div>
         </div>
         ${factorSections.map(([title,factor])=>renderCycleFactorBreakdown(title,factor)).join("")}
         <section class="method-subsection">
@@ -291,12 +293,17 @@
         </section>
         <section class="method-subsection">
           <h4>周期调整期的恶化信号</h4>
-          <p class="method-note">至少 ${esc(stage.deterioration_required??2)} 项明确触发才进入周期调整期；缺失数据不会被当作“未触发”。本期触发 ${esc(stage.deterioration_trigger_count??0)} 项。</p>
+          <p class="method-note">至少 ${esc(stage.deterioration_required??2)} 项明确触发才进入周期调整期；缺失数据不会被当作“未触发”。本期触发 ${esc(stage.deterioration_trigger_count??0)} 项。${esc(stage.coverage_note||"")}</p>
           <div class="table-wrap"><table class="cycle-method-table"><thead><tr><th>信号</th><th>规则</th><th>状态</th></tr></thead><tbody>${triggers}</tbody></table></div>
         </section>
         <section class="method-subsection method-grid-2">
           <div><h4>缺失与归一化规则</h4><p>${esc(method.normalisation||"")}</p><p>${esc(method.missing_policy||"")}</p></div>
-          <div><h4>证据覆盖度如何计算</h4><p>${esc(c.confidence_dimensions?.formula||"")}</p><ul><li>可计算子因子覆盖：${esc(fmtNum(c.confidence_dimensions?.component_coverage_pct,1))}%</li><li>T1/T2强证据占比：${esc(fmtNum(c.confidence_dimensions?.strong_evidence_pct,1))}%</li><li>自动数据源成功率：${esc(fmtNum(c.confidence_dimensions?.source_reliability_pct,1))}%</li></ul>${confidenceReasons?`<p>后续增强项：</p><ul>${confidenceReasons}</ul>`:'<p>当前未发现额外降级项。</p>'}</div>
+          <div><h4>证据完整度如何计算</h4><p>${esc(c.confidence_dimensions?.formula||"")}</p><p>${esc(c.confidence_dimensions?.aggregation||"")}</p><ul><li>可计算子因子覆盖：${esc(fmtNum(c.confidence_dimensions?.component_coverage_pct,1))}%</li><li>T1/T2强证据占比：${esc(fmtNum(c.confidence_dimensions?.strong_evidence_pct,1))}%</li><li>自动数据源成功率：${esc(fmtNum(c.confidence_dimensions?.source_reliability_pct,1))}%</li></ul>${confidenceReasons?`<p>当前边界：</p><ul>${confidenceReasons}</ul>`:'<p>当前未发现额外降级项。</p>'}</div>
+        </section>
+        ${renderRobustness(c)}
+        <section class="method-subsection method-grid-2">
+          <div><h4>阈值校准状态</h4><p>${esc(method.threshold_calibration||"")}</p></div>
+          <div><h4>资本投入如何解读</h4><p>${esc(method.capital_interpretation||"")}</p></div>
         </section>
         <p class="method-reference">方法设计参考：${method.method_reference?sourceLink(method.method_reference.url,method.method_reference.name):"—"}</p>
       </div>
@@ -315,8 +322,34 @@
         <td>${sources}${item.note?`<small>${esc(item.note)}</small>`:""}</td>
       </tr>`;
     }).join("");
+    const stability=factor.stability;
     return `<section class="method-subsection"><h4>${esc(title)}：${factor.score==null?"—":esc(fmtNum(factor.score,1))+" / 100"}${factor.contribution!=null?` · 对产业总分贡献 ${esc(fmtNum(factor.contribution,1))}`:""}</h4>
+      ${stability?`<p class="method-note ${stability.level==='reduced'?'method-warning':''}">权重稳定性：${esc(stability.note||'—')}</p>`:""}
       <div class="table-wrap"><table class="cycle-method-table"><thead><tr><th>子因子与公式</th><th>本期原始值</th><th>分数</th><th>有效权重</th><th>贡献</th><th>来源/说明</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+  }
+
+  function renderRobustness(c) {
+    const r=c.robustness||{}, scenarios=r.weight_scenarios||[], grid=r.threshold_grid||[];
+    if(!scenarios.length&&!grid.length) return "";
+    const scenarioRows=scenarios.map(x=>`<tr><td>${esc(x.name)}</td><td class="num">${esc(fmtNum(x.score,1))}</td><td>${esc(x.stage)}</td></tr>`).join("");
+    const thresholdSummary=[...new Set(grid.map(x=>x.stage))].join("、")||"—";
+    return `<section class="method-subsection">
+      <h4>稳健性检验</h4>
+      <p class="method-note">权重情景阶段${r.weight_stage_stable?'保持一致':'发生变化'}；发展阈值50–60、价格过热阈值65–75的网格检验结果为：${esc(thresholdSummary)}。${esc(r.interpretation||"")}</p>
+      <div class="table-wrap"><table class="cycle-method-table compact-method-table"><thead><tr><th>合成方法/权重情景</th><th>产业分数</th><th>阶段</th></tr></thead><tbody>${scenarioRows}<tr><td>加权几何平均（非完全可替代）</td><td class="num">${esc(fmtNum(r.weighted_geometric?.score,1))}</td><td>${esc(r.weighted_geometric?.stage||"—")}</td></tr></tbody></table></div>
+    </section>`;
+  }
+
+  function renderCycleTrend(current, history) {
+    const rows=[...(history||[]),current].filter(x=>x&&x.industry_development_score!=null&&!x.sample_based&&x.generated_at);
+    const byDate=new Map(rows.map(x=>[String(x.generated_at).slice(0,10),x]));
+    const points=[...byDate.entries()].map(([date,row])=>({date,value:Number(row.industry_development_score),stage:row.stage_label||"—",method:row.score_method||"legacy"})).filter(x=>Number.isFinite(x.value)).sort((a,b)=>a.date.localeCompare(b.date)).slice(-12);
+    if(!points.length) return "";
+    const left=48,right=770,top=30,bottom=150,min=Math.max(0,Math.min(55,Math.min(...points.map(x=>x.value))-8)),max=Math.min(100,Math.max(55,Math.max(...points.map(x=>x.value))+8));
+    const span=Math.max(max-min,1),xAt=(p,i)=>points.length===1?(left+right)/2:left+i/(points.length-1)*(right-left),yAt=v=>bottom-(v-min)/span*(bottom-top);
+    const coords=points.map((p,i)=>`${xAt(p,i).toFixed(1)},${yAt(p.value).toFixed(1)}`).join(" ");
+    const dots=points.map((p,i)=>`<circle class="history-point" cx="${xAt(p,i).toFixed(1)}" cy="${yAt(p.value).toFixed(1)}" r="4"><title>${esc(p.date)} · ${esc(fmtNum(p.value,1))} · ${esc(p.stage)} · ${esc(p.method)}</title></circle>`).join("");
+    return `<section class="section"><div class="section-head"><h2>产业发展强度历史</h2><p>最近 ${points.length} 个可用日快照 · 方法升级日可能产生口径断点</p></div><div class="card history-chart cycle-trend"><svg viewBox="0 0 800 185" role="img" aria-label="产业发展强度历史"><line class="history-grid" x1="${left}" y1="${yAt(55)}" x2="${right}" y2="${yAt(55)}"/><text class="history-axis-label" x="4" y="${yAt(55)+4}">55</text><polyline class="history-line" points="${coords}"/>${dots}<text class="history-date" x="${left}" y="175">${esc(points[0].date)}</text><text class="history-date" x="${right}" y="175" text-anchor="end">${esc(points.at(-1).date)}</text></svg><p class="history-note">仅比较当时可获得的数据快照；评分方法版本变更不会回填旧值，跨版本跳变应结合变更日志解释。</p></div></section>`;
   }
 
   function kpiCard(label, value, suffix) {
@@ -349,8 +382,8 @@
     const m = {
       tech_validation: "技术路线探索期。Token价格处于高位，商业模式未成形，资本投入相对谨慎。",
       infra_expansion: "Capex快速增长，GPU供不应求，Token价格开始快速下降。基础设施层持续受益。",
-      commercialization: "产业发展代理达到55以上且市场拥挤代理低于70；表示技术、商业与资本投入证据较强，不等同于全行业已经盈利。",
-      valuation_crowding: "⚠️ 产业发展代理较强，同时市场价格拥挤代理达到70以上。当前未纳入完整估值与ETF申赎，只作为价格风险警戒。",
+      commercialization: "产业发展代理达到55以上且价格动量/过热代理低于70；表示技术、商业与资本投入证据较强，不等同于全行业已经盈利。",
+      valuation_crowding: "⚠️ 产业发展代理较强，同时价格动量/过热代理达到70以上。当前未纳入完整估值与ETF申赎，只作为价格风险警戒。",
       cyclical_adjustment: "⚠️ 产能过剩担忧，Capex增速放缓。行业进入出清或再平衡。由边际恶化信号触发。",
       insufficient_data: "当前的真实定价、商业化与资本开支数据覆盖不足，暂不输出产业周期判断。",
     };
@@ -801,7 +834,8 @@
           <article class="method-card">
             <h3>Token 混合成本</h3>
             <p><code>blended_cost = input × 0.65 + output × 0.35</code></p>
-            <p>CNY 定价按 fx_rate 转 USD。不含 Batch/缓存/长上下文/工具调用/企业折扣。</p>
+            <p>这是标准实时档“名义标价”代理。CNY 定价按记录中的 fx_rate 转 USD；不把 Batch、缓存、Flex/Spot、长上下文阶梯、推理Token或企业折扣静默混入。</p>
+            <p>不同Tokenizer对同一文本的切分差异尚未完成统一基准实测，因此当前不能解释为“每千字真实任务成本”。</p>
           </article>
           <article class="method-card">
             <h3>商业化指标</h3>
@@ -811,25 +845,26 @@
           <article class="method-card">
             <h3>来源分级</h3>
             <ul>
-              <li><span class="tag t1">T1</span> 公司官网/IR/交易所/监管/官方定价页</li>
-              <li><span class="tag t2">T2</span> 权威媒体和公开可引用的行业研究</li>
-              <li><span class="tag t3">T3</span> 公开聚合目录与新闻源</li>
+              <li><span class="tag t1">T1</span> 原始一手证据：监管文件、交易所公告、公司IR/财报、官方定价或产品文档。可进入正式指标。</li>
+              <li><span class="tag t2">T2</span> 有编辑责任与可追溯采访/研究方法的权威媒体或公开机构研究。须标记reported，可进入代理指标。</li>
+              <li><span class="tag t3">T3</span> 免费行情、聚合目录、路由市场与新闻发现源。仅作补缺/趋势代理，不得覆盖T1冲突值。</li>
             </ul>
+            <p>等级衡量证据链距离，不代表数据一定正确；confidence与freshness另行描述核验状态和时效。</p>
           </article>
           <article class="method-card">
             <h3>AI Cycle</h3>
-            <p>技术成熟度30%、商业化兑现度35%、资本投入强度35%构成产业发展强度；市场拥挤代理独立计算。</p>
-            <p>${esc(c.stages_reference?.map(s => s.label_zh).join(" → ") || "技术验证 → 基础设施扩张 → 商业化兑现 → 估值拥挤 → 周期调整")}</p>
+            <p>技术成熟度30%、商业化兑现度35%、资本投入强度35%构成产业发展强度；价格动量/过热代理独立计算。结果同步接受权重、几何平均与阈值敏感性检验。</p>
+            <p>${esc(c.stages_reference?.map(s => s.label_zh).join(" → ") || "技术验证 → 基础设施扩张 → 商业化兑现 → 价格过热警戒 → 周期调整")}</p>
           </article>
           <article class="method-card">
             <h3>GPU 与云 CAPEX</h3>
             <p>GPU采用服务商官方公开按需价格，统一为USD/GPU·小时，并保留供应商、型号、显存、价格类型与采集日。</p>
-            <p>CAPEX来自公司年报、业绩公告或SEC/IR，均为公司整体口径，并非纯AI支出。</p>
+            <p>CAPEX来自公司年报、业绩公告或SEC/IR，均为公司整体口径（Total Company CAPEX），并非纯AI/GPU支出；没有公开拆分依据时不估算AI占比。</p>
           </article>
           <article class="method-card">
             <h3>产业链财务</h3>
             <p>覆盖GPU/CPU/ASIC、晶圆代工、光刻设备与HBM/存储。收入和毛利率来自公司正式财务披露。</p>
-            <p>美元与欧元保留原币种；图表只比较同币种，避免未经说明的汇率换算。</p>
+            <p>美元与欧元保留原币种；图表只比较同币种。各层收入存在上下游交易与双重计数，禁止直接相加为“AI产业总规模”；需做产业规模时应采用增加值法。</p>
           </article>
           <article class="method-card">
             <h3>市场行情与投资研究</h3>
@@ -839,7 +874,7 @@
           <article class="method-card">
             <h3>时间序列与更新</h3>
             <p>每次成功构建按date+metric_id去重写入历史快照；价格未变化也保留当日真实快照，以支持水平线。</p>
-            <p>自动抓取失败时保留上一成功快照并标记stale_fallback；动态官网使用人工核验回退。</p>
+            <p>自动抓取失败时保留上一成功快照并标记stale_fallback；动态官网使用人工核验回退。全站当前快照截止：<strong>${esc(fmtDate(m.generated_at))}</strong>。</p>
           </article>
         </div>
       </section>
@@ -852,8 +887,18 @@
           <tr><td><strong>算力</strong></td><td>GPU按需价、显存、供应商、CSP CAPEX</td><td>Lambda/RunPod等官方价；公司年报与业绩公告</td><td>价格自动抓取；财报定期更新</td><td>公开展示最低价不代表库存/SLA；CAPEX含非AI投入</td></tr>
           <tr><td><strong>产业链</strong></td><td>营收、毛利率、产业环节</td><td>公司IR、年报、SEC/交易所披露</td><td>财报发布后更新</td><td>公司整体财务，不等同AI业务收入；跨币种不直接比较</td></tr>
           <tr><td><strong>投资研究</strong></td><td>收益、回撤、波动率、上涨广度</td><td>Yahoo Finance公开复权日线</td><td>每日自动</td><td>T3代理；需用持牌行情与估值数据复核</td></tr>
-          <tr><td><strong>周期评分</strong></td><td>固定锚点标准化、权重、贡献、阶段规则</td><td>以上各模块；方法参考OECD/EC-JRC复合指标手册</td><td>随数据构建重算</td><td>监测代理指数，不是回测收益模型或外部机构评级</td></tr>
+          <tr><td><strong>周期评分</strong></td><td>固定锚点标准化、权重、贡献、稳健性与阶段规则</td><td>以上各模块；方法参考OECD/EC-JRC复合指标手册</td><td>随数据构建重算</td><td>研究型经验阈值尚未历史校准；监测代理指数，不是回测收益模型或外部机构评级</td></tr>
         </tbody></table></div></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><h2>方法边界与研究路线</h2><p>已实现、暂未实现和不能替代的内容明确分开</p></div>
+        <div class="method-grid">
+          <article class="method-card"><h3>本期已落地</h3><ul><li>ARR与短期年化运行率分口径标准化，不直接相加</li><li>企业采用少于3家公司时退出计分</li><li>缺失重归一披露权重放大倍数</li><li>证据完整度改用等权几何平均</li><li>权重、非线性聚合与阶段阈值敏感性检验</li></ul></article>
+          <article class="method-card"><h3>待有数据后实现</h3><ul><li>统一中英代码基准语料的Tokenizer修正和任务级有效成本</li><li>模型能力/延迟/成本帕累托前沿</li><li>至少8个季度的CAPEX→收入滞后与资本效率</li><li>机构级Forward估值、ETF申赎、融资与情绪拥挤指标</li><li>混频Nowcasting/MIDAS与历史回测阈值校准</li></ul></article>
+          <article class="method-card"><h3>证据完整度不是概率</h3><p>HIGH/MEDIUM/LIMITED仅描述可计算覆盖、强证据比例与管道成功率，不是“结论正确概率”，也不是外部评级。任一维度偏弱会通过几何平均约束总分。</p></article>
+          <article class="method-card"><h3>引用本项目</h3><p><cite>AI Industry Monitor. (2026). AI Cycle &amp; LLM Commercialization Dashboard.</cite></p><p>访问日期请按实际使用日填写；引用数字时同时记录快照时间、metric_id、source_url与score_method。</p></article>
+        </div>
       </section>
 
       <section class="section">

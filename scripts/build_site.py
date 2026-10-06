@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import html
 import json
 import shutil
 import sys
@@ -100,16 +101,17 @@ def build_site(root: Path, *, verbose: bool = False) -> Path:
     template = template_path.read_text(encoding="utf-8")
 
     # ── 渲染函数：替换模板变量 ──
-    def render_page(root_prefix: str, asset_prefix: str) -> str:
+    def render_page(root_prefix: str, asset_prefix: str, page_id: str) -> str:
         return (
             template
             .replace("{{ROOT_PREFIX}}", root_prefix)
             .replace("{{ASSET_PREFIX}}", asset_prefix)
             .replace("{{ASSET_VERSION}}", asset_version)
+            .replace("{{PRERENDERED_CONTENT}}", _prerendered_content(page_id, dashboard, health))
         )
 
     # ── 首页：ROOT=./  ASSET=./  ──
-    home_html = render_page("./", "./")
+    home_html = render_page("./", "./", "overview")
     (site_dir / "index.html").write_text(home_html, encoding="utf-8")
     if verbose:
         print("  生成 index.html (ROOT=./)")
@@ -118,7 +120,7 @@ def build_site(root: Path, *, verbose: bool = False) -> Path:
     for sub_dir in SUB_PAGES:
         sub_path = site_dir / sub_dir
         sub_path.mkdir(parents=True, exist_ok=True)
-        sub_html = render_page("../", "../")
+        sub_html = render_page("../", "../", sub_dir)
         (sub_path / "index.html").write_text(sub_html, encoding="utf-8")
         if verbose:
             print(f"  生成 {sub_dir}/index.html (ROOT=../)")
@@ -186,7 +188,7 @@ def _verify_build(site_dir: Path) -> None:
     import re
     for html_file in site_dir.rglob("*.html"):
         content = html_file.read_text(encoding="utf-8")
-        for placeholder in ("{{ROOT_PREFIX}}", "{{ASSET_PREFIX}}", "{{ASSET_VERSION}}"):
+        for placeholder in ("{{ROOT_PREFIX}}", "{{ASSET_PREFIX}}", "{{ASSET_VERSION}}", "{{PRERENDERED_CONTENT}}"):
             if placeholder in content:
                 raise RuntimeError(
                     f"构建校验失败: {html_file.relative_to(site_dir)} 中残留未替换的 {placeholder}"
@@ -194,6 +196,54 @@ def _verify_build(site_dir: Path) -> None:
         # 确保 DASHBOARD_ROOT 被正确设置
         if "{{ROOT_PREFIX}}" not in content and "{{ASSET_PREFIX}}" not in content:
             continue  # 已通过
+
+
+def _prerendered_content(page_id: str, dashboard: dict[str, Any], health: dict[str, Any]) -> str:
+    """Emit a crawlable build-time snapshot; app.js hydrates it with the full UI."""
+    meta = dashboard.get("meta", {})
+    cycle = dashboard.get("overview", {}).get("cycle", {})
+    generated = html.escape(str(meta.get("generated_at") or health.get("generated_at") or "—"))
+    page_titles = {
+        "overview": "AI产业景气与风险总览",
+        "token": "Token经济与模型定价",
+        "business": "大模型商业化进程",
+        "compute": "AI算力与云CAPEX",
+        "supply-chain": "AI产业链",
+        "investment": "投资研究",
+        "methodology": "数据、来源与方法论",
+    }
+    title = html.escape(page_titles.get(page_id, "AI Industry Monitor"))
+    if page_id == "overview":
+        stage = html.escape(str(cycle.get("stage_label") or "数据不足"))
+        industry = html.escape(str(cycle.get("industry_development_score") if cycle.get("industry_development_score") is not None else "—"))
+        momentum = html.escape(str(cycle.get("risk_crowding_score") if cycle.get("risk_crowding_score") is not None else "—"))
+        coverage = html.escape(str(cycle.get("confidence_score") if cycle.get("confidence_score") is not None else "—"))
+        body = (
+            f"<h2>当前阶段：{stage}</h2><p>产业发展强度 {industry}/100；"
+            f"价格动量/过热代理 {momentum}/100；证据完整度 {coverage}/100。</p>"
+            "<p>本指数是公开数据驱动的研究型监测代理，不是投资评级或收益预测。</p>"
+        )
+    elif page_id == "methodology":
+        body = (
+            "<h2>来源与方法摘要</h2><p>T1为监管文件、交易所、公司IR/财报和官方定价；"
+            "T2为可追溯的权威媒体或公开研究；T3为免费行情、聚合目录与路由市场，只作补缺或趋势代理。</p>"
+            "<p>产业发展强度由技术成熟度30%、商业化兑现度35%、资本投入强度35%构成；"
+            "价格动量/过热代理独立计算。缺失值不填0，并披露重归一后的权重放大。</p>"
+        )
+    else:
+        descriptions = {
+            "token": "比较官方或明确标注的路由市场输入价、输出价、缓存价与历史快照。",
+            "business": "分列ARR、短期年化运行率、财务收入、用户、企业采用、融资与估值口径。",
+            "compute": "跟踪GPU官方按需租赁价格与公司整体CAPEX；整体CAPEX不冒充纯AI投入。",
+            "supply-chain": "按上游制造与设备、芯片与网络、云与系统、模型与应用分层观察；各层收入不得直接相加。",
+            "investment": "以免费复权日线观察收益、回撤和波动；仅作价格行为代理。",
+        }
+        body = f"<h2>{title}</h2><p>{html.escape(descriptions.get(page_id, '公开数据监测模块。'))}</p>"
+    return (
+        f'<section class="loading-state prerendered-snapshot" data-prerendered="true">'
+        f'<p class="page-kicker">BUILD-TIME SNAPSHOT</p><h1>{title}</h1>{body}'
+        f'<p>数据截止：<time>{generated}</time>。正在加载交互视图…</p></section>'
+    )
 
 
 def _write_placeholder(site_dir: Path, dashboard: dict[str, Any]) -> None:

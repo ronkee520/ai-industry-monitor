@@ -1,8 +1,8 @@
 {
   "_description": "AI Industry Monitor — AI产业周期透明代理指数配置",
-  "_version": "2.0.0",
-  "_last_updated": "2026-10-05",
-  "_scoring_philosophy": "透明代理指数：原始值按固定锚点映射到0-100，再线性加权；缺失值不填0或默认50，而是在同一层级对可用权重归一化。产业发展强度与市场价格拥挤代理分开计算。本指数用于监测，不是经回测验证的收益预测或投资评级。",
+  "_version": "2.1.0",
+  "_last_updated": "2026-10-06",
+  "_scoring_philosophy": "透明代理指数：原始值按预先公开的固定锚点映射到0-100，再线性加权；同时报告等权、偏重情景与加权几何平均的稳健性检验。缺失值不填0或默认50，而是在同一层级对可用权重归一化并披露权重放大。产业发展强度与市场价格动量/过热代理分开计算。本指数用于监测，不是经回测验证的收益预测或投资评级。",
   "_method_reference": {
     "name": "OECD / EC-JRC — Handbook on Constructing Composite Indicators",
     "url": "https://doi.org/10.1787/9789264043466-en"
@@ -26,15 +26,15 @@
       "id": "commercialization",
       "label_zh": "商业化兑现期",
       "label_en": "Commercialization",
-      "trigger_rule": "industry_score ≥ 55 且 risk_score < 70",
-      "description": "产业发展代理不低于55且市场拥挤代理低于70。它表示技术、商业化和资本投入的综合证据较强，不等同于全行业已盈利。"
+      "trigger_rule": "industry_score ≥ 55 且 price_overheating_proxy < 70",
+      "description": "产业发展代理不低于55且价格动量/过热代理低于70。它表示技术、商业化和资本投入的综合证据较强，不等同于全行业已盈利。"
     },
     {
       "id": "valuation_crowding",
-      "label_zh": "市场拥挤警戒",
-      "label_en": "Market Crowding Alert",
-      "trigger_rule": "industry_score ≥ 55 且 risk_score ≥ 70",
-      "description": "当前未纳入Forward P/E或ETF净申购，因此只能称为价格拥挤警戒，不能直接判断估值泡沫。"
+      "label_zh": "价格过热警戒",
+      "label_en": "Price Overheating Alert",
+      "trigger_rule": "industry_score ≥ 55 且 price_overheating_proxy ≥ 70",
+      "description": "仅基于价格动量、上涨广度和距52周高点；当前未纳入Forward P/E、ETF净申购或融资拥挤，因此不能直接判断估值泡沫或完整市场拥挤度。"
     },
     {
       "id": "cyclical_adjustment",
@@ -50,7 +50,7 @@
       "label_zh": "技术成熟度",
       "weight": 0.30,
       "sub_factors": {
-        "token_price_decline": {"label_zh": "90天Token成本变化", "weight": 0.35, "formula": "clip(50 - 2 × 90天价格变化中位数, 0, 100)", "anchors": "下降25%=100；持平=50；上涨25%=0", "data_source": "官方价格事件、OpenRouter逐日价格变更档案"},
+        "token_price_decline": {"label_zh": "90天Token成本与降价广度", "weight": 0.35, "formula": "价格幅度分×70% + 价格竞争广度分×30%", "anchors": "幅度分：下降25%=100、持平=50、上涨25%=0；广度分：50+50×(降价数−涨价数)/样本数", "data_source": "官方价格事件、OpenRouter逐日价格变更档案"},
         "public_price_coverage": {"label_zh": "生产模型价格覆盖", "weight": 0.25, "formula": "有真实价格的生产模型数 / 已登记生产模型数 × 100", "data_source": "模型注册表与官方/路由市场价格"},
         "frontier_context_coverage": {"label_zh": "百万Token上下文覆盖", "weight": 0.20, "formula": "上下文窗口≥1000K的生产模型数 / 上下文已披露模型数 × 100", "data_source": "模型厂商官方页面"},
         "multimodal_coverage": {"label_zh": "多模态覆盖", "weight": 0.20, "formula": "支持至少两种模态的生产模型数 / 生产模型数 × 100", "data_source": "模型厂商官方页面"}
@@ -60,9 +60,9 @@
       "label_zh": "商业化兑现度",
       "weight": 0.35,
       "sub_factors": {
-        "arr_scale": {"label_zh": "ARR/年化收入规模", "weight": 0.40, "formula": "clip(已披露ARR合计 / 2000亿美元 × 100, 0, 100)", "data_source": "公司公告或注明口径的权威媒体报道"},
+        "arr_scale": {"label_zh": "年化收入规模代理（分口径）", "weight": 0.40, "formula": "ARR与短期年化运行率分别按1000亿美元锚点标准化，再对可用口径等权平均；二者不直接相加", "data_source": "公司公告或注明口径的权威媒体报道"},
         "user_adoption": {"label_zh": "终端用户采用", "weight": 0.25, "formula": "clip(最高已披露活跃用户数 / 10亿 × 100, 0, 100)", "data_source": "公司官方披露"},
-        "enterprise_adoption": {"label_zh": "企业客户采用", "weight": 0.20, "formula": "clip(已披露企业客户数 / 100万 × 100, 0, 100)", "data_source": "公司官方披露；缺失时不计分且重新归一可用权重"},
+        "enterprise_adoption": {"label_zh": "企业客户采用", "weight": 0.20, "formula": "至少3家公司有效披露时，clip(已披露企业客户数 / 100万 × 100, 0, 100)；否则退出计分", "data_source": "公司官方披露；不同采用/支持/签约口径不得静默混同"},
         "commercial_disclosure_breadth": {"label_zh": "商业披露覆盖", "weight": 0.15, "formula": "有ARR/用户/企业客户披露的公司数 / 监测公司数 × 100", "data_source": "business_metrics.json"}
       }
     },
@@ -78,20 +78,22 @@
     }
   },
   "risk_overlay": {
-    "label_zh": "市场价格拥挤度代理",
+    "label_zh": "市场价格动量/过热代理",
     "weight": "独立计算，不参与产业发展强度",
     "sub_factors": {
       "momentum": {"label_zh": "3个月价格动量", "weight": 0.40, "formula": "clip(50 + 1.25 × 观察池3个月收益率中位数, 0, 100)"},
       "breadth": {"label_zh": "上涨广度", "weight": 0.30, "formula": "3个月收益为正的标的数 / 有效标的数 × 100"},
       "proximity_to_52w_high": {"label_zh": "距52周高点", "weight": 0.30, "formula": "clip(100 + 距52周高点回撤中位数, 0, 100)"}
     },
-    "limitations": "当前行情来自T3免费复权日线，不包含Forward P/E、EV/EBITDA或ETF净申购，故不能称为完整估值拥挤度。"
+    "limitations": "当前行情来自T3免费复权日线，不包含Forward P/E、EV/EBITDA、ETF净申购、融资余额或情绪衍生指标，故只称价格动量/过热代理，不能称为完整市场拥挤度。"
   },
   "stage_priority": ["insufficient_data", "cyclical_adjustment", "valuation_crowding", "commercialization", "infra_expansion", "tech_validation"],
   "_missing_policy": "缺失值不填0、不默认50；同一因子内只对可用子因子重新归一权重。",
   "_minimum_data_requirement": {
     "industry_score": "三个一级因子中至少两个可计算。",
     "risk_score": "三个市场代理中至少两个可计算。",
-    "cyclical_adjustment": "五项恶化信号至少两项明确触发；不可用信号不按false处理。"
-  }
+    "cyclical_adjustment": "五项恶化信号至少两项明确触发；不可用信号不按false处理。",
+    "enterprise_adoption": "至少3家公司具有可比较的有效披露，否则该子因子退出计分。"
+  },
+  "_threshold_status": "35/55/70/85为研究型经验阈值，尚未经长历史回测或德尔菲法校准；产品必须同步展示合理区间敏感性结果。"
 }

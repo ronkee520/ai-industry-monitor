@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light">
 <meta name="description" content="AI Industry Monitor — AI产业与大模型商业化监测 Dashboard">
+<meta name="author" content="Ren Keyi">
+<meta name="citation_title" content="AI Industry Monitor: AI Cycle &amp; LLM Commercialization Dashboard">
+<meta name="citation_author" content="Ren Keyi">
+<meta name="citation_publication_date" content="2026">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI Industry Monitor">
+<meta property="og:description" content="可追溯的AI产业、模型经济、商业化与算力资本开支监测看板">
 <title>AI Industry Monitor</title>
 <link rel="icon" href="{{ASSET_PREFIX}}favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="{{ASSET_PREFIX}}styles.css?v={{ASSET_VERSION}}">
@@ -44,7 +51,7 @@
 </nav>
 
 <main class="page" id="app" aria-live="polite">
-  <section class="loading-state">正在读取最新公开快照…</section>
+  {{PRERENDERED_CONTENT}}
 </main>
 
 <footer class="site-footer">
@@ -53,8 +60,8 @@
     <p>AI 产业、模型经济与资产配置信号终端</p>
   </div>
   <div>
-    <strong>数据来源</strong>
-    <p>官方 API · 公司披露 · 监管文件 · 市场行情</p>
+    <strong>研究用途与免责声明</strong>
+    <p>数据仅供教学、研究与信息参考，不构成投资建议、证券评级或收益承诺。数据可能延迟、修订或存在口径差异；投资决策应以监管文件、交易所及持牌数据源复核，风险由使用者自行承担。</p>
   </div>
 </footer>
 
