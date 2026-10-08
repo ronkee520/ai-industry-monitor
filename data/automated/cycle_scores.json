@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-10-07T14:47:40+08:00",
+  "generated_at": "2026-10-08T14:56:43+08:00",
   "stage_id": "commercialization",
   "stage_label": "商业化兑现期",
   "stage_description": "产业发展代理不低于55且价格动量/过热代理低于70。它表示技术、商业化和资本投入的综合证据较强，不等同于全行业已盈利。",
   "industry_development_score": 76.3,
-  "risk_crowding_score": 65.2,
+  "risk_crowding_score": 62.0,
   "risk_note": "仅为市场价格动量/过热代理：使用3个月动量、上涨广度与距52周高点；未接入Forward P/E、EV/EBITDA、ETF净申购或融资拥挤，不能称为完整市场拥挤度，也不能单独作为交易信号。",
   "risk_components": {
-    "momentum": 54.8,
-    "breadth": 57.9,
-    "proximity_to_52w_high": 86.5
+    "momentum": 50.2,
+    "breadth": 52.6,
+    "proximity_to_52w_high": 87.2
   },
   "risk_details": {
-    "score": 65.2,
+    "score": 62.0,
     "available_component_weight": 1.0,
     "components": [
       {
         "id": "momentum",
         "label": "3个月价格动量",
-        "score": 54.8,
+        "score": 50.2,
         "configured_weight": 0.4,
-        "raw_display": "中位收益 +3.8%",
+        "raw_display": "中位收益 +0.2%",
         "formula": "score = clip(50 + 1.25 × 观察池3个月收益率中位数, 0, 100)",
         "sample_size": 19,
         "sources": [
@@ -49,15 +49,15 @@
         "minimum_sample_size": null,
         "inclusion_status": "included",
         "effective_weight": 0.4,
-        "contribution": 21.9,
+        "contribution": 20.1,
         "weight_amplification": 1.0
       },
       {
         "id": "breadth",
         "label": "上涨广度",
-        "score": 57.9,
+        "score": 52.6,
         "configured_weight": 0.3,
-        "raw_display": "11 / 19 个标的上涨",
+        "raw_display": "10 / 19 个标的上涨",
         "formula": "score = 3个月收益为正的标的数 ÷ 有效标的数 × 100",
         "sample_size": 19,
         "sources": [
@@ -86,15 +86,15 @@
         "minimum_sample_size": null,
         "inclusion_status": "included",
         "effective_weight": 0.3,
-        "contribution": 17.4,
+        "contribution": 15.8,
         "weight_amplification": 1.0
       },
       {
         "id": "proximity_to_52w_high",
         "label": "距52周高点",
-        "score": 86.5,
+        "score": 87.2,
         "configured_weight": 0.3,
-        "raw_display": "距高点中位数 -13.5%",
+        "raw_display": "距高点中位数 -12.8%",
         "formula": "score = clip(100 + 距52周高点回撤中位数, 0, 100)",
         "sample_size": 19,
         "sources": [
@@ -123,7 +123,7 @@
         "minimum_sample_size": null,
         "inclusion_status": "included",
         "effective_weight": 0.3,
-        "contribution": 25.9,
+        "contribution": 26.2,
         "weight_amplification": 1.0
       }
     ]
@@ -605,7 +605,7 @@
     "industry_formula": "产业发展强度 = 技术成熟度×30% + 商业化兑现度×35% + 资本投入强度×35%；缺失整项时对可用权重归一化。",
     "industry_calculation": "68.1×30%=20.4 + 59.6×35%=20.9 + 100.0×35%=35.0 = 76.3",
     "risk_formula": "价格动量/过热代理 = 3个月动量×40% + 上涨广度×30% + 距52周高点×30%。",
-    "risk_calculation": "54.8×40%=21.9 + 57.9×30%=17.4 + 86.5×30%=25.9 = 65.2",
+    "risk_calculation": "50.2×40%=20.1 + 52.6×30%=15.8 + 87.2×30%=26.2 = 62.0",
     "normalisation": "所有异量纲原始值按预先公开的锚点线性映射到0–100并截尾；不使用当期样本的min-max，避免样本变化导致历史分数漂移。",
     "missing_policy": "缺失值不填0、不默认50；在同一因子内仅对可用子因子重新归一权重，并披露权重放大倍数；企业客户等口径不一指标低于3家公司时退出计分。",
     "threshold_calibration": "35/55/70/85为透明的研究型经验阈值，尚未经长历史回测或德尔菲专家法校准；因此同步披露50–60发展阈值、65–75过热阈值的敏感性结果。",
@@ -737,7 +737,7 @@
       {
         "development_threshold": 50,
         "overheating_threshold": 65,
-        "stage": "价格过热警戒"
+        "stage": "商业化兑现期"
       },
       {
         "development_threshold": 50,
@@ -752,7 +752,7 @@
       {
         "development_threshold": 55,
         "overheating_threshold": 65,
-        "stage": "价格过热警戒"
+        "stage": "商业化兑现期"
       },
       {
         "development_threshold": 55,
@@ -767,7 +767,7 @@
       {
         "development_threshold": 60,
         "overheating_threshold": 65,
-        "stage": "价格过热警戒"
+        "stage": "商业化兑现期"
       },
       {
         "development_threshold": 60,
@@ -780,7 +780,7 @@
         "stage": "商业化兑现期"
       }
     ],
-    "threshold_stage_stable": false,
+    "threshold_stage_stable": true,
     "interpretation": "若不同权重、非线性聚合或合理阈值区间产生不同阶段，当前判定应视为边界状态。"
   },
   "limitations": "已补充多公司商业化、企业采用与两期CAPEX数据，但统一模型能力基准、可比Token真实用量、机构级Forward估值与ETF申赎仍未接入。指数用于产业阶段监测与研究复核，不直接生成仓位。",
