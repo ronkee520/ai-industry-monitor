@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-10-09T15:04:58+08:00",
+  "generated_at": "2026-10-10T14:37:29+08:00",
   "stage_id": "commercialization",
   "stage_label": "商业化兑现期",
   "stage_description": "产业发展代理不低于55且价格动量/过热代理低于70。它表示技术、商业化和资本投入的综合证据较强，不等同于全行业已盈利。",
   "industry_development_score": 76.0,
-  "risk_crowding_score": 57.5,
+  "risk_crowding_score": 57.7,
   "risk_note": "仅为市场价格动量/过热代理：使用3个月动量、上涨广度与距52周高点；未接入Forward P/E、EV/EBITDA、ETF净申购或融资拥挤，不能称为完整市场拥挤度，也不能单独作为交易信号。",
   "risk_components": {
-    "momentum": 47.2,
+    "momentum": 48.1,
     "breadth": 42.1,
-    "proximity_to_52w_high": 86.5
+    "proximity_to_52w_high": 86.0
   },
   "risk_details": {
-    "score": 57.5,
+    "score": 57.7,
     "available_component_weight": 1.0,
     "components": [
       {
         "id": "momentum",
         "label": "3个月价格动量",
-        "score": 47.2,
+        "score": 48.1,
         "configured_weight": 0.4,
-        "raw_display": "中位收益 -2.3%",
+        "raw_display": "中位收益 -1.5%",
         "formula": "score = clip(50 + 1.25 × 观察池3个月收益率中位数, 0, 100)",
         "sample_size": 19,
         "sources": [
@@ -49,7 +49,7 @@
         "minimum_sample_size": null,
         "inclusion_status": "included",
         "effective_weight": 0.4,
-        "contribution": 18.9,
+        "contribution": 19.2,
         "weight_amplification": 1.0
       },
       {
@@ -92,9 +92,9 @@
       {
         "id": "proximity_to_52w_high",
         "label": "距52周高点",
-        "score": 86.5,
+        "score": 86.0,
         "configured_weight": 0.3,
-        "raw_display": "距高点中位数 -13.6%",
+        "raw_display": "距高点中位数 -14.0%",
         "formula": "score = clip(100 + 距52周高点回撤中位数, 0, 100)",
         "sample_size": 19,
         "sources": [
@@ -123,7 +123,7 @@
         "minimum_sample_size": null,
         "inclusion_status": "included",
         "effective_weight": 0.3,
-        "contribution": 25.9,
+        "contribution": 25.8,
         "weight_amplification": 1.0
       }
     ]
@@ -558,13 +558,13 @@
           "sample_size": 0,
           "sources": [
             {
-              "name": "RunPod GPU Pricing",
-              "url": "https://www.runpod.io/pricing",
+              "name": "Lambda Cloud On-Demand GPU Pricing",
+              "url": "https://lambda.ai/instances",
               "tier": 1
             },
             {
-              "name": "Lambda Cloud On-Demand GPU Pricing",
-              "url": "https://lambda.ai/instances",
+              "name": "RunPod GPU Pricing",
+              "url": "https://www.runpod.io/pricing",
               "tier": 1
             }
           ],
@@ -605,7 +605,7 @@
     "industry_formula": "产业发展强度 = 技术成熟度×30% + 商业化兑现度×35% + 资本投入强度×35%；缺失整项时对可用权重归一化。",
     "industry_calculation": "67.2×30%=20.2 + 59.6×35%=20.9 + 100.0×35%=35.0 = 76.0",
     "risk_formula": "价格动量/过热代理 = 3个月动量×40% + 上涨广度×30% + 距52周高点×30%。",
-    "risk_calculation": "47.2×40%=18.9 + 42.1×30%=12.6 + 86.5×30%=25.9 = 57.5",
+    "risk_calculation": "48.1×40%=19.2 + 42.1×30%=12.6 + 86.0×30%=25.8 = 57.7",
     "normalisation": "所有异量纲原始值按预先公开的锚点线性映射到0–100并截尾；不使用当期样本的min-max，避免样本变化导致历史分数漂移。",
     "missing_policy": "缺失值不填0、不默认50；在同一因子内仅对可用子因子重新归一权重，并披露权重放大倍数；企业客户等口径不一指标低于3家公司时退出计分。",
     "threshold_calibration": "35/55/70/85为透明的研究型经验阈值，尚未经长历史回测或德尔菲专家法校准；因此同步披露50–60发展阈值、65–75过热阈值的敏感性结果。",

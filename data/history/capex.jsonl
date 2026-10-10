@@ -44,3 +44,11 @@
 {"date":"2026-10-09","metric_id":"capex_total::alphabet::fy2024","value":52.5,"company_id":"google","period":"FY2024"}
 {"date":"2026-10-09","metric_id":"capex_total::amazon::fy2025","value":128.32,"company_id":"amazon","period":"FY2025"}
 {"date":"2026-10-09","metric_id":"capex_total::amazon::fy2024","value":77.658,"company_id":"amazon","period":"FY2024"}
+{"date":"2026-10-10","metric_id":"capex_total::microsoft::fy2025","value":64.551,"company_id":"microsoft","period":"FY2025"}
+{"date":"2026-10-10","metric_id":"capex_total::microsoft::fy2024","value":44.477,"company_id":"microsoft","period":"FY2024"}
+{"date":"2026-10-10","metric_id":"capex_total::meta::fy2025","value":72.22,"company_id":"meta","period":"FY2025"}
+{"date":"2026-10-10","metric_id":"capex_total::meta::fy2024","value":39.225,"company_id":"meta","period":"FY2024"}
+{"date":"2026-10-10","metric_id":"capex_total::alphabet::fy2025","value":91.0,"company_id":"google","period":"FY2025"}
+{"date":"2026-10-10","metric_id":"capex_total::alphabet::fy2024","value":52.5,"company_id":"google","period":"FY2024"}
+{"date":"2026-10-10","metric_id":"capex_total::amazon::fy2025","value":128.32,"company_id":"amazon","period":"FY2025"}
+{"date":"2026-10-10","metric_id":"capex_total::amazon::fy2024","value":77.658,"company_id":"amazon","period":"FY2024"}
