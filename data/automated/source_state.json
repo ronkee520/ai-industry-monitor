@@ -10,15 +10,15 @@
     "attempted_urls": [
       "https://platform.openai.com/docs/pricing"
     ],
-    "checked_at": "2026-10-15T13:29:21+08:00",
+    "checked_at": "2026-10-16T13:21:03+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://developers.openai.com/api/docs/pricing",
-    "content_hash": "dc8d2d4af84b24f792ad7050af4e586d48c5ed345bb17bbf3cdc87bd74e7eda9",
+    "content_hash": "8485aa2e5a4c17aedcb1dbf92a83d81d51e6fbf590d6faef1b734298222e90d6",
     "changed": true,
-    "text_chars": 595737,
+    "text_chars": 597480,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:21+08:00"
+    "last_successful_check": "2026-10-16T13:21:03+08:00"
   },
   {
     "source_id": "anthropic_pricing",
@@ -31,15 +31,15 @@
     "attempted_urls": [
       "https://platform.claude.com/docs/en/about-claude/pricing"
     ],
-    "checked_at": "2026-10-15T13:29:21+08:00",
+    "checked_at": "2026-10-16T13:21:03+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://platform.claude.com/docs/en/about-claude/pricing",
-    "content_hash": "8438520a6a9f40794146edc69157e3198b67bf8267d74429b12888a0c7c34ce5",
+    "content_hash": "9d667f140287258e4f06a22f6933ecddd372ec5b3b010c6d26a6dfafb4a37f97",
     "changed": true,
-    "text_chars": 1507621,
+    "text_chars": 1537694,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:21+08:00"
+    "last_successful_check": "2026-10-16T13:21:03+08:00"
   },
   {
     "source_id": "google_pricing",
@@ -52,15 +52,15 @@
     "attempted_urls": [
       "https://ai.google.dev/gemini-api/docs/pricing"
     ],
-    "checked_at": "2026-10-15T13:29:21+08:00",
+    "checked_at": "2026-10-16T13:21:03+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://ai.google.dev/gemini-api/docs/pricing?hl=zh-cn",
-    "content_hash": "50b7d42f41e30301fd61652e71423242303d185a08e7a24e0dce5ab632b97ab6",
+    "content_hash": "8b01a1c23f536d34d533c730c5b77c668441b966fe748352d3762b6747c68b37",
     "changed": true,
-    "text_chars": 233958,
+    "text_chars": 238913,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:21+08:00"
+    "last_successful_check": "2026-10-16T13:21:03+08:00"
   },
   {
     "source_id": "xai_pricing",
@@ -73,7 +73,7 @@
     "attempted_urls": [
       "https://x.ai/pricing"
     ],
-    "checked_at": "2026-10-15T13:29:20+08:00",
+    "checked_at": "2026-10-16T13:21:03+08:00",
     "status": "error",
     "http_status": null,
     "final_url": null,
@@ -93,15 +93,15 @@
     "attempted_urls": [
       "https://docs.mistral.ai/inference/pricing"
     ],
-    "checked_at": "2026-10-15T13:29:21+08:00",
+    "checked_at": "2026-10-16T13:21:03+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://docs.mistral.ai/inference/pricing",
-    "content_hash": "a95ef6b7fb85b64699f61d5e2a8efd9803ee4fee7883be5a4192a70a9d2dfd40",
+    "content_hash": "83fa2be4e54f3c16a634a6da04984bf55f0aed964d3a933ebf1ff46d2bf6d3d3",
     "changed": true,
-    "text_chars": 1152733,
+    "text_chars": 1155413,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:21+08:00"
+    "last_successful_check": "2026-10-16T13:21:03+08:00"
   },
   {
     "source_id": "cohere_pricing",
@@ -114,15 +114,15 @@
     "attempted_urls": [
       "https://docs.cohere.com/v2/docs/command-r-plus"
     ],
-    "checked_at": "2026-10-15T13:29:21+08:00",
+    "checked_at": "2026-10-16T13:21:03+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://docs.cohere.com/v2/docs/command-r-plus",
-    "content_hash": "83eef6a7e804cd9ee56639aae8327ea88c258bf014625562cd59509097e11f1f",
+    "content_hash": "d5c66cd0aa98efd9111f77350f93a5e69976cdec33d63c03e2b08539510504b7",
     "changed": true,
-    "text_chars": 198830,
+    "text_chars": 198826,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:21+08:00"
+    "last_successful_check": "2026-10-16T13:21:03+08:00"
   },
   {
     "source_id": "amazon_bedrock_pricing",
@@ -135,15 +135,15 @@
     "attempted_urls": [
       "https://aws.amazon.com/bedrock/pricing/"
     ],
-    "checked_at": "2026-10-15T13:29:21+08:00",
+    "checked_at": "2026-10-16T13:21:03+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://aws.amazon.com/cn/bedrock/pricing/",
-    "content_hash": "100cd6184051b5ed3cbf62bf5991bdfa80e46816b647baaa5a964811547b626e",
+    "content_hash": "619c8950c05adf10e14b0b10ba5744e5a4726261d96d0822800c360e2ad04ea2",
     "changed": true,
-    "text_chars": 831060,
+    "text_chars": 837194,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:21+08:00"
+    "last_successful_check": "2026-10-16T13:21:03+08:00"
   },
   {
     "source_id": "deepseek_pricing",
@@ -156,7 +156,7 @@
     "attempted_urls": [
       "https://api-docs.deepseek.com/quick_start/pricing"
     ],
-    "checked_at": "2026-10-15T13:29:21+08:00",
+    "checked_at": "2026-10-16T13:21:05+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://api-docs.deepseek.com/quick_start/pricing/",
@@ -164,7 +164,7 @@
     "changed": false,
     "text_chars": 23908,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:21+08:00"
+    "last_successful_check": "2026-10-16T13:21:05+08:00"
   },
   {
     "source_id": "alibaba_pricing",
@@ -177,15 +177,15 @@
     "attempted_urls": [
       "https://help.aliyun.com/zh/model-studio/model-pricing"
     ],
-    "checked_at": "2026-10-15T13:29:24+08:00",
+    "checked_at": "2026-10-16T13:21:07+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://help.aliyun.com/zh/model-studio/model-pricing",
-    "content_hash": "5bd5a3572eba055e573fc3e86aef651d5cd09e2f965c2a4041ff840998cba691",
+    "content_hash": "a4383c04158769afe5fc91b3b2099a4251e83db46bae24cd04f6ac8239b9d680",
     "changed": true,
     "text_chars": 1334702,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:24+08:00"
+    "last_successful_check": "2026-10-16T13:21:07+08:00"
   },
   {
     "source_id": "doubao_pricing",
@@ -198,15 +198,15 @@
     "attempted_urls": [
       "https://docs.volcengine.com/docs/ark/model-pricing?lang=zh"
     ],
-    "checked_at": "2026-10-15T13:29:23+08:00",
+    "checked_at": "2026-10-16T13:21:06+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://docs.volcengine.com/docs/ark/model-pricing?lang=zh",
-    "content_hash": "eb0ce3292ea1a4a22d51bc726459a1b6b5a2f7ad8e444f22b6b333c140c25f9b",
+    "content_hash": "0a470fb513fe00843e3fdc92447acac3ed825dea8f5a47c04d5c95e6fa610d17",
     "changed": true,
     "text_chars": 11902,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:23+08:00"
+    "last_successful_check": "2026-10-16T13:21:06+08:00"
   },
   {
     "source_id": "baidu_pricing",
@@ -219,15 +219,15 @@
     "attempted_urls": [
       "https://cloud.baidu.com/product/wenxinworkshop.html"
     ],
-    "checked_at": "2026-10-15T13:29:23+08:00",
+    "checked_at": "2026-10-16T13:21:07+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://cloud.baidu.com/product-s/qianfan_home",
-    "content_hash": "baa5ae19210c23c35cfe7f403245c87769d63ed7a12dfd297abcfd8ad446f9f5",
+    "content_hash": "6a29f55acb79bdd14b67d263cda96bf80494c97fc3cddb64a391241e9e546570",
     "changed": true,
     "text_chars": 82116,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:23+08:00"
+    "last_successful_check": "2026-10-16T13:21:07+08:00"
   },
   {
     "source_id": "tencent_pricing",
@@ -240,15 +240,15 @@
     "attempted_urls": [
       "https://cloud.tencent.com/product/hunyuan"
     ],
-    "checked_at": "2026-10-15T13:29:21+08:00",
+    "checked_at": "2026-10-16T13:21:04+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://cloud.tencent.com/product/hunyuan",
-    "content_hash": "79482ab025cf150c67943f10eac0cfc4c17b36800f6b275b79c85a45cfd76b7a",
+    "content_hash": "9358cdb856efe7486ad6cf0f7d78ce5b626bf02a10c29b73c03d089de9502868",
     "changed": true,
-    "text_chars": 988,
+    "text_chars": 987,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:21+08:00"
+    "last_successful_check": "2026-10-16T13:21:04+08:00"
   },
   {
     "source_id": "zhipu_pricing",
@@ -261,15 +261,15 @@
     "attempted_urls": [
       "https://bigmodel.cn/pricing"
     ],
-    "checked_at": "2026-10-15T13:29:22+08:00",
+    "checked_at": "2026-10-16T13:21:05+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://bigmodel.cn/pricing",
-    "content_hash": "76f667e17a1dfa54f3850b90a972bf7f7a5d103748bc325236b2fcb9ff719400",
+    "content_hash": "f0b39cbf58408bf52bf72472d2d193ff7c76d66671fb3f1e1f9dc0bee8c85a20",
     "changed": true,
     "text_chars": 5893,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:22+08:00"
+    "last_successful_check": "2026-10-16T13:21:05+08:00"
   },
   {
     "source_id": "moonshot_pricing",
@@ -282,15 +282,15 @@
     "attempted_urls": [
       "https://platform.kimi.com/docs/pricing/chat"
     ],
-    "checked_at": "2026-10-15T13:29:23+08:00",
+    "checked_at": "2026-10-16T13:21:06+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://platform.kimi.com/docs/pricing/chat",
-    "content_hash": "4124947f06fd4a9abff36726ebf21b412c9052cd970b1e9e18a0f45e955a9232",
+    "content_hash": "07bab11034b95a9d85b29b78b787f04731a31672cd83ab5603c97fe422297319",
     "changed": true,
-    "text_chars": 274749,
+    "text_chars": 275299,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:23+08:00"
+    "last_successful_check": "2026-10-16T13:21:06+08:00"
   },
   {
     "source_id": "lambda_cloud_pricing",
@@ -298,7 +298,7 @@
     "kind": "gpu_rental",
     "name": "Lambda Cloud On-Demand GPU Pricing",
     "url": "https://lambda.ai/instances",
-    "checked_at": "2026-10-15T13:29:25+08:00",
+    "checked_at": "2026-10-16T13:21:08+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://lambda.ai/instances",
@@ -306,7 +306,7 @@
     "changed": null,
     "text_chars": 98683,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:25+08:00"
+    "last_successful_check": "2026-10-16T13:21:08+08:00"
   },
   {
     "source_id": "vast_ai",
@@ -314,15 +314,15 @@
     "kind": "gpu_rental",
     "name": "Vast.ai GPU Pricing",
     "url": "https://vast.ai/",
-    "checked_at": "2026-10-15T13:29:25+08:00",
+    "checked_at": "2026-10-16T13:21:08+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://vast.ai/",
-    "content_hash": "1f3b1ac4533c9ed63a4a51bc2fc02513303f34908ffa03dce0e3b7c7700b0b22",
+    "content_hash": "05193c36ed6477ea527ebf6fbfb34088dca7ee55c36c85a68d7a21a8f3ad71ae",
     "changed": null,
-    "text_chars": 102701,
+    "text_chars": 101410,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:25+08:00"
+    "last_successful_check": "2026-10-16T13:21:08+08:00"
   },
   {
     "source_id": "runpod_pricing",
@@ -330,15 +330,15 @@
     "kind": "gpu_rental",
     "name": "RunPod GPU Pricing",
     "url": "https://www.runpod.io/pricing",
-    "checked_at": "2026-10-15T13:29:25+08:00",
+    "checked_at": "2026-10-16T13:21:08+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://www.runpod.io/pricing",
-    "content_hash": "4c41fc9ec7cf08ff0361a550da21de71c7e860075ac9cac608a12186d12fe1a6",
+    "content_hash": "9d62808f98ac3bd4075b26b83400b604083f54cec0303e7eb7331ff05bfbaf72",
     "changed": null,
-    "text_chars": 321055,
+    "text_chars": 323140,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:25+08:00"
+    "last_successful_check": "2026-10-16T13:21:08+08:00"
   },
   {
     "source_id": "aliyun_gpu",
@@ -346,14 +346,14 @@
     "kind": "gpu_rental_cloud",
     "name": "阿里云GPU定价",
     "url": "https://help.aliyun.com/en/cs/product-overview/product-billing-rules",
-    "checked_at": "2026-10-15T13:29:26+08:00",
+    "checked_at": "2026-10-16T13:21:10+08:00",
     "status": "ok",
     "http_status": 200,
     "final_url": "https://help.aliyun.com/en/cs/product-overview/product-billing-rules",
-    "content_hash": "063823d1502ca15bcbf59bf1fe8730f6126558283c66aaed84fce4f22ff347a3",
+    "content_hash": "38d89f863533e298860a390beb25075e202fae3a37204b06226a13f4132879e1",
     "changed": null,
     "text_chars": 120983,
     "error": null,
-    "last_successful_check": "2026-10-15T13:29:26+08:00"
+    "last_successful_check": "2026-10-16T13:21:10+08:00"
   }
 ]
