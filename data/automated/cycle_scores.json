@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-10-21T13:39:40+08:00",
+  "generated_at": "2026-10-22T13:40:42+08:00",
   "stage_id": "commercialization",
   "stage_label": "商业化兑现期",
   "stage_description": "产业发展代理不低于55且价格动量/过热代理低于70。它表示技术、商业化和资本投入的综合证据较强，不等同于全行业已盈利。",
-  "industry_development_score": 76.0,
-  "risk_crowding_score": 52.2,
+  "industry_development_score": 75.9,
+  "risk_crowding_score": 57.3,
   "risk_note": "仅为市场价格动量/过热代理：使用3个月动量、上涨广度与距52周高点；未接入Forward P/E、EV/EBITDA、ETF净申购或融资拥挤，不能称为完整市场拥挤度，也不能单独作为交易信号。",
   "risk_components": {
-    "momentum": 46.0,
-    "breadth": 36.8,
-    "proximity_to_52w_high": 76.0
+    "momentum": 49.7,
+    "breadth": 47.4,
+    "proximity_to_52w_high": 77.4
   },
   "risk_details": {
-    "score": 52.2,
+    "score": 57.3,
     "available_component_weight": 1.0,
     "components": [
       {
         "id": "momentum",
         "label": "3个月价格动量",
-        "score": 46.0,
+        "score": 49.7,
         "configured_weight": 0.4,
-        "raw_display": "中位收益 -3.2%",
+        "raw_display": "中位收益 -0.2%",
         "formula": "score = clip(50 + 1.25 × 观察池3个月收益率中位数, 0, 100)",
         "sample_size": 19,
         "sources": [
@@ -49,15 +49,15 @@
         "minimum_sample_size": null,
         "inclusion_status": "included",
         "effective_weight": 0.4,
-        "contribution": 18.4,
+        "contribution": 19.9,
         "weight_amplification": 1.0
       },
       {
         "id": "breadth",
         "label": "上涨广度",
-        "score": 36.8,
+        "score": 47.4,
         "configured_weight": 0.3,
-        "raw_display": "7 / 19 个标的上涨",
+        "raw_display": "9 / 19 个标的上涨",
         "formula": "score = 3个月收益为正的标的数 ÷ 有效标的数 × 100",
         "sample_size": 19,
         "sources": [
@@ -86,15 +86,15 @@
         "minimum_sample_size": null,
         "inclusion_status": "included",
         "effective_weight": 0.3,
-        "contribution": 11.0,
+        "contribution": 14.2,
         "weight_amplification": 1.0
       },
       {
         "id": "proximity_to_52w_high",
         "label": "距52周高点",
-        "score": 76.0,
+        "score": 77.4,
         "configured_weight": 0.3,
-        "raw_display": "距高点中位数 -24.0%",
+        "raw_display": "距高点中位数 -22.6%",
         "formula": "score = clip(100 + 距52周高点回撤中位数, 0, 100)",
         "sample_size": 19,
         "sources": [
@@ -123,14 +123,14 @@
         "minimum_sample_size": null,
         "inclusion_status": "included",
         "effective_weight": 0.3,
-        "contribution": 22.8,
+        "contribution": 23.2,
         "weight_amplification": 1.0
       }
     ]
   },
   "factor_scores": {
     "technology_maturity": {
-      "score": 67.2,
+      "score": 66.9,
       "weight": 0.3,
       "available": true,
       "available_component_weight": 1.0,
@@ -138,11 +138,11 @@
         {
           "id": "token_price_decline",
           "label": "90天Token成本变化",
-          "score": 50.0,
+          "score": 49.0,
           "configured_weight": 0.35,
-          "raw_display": "中位数 +0.0%；降价广度 1/12",
+          "raw_display": "中位数 +0.0%；降价广度 1/15",
           "formula": "score = 价格幅度分×70% + 价格竞争广度分×30%；幅度分=clip(50−2×变化中位数)，广度分=50+50×(降价数−涨价数)/样本数",
-          "sample_size": 12,
+          "sample_size": 15,
           "sources": [
             {
               "name": "DeepSeek API Docs",
@@ -150,18 +150,18 @@
               "tier": null
             },
             {
-              "name": "Introducing Grok 4.7",
-              "url": "https://x.ai/news/grok-4-7",
+              "name": "OpenAI API Changelog",
+              "url": "https://developers.openai.com/api/docs/changelog",
               "tier": null
             },
             {
-              "name": "xAI Models",
-              "url": "https://docs.x.ai/developers/models/grok-4.7",
+              "name": "OpenAI API Models",
+              "url": "https://developers.openai.com/api/docs/models/gpt-6-luna",
               "tier": 1
             },
             {
-              "name": "OpenAI API Changelog",
-              "url": "https://developers.openai.com/api/docs/changelog",
+              "name": "Introducing Grok 4.7",
+              "url": "https://x.ai/news/grok-4-7",
               "tier": null
             }
           ],
@@ -169,7 +169,7 @@
           "minimum_sample_size": null,
           "inclusion_status": "included",
           "effective_weight": 0.35,
-          "contribution": 17.5,
+          "contribution": 17.1,
           "weight_amplification": 1.0
         },
         {
@@ -291,7 +291,7 @@
         "note": "全部子因子均参与计算，未发生缺失重归一。"
       },
       "effective_weight": 0.3,
-      "contribution": 20.2
+      "contribution": 20.1
     },
     "commercialization": {
       "score": 59.6,
@@ -603,9 +603,9 @@
   "methodology": {
     "positioning": "可复现的产业监测代理指数，不是经回测验证的收益预测模型，也不是投资评级。",
     "industry_formula": "产业发展强度 = 技术成熟度×30% + 商业化兑现度×35% + 资本投入强度×35%；缺失整项时对可用权重归一化。",
-    "industry_calculation": "67.2×30%=20.2 + 59.6×35%=20.9 + 100.0×35%=35.0 = 76.0",
+    "industry_calculation": "66.9×30%=20.1 + 59.6×35%=20.9 + 100.0×35%=35.0 = 75.9",
     "risk_formula": "价格动量/过热代理 = 3个月动量×40% + 上涨广度×30% + 距52周高点×30%。",
-    "risk_calculation": "46.0×40%=18.4 + 36.8×30%=11.0 + 76.0×30%=22.8 = 52.2",
+    "risk_calculation": "49.7×40%=19.9 + 47.4×30%=14.2 + 77.4×30%=23.2 = 57.3",
     "normalisation": "所有异量纲原始值按预先公开的锚点线性映射到0–100并截尾；不使用当期样本的min-max，避免样本变化导致历史分数漂移。",
     "missing_policy": "缺失值不填0、不默认50；在同一因子内仅对可用子因子重新归一权重，并披露权重放大倍数；企业客户等口径不一指标低于3家公司时退出计分。",
     "threshold_calibration": "35/55/70/85为透明的研究型经验阈值，尚未经长历史回测或德尔菲专家法校准；因此同步披露50–60发展阈值、65–75过热阈值的敏感性结果。",
@@ -704,32 +704,32 @@
     "weight_scenarios": [
       {
         "name": "基准权重",
-        "score": 76.0,
+        "score": 75.9,
         "stage": "商业化兑现期"
       },
       {
         "name": "一级因子等权",
-        "score": 75.6,
+        "score": 75.5,
         "stage": "商业化兑现期"
       },
       {
         "name": "技术偏重",
-        "score": 74.8,
+        "score": 74.6,
         "stage": "商业化兑现期"
       },
       {
         "name": "商业化偏重",
-        "score": 73.6,
+        "score": 73.5,
         "stage": "商业化兑现期"
       },
       {
         "name": "资本轻权",
-        "score": 72.4,
+        "score": 72.3,
         "stage": "商业化兑现期"
       }
     ],
     "weighted_geometric": {
-      "score": 74.1,
+      "score": 74.0,
       "stage": "商业化兑现期"
     },
     "weight_stage_stable": true,
