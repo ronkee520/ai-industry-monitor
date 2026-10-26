@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-25T13:34:59+08:00",
+  "generated_at": "2026-10-26T13:42:28+08:00",
   "source": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
   "method": "daily interval reconstruction from an append-only price-change log",
   "records": [
@@ -820,6 +820,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::openai::gpt6_astra::market_route",
+      "value": 24.0,
+      "blended_cost_usd": 24.0,
+      "input_per_m": 10.0,
+      "output_per_m": 50.0,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "openai/gpt-6-astra",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-09-30",
       "metric_id": "token_blended_cost::openai::gpt61_sol::market_route",
       "value": 4.8,
@@ -1221,6 +1237,22 @@
     },
     {
       "date": "2026-10-25",
+      "metric_id": "token_blended_cost::openai::gpt61_sol::market_route",
+      "value": 4.8,
+      "blended_cost_usd": 4.8,
+      "input_per_m": 2.0,
+      "output_per_m": 10.0,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "openai/gpt-6.1-sol",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
+      "date": "2026-10-26",
       "metric_id": "token_blended_cost::openai::gpt61_sol::market_route",
       "value": 4.8,
       "blended_cost_usd": 4.8,
@@ -1764,6 +1796,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::openai::gpt6_luna::market_route",
+      "value": 0.24,
+      "blended_cost_usd": 0.24,
+      "input_per_m": 0.1,
+      "output_per_m": 0.5,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "openai/gpt-6-luna",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-09-23",
       "metric_id": "token_blended_cost::anthropic::claude_opus55::market_route",
       "value": 9.6,
@@ -2292,6 +2340,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::anthropic::claude_opus55::market_route",
+      "value": 9.6,
+      "blended_cost_usd": 9.6,
+      "input_per_m": 4.0,
+      "output_per_m": 20.0,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "anthropic/claude-opus-5.5",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-09-29",
       "metric_id": "token_blended_cost::anthropic::claude_sonnet55::market_route",
       "value": 4.8,
@@ -2709,6 +2773,22 @@
     },
     {
       "date": "2026-10-25",
+      "metric_id": "token_blended_cost::anthropic::claude_sonnet55::market_route",
+      "value": 4.8,
+      "blended_cost_usd": 4.8,
+      "input_per_m": 2.0,
+      "output_per_m": 10.0,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "anthropic/claude-sonnet-5.5",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
+      "date": "2026-10-26",
       "metric_id": "token_blended_cost::anthropic::claude_sonnet55::market_route",
       "value": 4.8,
       "blended_cost_usd": 4.8,
@@ -3572,6 +3652,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::google::gemini38_flash::market_route",
+      "value": 1.98,
+      "blended_cost_usd": 1.98,
+      "input_per_m": 0.825,
+      "output_per_m": 4.125,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "google/gemini-3.8-flash",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-09-22",
       "metric_id": "token_blended_cost::xai::grok47::market_route",
       "value": 2.72,
@@ -4101,6 +4197,22 @@
     },
     {
       "date": "2026-10-25",
+      "metric_id": "token_blended_cost::xai::grok47::market_route",
+      "value": 3.4,
+      "blended_cost_usd": 3.4,
+      "input_per_m": 2.0,
+      "output_per_m": 6.0,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "x-ai/grok-4.7",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
+      "date": "2026-10-26",
       "metric_id": "token_blended_cost::xai::grok47::market_route",
       "value": 3.4,
       "blended_cost_usd": 3.4,
@@ -5300,6 +5412,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::deepseek::deepseek_v4_pro::market_route",
+      "value": 1.122,
+      "blended_cost_usd": 1.122,
+      "input_per_m": 0.66,
+      "output_per_m": 1.98,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "deepseek/deepseek-v4-pro-0813",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-09-10",
       "metric_id": "token_blended_cost::deepseek::deepseek_v4_flash::market_route",
       "value": 0.615,
@@ -6036,6 +6164,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::deepseek::deepseek_v4_flash::market_route",
+      "value": 0.363,
+      "blended_cost_usd": 0.363,
+      "input_per_m": 0.02,
+      "output_per_m": 1.0,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "deepseek/deepseek-v4.1-flash",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-09-24",
       "metric_id": "token_blended_cost::alibaba::qwen38_max_prime::market_route",
       "value": 6.8,
@@ -6548,6 +6692,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::alibaba::qwen38_max_prime::market_route",
+      "value": 6.8,
+      "blended_cost_usd": 6.8,
+      "input_per_m": 4.0,
+      "output_per_m": 12.0,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "qwen/qwen3.8-max-prime",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-09-24",
       "metric_id": "token_blended_cost::zhipu::glm53_prime::market_route",
       "value": 4.9,
@@ -7045,6 +7205,22 @@
     },
     {
       "date": "2026-10-25",
+      "metric_id": "token_blended_cost::zhipu::glm53_prime::market_route",
+      "value": 4.9,
+      "blended_cost_usd": 4.9,
+      "input_per_m": 2.8,
+      "output_per_m": 8.8,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "z-ai/glm-5.3-prime",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
+      "date": "2026-10-26",
       "metric_id": "token_blended_cost::zhipu::glm53_prime::market_route",
       "value": 4.9,
       "blended_cost_usd": 4.9,
@@ -8500,6 +8676,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::moonshot::kimi_k3::market_route",
+      "value": 7.0988,
+      "blended_cost_usd": 7.0988,
+      "input_per_m": 0.152,
+      "output_per_m": 20.0,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "moonshotai/kimi-k3",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-09-06",
       "metric_id": "token_blended_cost::openai::gpt4o::market_route",
       "value": 5.125,
@@ -9285,6 +9477,22 @@
     },
     {
       "date": "2026-10-25",
+      "metric_id": "token_blended_cost::openai::gpt4o::market_route",
+      "value": 5.125,
+      "blended_cost_usd": 5.125,
+      "input_per_m": 2.5,
+      "output_per_m": 10.0,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "openai/gpt-4o",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
+      "date": "2026-10-26",
       "metric_id": "token_blended_cost::openai::gpt4o::market_route",
       "value": 5.125,
       "blended_cost_usd": 5.125,
@@ -10100,6 +10308,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::openai::gpt4o_mini::market_route",
+      "value": 0.3075,
+      "blended_cost_usd": 0.3075,
+      "input_per_m": 0.15,
+      "output_per_m": 0.6,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "openai/gpt-4o-mini",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-09-06",
       "metric_id": "token_blended_cost::anthropic::claude_opus4::market_route",
       "value": 12.0,
@@ -10900,6 +11124,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::anthropic::claude_opus4::market_route",
+      "value": 12.0,
+      "blended_cost_usd": 12.0,
+      "input_per_m": 5.0,
+      "output_per_m": 25.0,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "anthropic/claude-opus-4.8",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-10-10",
       "metric_id": "token_blended_cost::anthropic::claude_sonnet4::market_route",
       "value": 7.2,
@@ -11141,6 +11381,22 @@
     },
     {
       "date": "2026-10-25",
+      "metric_id": "token_blended_cost::anthropic::claude_sonnet4::market_route",
+      "value": 7.2,
+      "blended_cost_usd": 7.2,
+      "input_per_m": 3.0,
+      "output_per_m": 15.0,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "anthropic/claude-sonnet-4.6",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
+      "date": "2026-10-26",
       "metric_id": "token_blended_cost::anthropic::claude_sonnet4::market_route",
       "value": 7.2,
       "blended_cost_usd": 7.2,
@@ -11956,6 +12212,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::google::gemini25_pro::market_route",
+      "value": 4.3125,
+      "blended_cost_usd": 4.3125,
+      "input_per_m": 1.25,
+      "output_per_m": 10.0,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "google/gemini-2.5-pro",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-09-06",
       "metric_id": "token_blended_cost::google::gemini25_flash::market_route",
       "value": 1.07,
@@ -12756,6 +13028,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::google::gemini25_flash::market_route",
+      "value": 1.07,
+      "blended_cost_usd": 1.07,
+      "input_per_m": 0.3,
+      "output_per_m": 2.5,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "google/gemini-2.5-flash",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-09-22",
       "metric_id": "token_blended_cost::xai::grok4::market_route",
       "value": 2.72,
@@ -13285,6 +13573,22 @@
     },
     {
       "date": "2026-10-25",
+      "metric_id": "token_blended_cost::xai::grok4::market_route",
+      "value": 3.4,
+      "blended_cost_usd": 3.4,
+      "input_per_m": 2.0,
+      "output_per_m": 6.0,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "x-ai/grok-4.7",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
+      "date": "2026-10-26",
       "metric_id": "token_blended_cost::xai::grok4::market_route",
       "value": 3.4,
       "blended_cost_usd": 3.4,
@@ -14740,6 +15044,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::meta::llama4::market_route",
+      "value": 0.35025,
+      "blended_cost_usd": 0.35025,
+      "input_per_m": 0.1875,
+      "output_per_m": 0.6525,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "meta-llama/llama-4-maverick",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-09-25",
       "metric_id": "token_blended_cost::mistral::mistral_large::market_route",
       "value": 0.85,
@@ -15221,6 +15541,22 @@
     },
     {
       "date": "2026-10-25",
+      "metric_id": "token_blended_cost::mistral::mistral_large::market_route",
+      "value": 0.85,
+      "blended_cost_usd": 0.85,
+      "input_per_m": 0.5,
+      "output_per_m": 1.5,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "mistralai/mistral-large-2512",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
+      "date": "2026-10-26",
       "metric_id": "token_blended_cost::mistral::mistral_large::market_route",
       "value": 0.85,
       "blended_cost_usd": 0.85,
@@ -15844,6 +16180,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::cohere::command_r_plus::market_route",
+      "value": 5.125,
+      "blended_cost_usd": 5.125,
+      "input_per_m": 2.5,
+      "output_per_m": 10.0,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "cohere/command-r-plus-08-2024",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-09-18",
       "metric_id": "token_blended_cost::amazon::amazon_nova_pro::market_route",
       "value": 1.64,
@@ -16437,6 +16789,22 @@
     },
     {
       "date": "2026-10-25",
+      "metric_id": "token_blended_cost::amazon::amazon_nova_pro::market_route",
+      "value": 1.64,
+      "blended_cost_usd": 1.64,
+      "input_per_m": 0.8,
+      "output_per_m": 3.2,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "amazon/nova-pro-v1",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
+      "date": "2026-10-26",
       "metric_id": "token_blended_cost::amazon::amazon_nova_pro::market_route",
       "value": 1.64,
       "blended_cost_usd": 1.64,
@@ -17892,6 +18260,22 @@
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     },
     {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::deepseek::deepseek_v3::market_route",
+      "value": 0.495,
+      "blended_cost_usd": 0.495,
+      "input_per_m": 0.25,
+      "output_per_m": 0.95,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "deepseek/deepseek-chat-v3.1",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
       "date": "2026-09-18",
       "metric_id": "token_blended_cost::deepseek::deepseek_r1::market_route",
       "value": 1.0775,
@@ -18485,6 +18869,22 @@
     },
     {
       "date": "2026-10-25",
+      "metric_id": "token_blended_cost::deepseek::deepseek_r1::market_route",
+      "value": 1.0775,
+      "blended_cost_usd": 1.0775,
+      "input_per_m": 0.5,
+      "output_per_m": 2.15,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "deepseek/deepseek-r1-0528",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
+      "date": "2026-10-26",
       "metric_id": "token_blended_cost::deepseek::deepseek_r1::market_route",
       "value": 1.0775,
       "blended_cost_usd": 1.0775,
@@ -19093,6 +19493,22 @@
     },
     {
       "date": "2026-10-25",
+      "metric_id": "token_blended_cost::tencent::hunyuan_turbo::market_route",
+      "value": 0.2905,
+      "blended_cost_usd": 0.2905,
+      "input_per_m": 0.14,
+      "output_per_m": 0.57,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "tencent/hunyuan-a13b-instruct",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
+      "date": "2026-10-26",
       "metric_id": "token_blended_cost::tencent::hunyuan_turbo::market_route",
       "value": 0.2905,
       "blended_cost_usd": 0.2905,
@@ -20533,6 +20949,22 @@
     },
     {
       "date": "2026-10-25",
+      "metric_id": "token_blended_cost::zhipu::glm4::market_route",
+      "value": 1.044,
+      "blended_cost_usd": 1.044,
+      "input_per_m": 0.54,
+      "output_per_m": 1.98,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "z-ai/glm-4.7",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
+      "date": "2026-10-26",
       "metric_id": "token_blended_cost::zhipu::glm4::market_route",
       "value": 1.044,
       "blended_cost_usd": 1.044,
@@ -21986,6 +22418,22 @@
       "source_tier": 3,
       "evidence_status": "public_price_archive",
       "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
+    },
+    {
+      "date": "2026-10-26",
+      "metric_id": "token_blended_cost::moonshot::kimi_k2::market_route",
+      "value": 1.616,
+      "blended_cost_usd": 1.616,
+      "input_per_m": 0.65,
+      "output_per_m": 3.41,
+      "currency": "USD",
+      "event_type": "archived_price_interval",
+      "provider_model_id": "moonshotai/kimi-k2.6",
+      "source_name": "OpenRouter daily price-change archive",
+      "source_url": "https://raw.githubusercontent.com/sophie-nguyenthuthuy/llm-pricing-history/master/data/history.csv",
+      "source_tier": 3,
+      "evidence_status": "public_price_archive",
+      "note": "由每日公开价格变更日志重建；无变更日延续最近一次已观测价格。"
     }
   ],
   "coverage": [
@@ -21993,224 +22441,224 @@
       "metric_id": "token_blended_cost::openai::gpt6_astra::market_route",
       "provider_model_id": "openai/gpt-6-astra",
       "first_date": "2026-09-05",
-      "last_date": "2026-10-25",
-      "days": 51,
+      "last_date": "2026-10-26",
+      "days": 52,
       "archive_events": 1
     },
     {
       "metric_id": "token_blended_cost::openai::gpt61_sol::market_route",
       "provider_model_id": "openai/gpt-6.1-sol",
       "first_date": "2026-09-30",
-      "last_date": "2026-10-25",
-      "days": 26,
+      "last_date": "2026-10-26",
+      "days": 27,
       "archive_events": 1
     },
     {
       "metric_id": "token_blended_cost::openai::gpt6_luna::market_route",
       "provider_model_id": "openai/gpt-6-luna",
       "first_date": "2026-09-23",
-      "last_date": "2026-10-25",
-      "days": 33,
+      "last_date": "2026-10-26",
+      "days": 34,
       "archive_events": 1
     },
     {
       "metric_id": "token_blended_cost::anthropic::claude_opus55::market_route",
       "provider_model_id": "anthropic/claude-opus-5.5",
       "first_date": "2026-09-23",
-      "last_date": "2026-10-25",
-      "days": 33,
+      "last_date": "2026-10-26",
+      "days": 34,
       "archive_events": 1
     },
     {
       "metric_id": "token_blended_cost::anthropic::claude_sonnet55::market_route",
       "provider_model_id": "anthropic/claude-sonnet-5.5",
       "first_date": "2026-09-29",
-      "last_date": "2026-10-25",
-      "days": 27,
+      "last_date": "2026-10-26",
+      "days": 28,
       "archive_events": 2
     },
     {
       "metric_id": "token_blended_cost::google::gemini38_flash::market_route",
       "provider_model_id": "google/gemini-3.8-flash",
       "first_date": "2026-09-03",
-      "last_date": "2026-10-25",
-      "days": 53,
+      "last_date": "2026-10-26",
+      "days": 54,
       "archive_events": 4
     },
     {
       "metric_id": "token_blended_cost::xai::grok47::market_route",
       "provider_model_id": "x-ai/grok-4.7",
       "first_date": "2026-09-22",
-      "last_date": "2026-10-25",
-      "days": 34,
+      "last_date": "2026-10-26",
+      "days": 35,
       "archive_events": 4
     },
     {
       "metric_id": "token_blended_cost::deepseek::deepseek_v4_pro::market_route",
       "provider_model_id": "deepseek/deepseek-v4-pro-0813",
       "first_date": "2026-08-13",
-      "last_date": "2026-10-25",
-      "days": 74,
+      "last_date": "2026-10-26",
+      "days": 75,
       "archive_events": 105
     },
     {
       "metric_id": "token_blended_cost::deepseek::deepseek_v4_flash::market_route",
       "provider_model_id": "deepseek/deepseek-v4.1-flash",
       "first_date": "2026-09-10",
-      "last_date": "2026-10-25",
-      "days": 46,
+      "last_date": "2026-10-26",
+      "days": 47,
       "archive_events": 89
     },
     {
       "metric_id": "token_blended_cost::alibaba::qwen38_max_prime::market_route",
       "provider_model_id": "qwen/qwen3.8-max-prime",
       "first_date": "2026-09-24",
-      "last_date": "2026-10-25",
-      "days": 32,
+      "last_date": "2026-10-26",
+      "days": 33,
       "archive_events": 1
     },
     {
       "metric_id": "token_blended_cost::zhipu::glm53_prime::market_route",
       "provider_model_id": "z-ai/glm-5.3-prime",
       "first_date": "2026-09-24",
-      "last_date": "2026-10-25",
-      "days": 32,
+      "last_date": "2026-10-26",
+      "days": 33,
       "archive_events": 1
     },
     {
       "metric_id": "token_blended_cost::moonshot::kimi_k3::market_route",
       "provider_model_id": "moonshotai/kimi-k3",
       "first_date": "2026-07-28",
-      "last_date": "2026-10-25",
-      "days": 90,
+      "last_date": "2026-10-26",
+      "days": 91,
       "archive_events": 67
     },
     {
       "metric_id": "token_blended_cost::openai::gpt4o::market_route",
       "provider_model_id": "openai/gpt-4o",
       "first_date": "2026-09-06",
-      "last_date": "2026-10-25",
-      "days": 50,
+      "last_date": "2026-10-26",
+      "days": 51,
       "archive_events": 2
     },
     {
       "metric_id": "token_blended_cost::openai::gpt4o_mini::market_route",
       "provider_model_id": "openai/gpt-4o-mini",
       "first_date": "2026-09-06",
-      "last_date": "2026-10-25",
-      "days": 50,
+      "last_date": "2026-10-26",
+      "days": 51,
       "archive_events": 2
     },
     {
       "metric_id": "token_blended_cost::anthropic::claude_opus4::market_route",
       "provider_model_id": "anthropic/claude-opus-4.8",
       "first_date": "2026-09-06",
-      "last_date": "2026-10-25",
-      "days": 50,
+      "last_date": "2026-10-26",
+      "days": 51,
       "archive_events": 2
     },
     {
       "metric_id": "token_blended_cost::anthropic::claude_sonnet4::market_route",
       "provider_model_id": "anthropic/claude-sonnet-4.6",
       "first_date": "2026-10-10",
-      "last_date": "2026-10-25",
-      "days": 16,
+      "last_date": "2026-10-26",
+      "days": 17,
       "archive_events": 1
     },
     {
       "metric_id": "token_blended_cost::google::gemini25_pro::market_route",
       "provider_model_id": "google/gemini-2.5-pro",
       "first_date": "2026-09-06",
-      "last_date": "2026-10-25",
-      "days": 50,
+      "last_date": "2026-10-26",
+      "days": 51,
       "archive_events": 2
     },
     {
       "metric_id": "token_blended_cost::google::gemini25_flash::market_route",
       "provider_model_id": "google/gemini-2.5-flash",
       "first_date": "2026-09-06",
-      "last_date": "2026-10-25",
-      "days": 50,
+      "last_date": "2026-10-26",
+      "days": 51,
       "archive_events": 2
     },
     {
       "metric_id": "token_blended_cost::xai::grok4::market_route",
       "provider_model_id": "x-ai/grok-4.7",
       "first_date": "2026-09-22",
-      "last_date": "2026-10-25",
-      "days": 34,
+      "last_date": "2026-10-26",
+      "days": 35,
       "archive_events": 4
     },
     {
       "metric_id": "token_blended_cost::meta::llama4::market_route",
       "provider_model_id": "meta-llama/llama-4-maverick",
       "first_date": "2026-07-28",
-      "last_date": "2026-10-25",
-      "days": 90,
+      "last_date": "2026-10-26",
+      "days": 91,
       "archive_events": 10
     },
     {
       "metric_id": "token_blended_cost::mistral::mistral_large::market_route",
       "provider_model_id": "mistralai/mistral-large-2512",
       "first_date": "2026-09-25",
-      "last_date": "2026-10-25",
-      "days": 31,
+      "last_date": "2026-10-26",
+      "days": 32,
       "archive_events": 2
     },
     {
       "metric_id": "token_blended_cost::cohere::command_r_plus::market_route",
       "provider_model_id": "cohere/command-r-plus-08-2024",
       "first_date": "2026-09-18",
-      "last_date": "2026-10-25",
-      "days": 38,
+      "last_date": "2026-10-26",
+      "days": 39,
       "archive_events": 2
     },
     {
       "metric_id": "token_blended_cost::amazon::amazon_nova_pro::market_route",
       "provider_model_id": "amazon/nova-pro-v1",
       "first_date": "2026-09-18",
-      "last_date": "2026-10-25",
-      "days": 38,
+      "last_date": "2026-10-26",
+      "days": 39,
       "archive_events": 2
     },
     {
       "metric_id": "token_blended_cost::deepseek::deepseek_v3::market_route",
       "provider_model_id": "deepseek/deepseek-chat-v3.1",
       "first_date": "2026-07-28",
-      "last_date": "2026-10-25",
-      "days": 90,
+      "last_date": "2026-10-26",
+      "days": 91,
       "archive_events": 12
     },
     {
       "metric_id": "token_blended_cost::deepseek::deepseek_r1::market_route",
       "provider_model_id": "deepseek/deepseek-r1-0528",
       "first_date": "2026-09-18",
-      "last_date": "2026-10-25",
-      "days": 38,
+      "last_date": "2026-10-26",
+      "days": 39,
       "archive_events": 2
     },
     {
       "metric_id": "token_blended_cost::tencent::hunyuan_turbo::market_route",
       "provider_model_id": "tencent/hunyuan-a13b-instruct",
       "first_date": "2026-09-18",
-      "last_date": "2026-10-25",
-      "days": 38,
+      "last_date": "2026-10-26",
+      "days": 39,
       "archive_events": 2
     },
     {
       "metric_id": "token_blended_cost::zhipu::glm4::market_route",
       "provider_model_id": "z-ai/glm-4.7",
       "first_date": "2026-07-28",
-      "last_date": "2026-10-25",
-      "days": 90,
+      "last_date": "2026-10-26",
+      "days": 91,
       "archive_events": 6
     },
     {
       "metric_id": "token_blended_cost::moonshot::kimi_k2::market_route",
       "provider_model_id": "moonshotai/kimi-k2.6",
       "first_date": "2026-07-28",
-      "last_date": "2026-10-25",
-      "days": 90,
+      "last_date": "2026-10-26",
+      "days": 91,
       "archive_events": 31
     }
   ]
