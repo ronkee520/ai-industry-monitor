@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-10-27T13:53:33+08:00",
+  "generated_at": "2026-10-28T14:32:53+08:00",
   "stage_id": "commercialization",
   "stage_label": "商业化兑现期",
   "stage_description": "产业发展代理不低于55且价格动量/过热代理低于70。它表示技术、商业化和资本投入的综合证据较强，不等同于全行业已盈利。",
   "industry_development_score": 75.9,
-  "risk_crowding_score": 62.1,
+  "risk_crowding_score": 61.7,
   "risk_note": "仅为市场价格动量/过热代理：使用3个月动量、上涨广度与距52周高点；未接入Forward P/E、EV/EBITDA、ETF净申购或融资拥挤，不能称为完整市场拥挤度，也不能单独作为交易信号。",
   "risk_components": {
-    "momentum": 52.5,
-    "breadth": 63.2,
-    "proximity_to_52w_high": 73.9
+    "momentum": 57.0,
+    "breadth": 52.6,
+    "proximity_to_52w_high": 77.0
   },
   "risk_details": {
-    "score": 62.1,
+    "score": 61.7,
     "available_component_weight": 1.0,
     "components": [
       {
         "id": "momentum",
         "label": "3个月价格动量",
-        "score": 52.5,
+        "score": 57.0,
         "configured_weight": 0.4,
-        "raw_display": "中位收益 +2.0%",
+        "raw_display": "中位收益 +5.6%",
         "formula": "score = clip(50 + 1.25 × 观察池3个月收益率中位数, 0, 100)",
         "sample_size": 19,
         "sources": [
@@ -49,15 +49,15 @@
         "minimum_sample_size": null,
         "inclusion_status": "included",
         "effective_weight": 0.4,
-        "contribution": 21.0,
+        "contribution": 22.8,
         "weight_amplification": 1.0
       },
       {
         "id": "breadth",
         "label": "上涨广度",
-        "score": 63.2,
+        "score": 52.6,
         "configured_weight": 0.3,
-        "raw_display": "12 / 19 个标的上涨",
+        "raw_display": "10 / 19 个标的上涨",
         "formula": "score = 3个月收益为正的标的数 ÷ 有效标的数 × 100",
         "sample_size": 19,
         "sources": [
@@ -86,15 +86,15 @@
         "minimum_sample_size": null,
         "inclusion_status": "included",
         "effective_weight": 0.3,
-        "contribution": 19.0,
+        "contribution": 15.8,
         "weight_amplification": 1.0
       },
       {
         "id": "proximity_to_52w_high",
         "label": "距52周高点",
-        "score": 73.9,
+        "score": 77.0,
         "configured_weight": 0.3,
-        "raw_display": "距高点中位数 -26.1%",
+        "raw_display": "距高点中位数 -23.0%",
         "formula": "score = clip(100 + 距52周高点回撤中位数, 0, 100)",
         "sample_size": 19,
         "sources": [
@@ -123,7 +123,7 @@
         "minimum_sample_size": null,
         "inclusion_status": "included",
         "effective_weight": 0.3,
-        "contribution": 22.2,
+        "contribution": 23.1,
         "weight_amplification": 1.0
       }
     ]
@@ -140,9 +140,9 @@
           "label": "90天Token成本变化",
           "score": 49.1,
           "configured_weight": 0.35,
-          "raw_display": "中位数 +0.0%；降价广度 1/16",
+          "raw_display": "中位数 +0.0%；降价广度 1/17",
           "formula": "score = 价格幅度分×70% + 价格竞争广度分×30%；幅度分=clip(50−2×变化中位数)，广度分=50+50×(降价数−涨价数)/样本数",
-          "sample_size": 16,
+          "sample_size": 17,
           "sources": [
             {
               "name": "DeepSeek API Docs",
@@ -605,7 +605,7 @@
     "industry_formula": "产业发展强度 = 技术成熟度×30% + 商业化兑现度×35% + 资本投入强度×35%；缺失整项时对可用权重归一化。",
     "industry_calculation": "66.9×30%=20.1 + 59.6×35%=20.9 + 100.0×35%=35.0 = 75.9",
     "risk_formula": "价格动量/过热代理 = 3个月动量×40% + 上涨广度×30% + 距52周高点×30%。",
-    "risk_calculation": "52.5×40%=21.0 + 63.2×30%=19.0 + 73.9×30%=22.2 = 62.1",
+    "risk_calculation": "57.0×40%=22.8 + 52.6×30%=15.8 + 77.0×30%=23.1 = 61.7",
     "normalisation": "所有异量纲原始值按预先公开的锚点线性映射到0–100并截尾；不使用当期样本的min-max，避免样本变化导致历史分数漂移。",
     "missing_policy": "缺失值不填0、不默认50；在同一因子内仅对可用子因子重新归一权重，并披露权重放大倍数；企业客户等口径不一指标低于3家公司时退出计分。",
     "threshold_calibration": "35/55/70/85为透明的研究型经验阈值，尚未经长历史回测或德尔菲专家法校准；因此同步披露50–60发展阈值、65–75过热阈值的敏感性结果。",
