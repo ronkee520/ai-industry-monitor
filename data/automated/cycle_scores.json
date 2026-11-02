@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-11-01T15:04:26+08:00",
+  "generated_at": "2026-11-02T15:06:24+08:00",
   "stage_id": "commercialization",
   "stage_label": "商业化兑现期",
   "stage_description": "产业发展代理不低于55且价格动量/过热代理低于70。它表示技术、商业化和资本投入的综合证据较强，不等同于全行业已盈利。",
-  "industry_development_score": 76.0,
-  "risk_crowding_score": 45.7,
+  "industry_development_score": 73.3,
+  "risk_crowding_score": 43.7,
   "risk_note": "仅为市场价格动量/过热代理：使用3个月动量、上涨广度与距52周高点；未接入Forward P/E、EV/EBITDA、ETF净申购或融资拥挤，不能称为完整市场拥挤度，也不能单独作为交易信号。",
   "risk_components": {
-    "momentum": 35.6,
-    "breadth": 36.8,
+    "momentum": 34.5,
+    "breadth": 31.6,
     "proximity_to_52w_high": 67.9
   },
   "risk_details": {
-    "score": 45.7,
+    "score": 43.7,
     "available_component_weight": 1.0,
     "components": [
       {
         "id": "momentum",
         "label": "3个月价格动量",
-        "score": 35.6,
+        "score": 34.5,
         "configured_weight": 0.4,
-        "raw_display": "中位收益 -11.5%",
+        "raw_display": "中位收益 -12.4%",
         "formula": "score = clip(50 + 1.25 × 观察池3个月收益率中位数, 0, 100)",
         "sample_size": 19,
         "sources": [
@@ -49,15 +49,15 @@
         "minimum_sample_size": null,
         "inclusion_status": "included",
         "effective_weight": 0.4,
-        "contribution": 14.2,
+        "contribution": 13.8,
         "weight_amplification": 1.0
       },
       {
         "id": "breadth",
         "label": "上涨广度",
-        "score": 36.8,
+        "score": 31.6,
         "configured_weight": 0.3,
-        "raw_display": "7 / 19 个标的上涨",
+        "raw_display": "6 / 19 个标的上涨",
         "formula": "score = 3个月收益为正的标的数 ÷ 有效标的数 × 100",
         "sample_size": 19,
         "sources": [
@@ -86,7 +86,7 @@
         "minimum_sample_size": null,
         "inclusion_status": "included",
         "effective_weight": 0.3,
-        "contribution": 11.0,
+        "contribution": 9.5,
         "weight_amplification": 1.0
       },
       {
@@ -437,10 +437,10 @@
       "contribution": 20.9
     },
     "capital_investment": {
-      "score": 100.0,
+      "score": 92.5,
       "weight": 0.35,
       "available": true,
-      "available_component_weight": 0.85,
+      "available_component_weight": 1.0,
       "components": [
         {
           "id": "csp_capex_growth",
@@ -475,9 +475,9 @@
           "note": "采用公司整体CAPEX，可能包含非AI投入。",
           "minimum_sample_size": null,
           "inclusion_status": "included",
-          "effective_weight": 0.5882,
-          "contribution": 58.8,
-          "weight_amplification": 1.18
+          "effective_weight": 0.5,
+          "contribution": 50.0,
+          "weight_amplification": 1.0
         },
         {
           "id": "csp_capex_coverage",
@@ -512,9 +512,9 @@
           "note": "",
           "minimum_sample_size": null,
           "inclusion_status": "included",
-          "effective_weight": 0.2353,
-          "contribution": 23.5,
-          "weight_amplification": 1.18
+          "effective_weight": 0.2,
+          "contribution": 20.0,
+          "weight_amplification": 1.0
         },
         {
           "id": "recent_funding",
@@ -544,18 +544,18 @@
           "note": "",
           "minimum_sample_size": null,
           "inclusion_status": "included",
-          "effective_weight": 0.1765,
-          "contribution": 17.6,
-          "weight_amplification": 1.18
+          "effective_weight": 0.15,
+          "contribution": 15.0,
+          "weight_amplification": 1.0
         },
         {
           "id": "gpu_price_tightness",
           "label": "GPU租赁价格趋势",
-          "score": null,
+          "score": 50.0,
           "configured_weight": 0.15,
-          "raw_display": "不足30天，不计分",
+          "raw_display": "变化中位数 +0.0%",
           "formula": "score = clip(50 + 2 × 至少30天GPU价格变化中位数, 0, 100)",
-          "sample_size": 0,
+          "sample_size": 10,
           "sources": [
             {
               "name": "Lambda Cloud On-Demand GPU Pricing",
@@ -571,24 +571,25 @@
           "note": "高分表示租赁价格上涨/供需偏紧，不代表投资回报更高。",
           "minimum_sample_size": null,
           "inclusion_status": "included",
-          "effective_weight": 0.0,
-          "contribution": null
+          "effective_weight": 0.15,
+          "contribution": 7.5,
+          "weight_amplification": 1.0
         }
       ],
       "stability": {
-        "missing_component_count": 1,
-        "max_weight_amplification": 1.18,
+        "missing_component_count": 0,
+        "max_weight_amplification": 1.0,
         "level": "normal",
-        "note": "1个子因子未计分；其余有效权重最高放大至原设定的1.18倍。"
+        "note": "全部子因子均参与计算，未发生缺失重归一。"
       },
       "effective_weight": 0.35,
-      "contribution": 35.0
+      "contribution": 32.4
     }
   },
   "confidence": "high",
-  "confidence_score": 90.2,
+  "confidence_score": 92.5,
   "confidence_dimensions": {
-    "component_coverage_pct": 86.7,
+    "component_coverage_pct": 93.3,
     "strong_evidence_pct": 89.7,
     "source_reliability_pct": 94.4,
     "formula": "证据完整度（等权几何平均） = (可计算子因子覆盖 × T1/T2强证据占比 × 自动数据源成功率)^(1/3)",
@@ -596,16 +597,15 @@
   },
   "confidence_reasons": [
     "企业客户口径仅覆盖2家公司，低于3家纳入阈值，已退出计分",
-    "GPU价格历史不足30天",
     "价格动量/过热代理仅使用T3免费行情，尚非完整估值与资金拥挤度"
   ],
   "score_method": "transparent_proxy_v3",
   "methodology": {
     "positioning": "可复现的产业监测代理指数，不是经回测验证的收益预测模型，也不是投资评级。",
     "industry_formula": "产业发展强度 = 技术成熟度×30% + 商业化兑现度×35% + 资本投入强度×35%；缺失整项时对可用权重归一化。",
-    "industry_calculation": "67.0×30%=20.1 + 59.6×35%=20.9 + 100.0×35%=35.0 = 76.0",
+    "industry_calculation": "67.0×30%=20.1 + 59.6×35%=20.9 + 92.5×35%=32.4 = 73.3",
     "risk_formula": "价格动量/过热代理 = 3个月动量×40% + 上涨广度×30% + 距52周高点×30%。",
-    "risk_calculation": "35.6×40%=14.2 + 36.8×30%=11.0 + 67.9×30%=20.4 = 45.7",
+    "risk_calculation": "34.5×40%=13.8 + 31.6×30%=9.5 + 67.9×30%=20.4 = 43.7",
     "normalisation": "所有异量纲原始值按预先公开的锚点线性映射到0–100并截尾；不使用当期样本的min-max，避免样本变化导致历史分数漂移。",
     "missing_policy": "缺失值不填0、不默认50；在同一因子内仅对可用子因子重新归一权重，并披露权重放大倍数；企业客户等口径不一指标低于3家公司时退出计分。",
     "threshold_calibration": "35/55/70/85为透明的研究型经验阈值，尚未经长历史回测或德尔菲专家法校准；因此同步披露50–60发展阈值、65–75过热阈值的敏感性结果。",
@@ -704,32 +704,32 @@
     "weight_scenarios": [
       {
         "name": "基准权重",
-        "score": 76.0,
+        "score": 73.3,
         "stage": "商业化兑现期"
       },
       {
         "name": "一级因子等权",
-        "score": 75.5,
+        "score": 73.0,
         "stage": "商业化兑现期"
       },
       {
         "name": "技术偏重",
-        "score": 74.7,
+        "score": 72.4,
         "stage": "商业化兑现期"
       },
       {
         "name": "商业化偏重",
-        "score": 73.6,
+        "score": 71.3,
         "stage": "商业化兑现期"
       },
       {
         "name": "资本轻权",
-        "score": 72.3,
+        "score": 70.4,
         "stage": "商业化兑现期"
       }
     ],
     "weighted_geometric": {
-      "score": 74.0,
+      "score": 72.0,
       "stage": "商业化兑现期"
     },
     "weight_stage_stable": true,
@@ -788,7 +788,7 @@
   "sample_based": false,
   "missing_based": false,
   "missing_factor_count": 0,
-  "missing_component_count": 2,
+  "missing_component_count": 1,
   "data_coverage": {
     "pricing_records": 30,
     "pricing_real": 30,
