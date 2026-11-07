@@ -1,10 +1,180 @@
 [
   {
+    "title": "OpenAI reportedly raises $11B in new funding at $1.25T valuation - SiliconANGLE",
+    "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQSlphbHJUU2ZsaDVtcWlvMm5FWGNnUzVmbEoxSXJ0MGJVVUpqSlI4blZsb0VuX01yWG44MEpBOEFvNVJXNk14dEJtcHB0Q3NmLV9Sb3VRZzFUQnJfTGhUSE96U2s2bjNoNkk3cFZfYUQzMlRHZU83U3VPY0o3dEtTS3FycXJpR0JBa0xNMm9uNkRzd0VVQVBNcnViWUlPMW1D?oc=5",
+    "publisher": "SiliconANGLE",
+    "published_at": "2026-11-07T07:43:00+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
+    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
+    "feed_id": "gnews_ai_commercial",
+    "feed_name": "Google News — AI商业化",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "798604e4ed7c390c2d3844ca4195f222d431ea4413fb6c8824cdff4e2190dc45"
+  },
+  {
+    "title": "OpenAI gets $11 billion funding at $1.25 trillion valuation, source says - Reuters",
+    "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNdlpNRm5XVy11c3hLY0NRdjh2T3VmOE1LOWQ2LXlvcFhmZlFJYkQya3N3QWxud2UteUZpWVlCTXVHUXZZTjIwRlVQaUhqOGhyM2lDaDJTSGcxMnE5MzhOZ1NHYlJIc1p5bHRxaVZjZDd4MFY2RWMtRkNlYkhSVkdpMlRBWi1PYUNmZGNydXZnOTZFMTFoOHR0azBpUlU1aHpVdFA4dlhCV0dDNm91VE0xSVg0bXZhcF9jaVAzcXYzaldOdw?oc=5",
+    "publisher": "Reuters",
+    "published_at": "2026-11-07T07:19:47+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
+    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
+    "feed_id": "gnews_ai_commercial",
+    "feed_name": "Google News — AI商业化",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "88996db90fe2e3d16fe8ac5c807820923a5466fd2a7ec7a56ddc85a1dde1f4c6"
+  },
+  {
+    "title": "OpenAI reportedly raises an additional $11 billion at a $1.25 trillion valuation - TechCrunch",
+    "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNRzVwenhwOUEyaGxYMTR0NkE2LXQxZk9PcklwNTlwX3h1SjhUbEgtSkRleWxwUXluYzdlTE5fN29oV0liWkxtMVB1ck9Welkxekx0anBGSjJIOHV2UGNnNTVUbXVFV1JjckRxVGk3c05QdXhFV2Vhdl81T0RKb0ZycTl3RU9YdXVRRGljdWZjb254dlBRb3U5dnZoSlpTUy1SRXNib1JFNjBrTHZpdkktbTJpTQ?oc=5",
+    "publisher": "TechCrunch",
+    "published_at": "2026-11-07T06:53:46+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
+    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
+    "feed_id": "gnews_ai_commercial",
+    "feed_name": "Google News — AI商业化",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "966774e1eef5933257db1cd30bd7e32bb36bc084c58426dc391febdb2f16ea2a"
+  },
+  {
+    "title": "Anthropic's falling IPO valuation raises stakes for broader AI trade - Axios",
+    "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE4yTl96WG92c29IdFAtUW9FWXhGRDNRaFhyVXVEb1ZWMHNTTzRpcTk4cVBYbGJQSGc4S1R0c0RXSnVuUVA4LUJZc19IeGlzb3dlZFo2TWFxb3JNd0I1Q29mcXpKQ3hLS3Jka1VIRFp0aE1rTzlMN0E?oc=5",
+    "publisher": "Axios",
+    "published_at": "2026-11-07T06:06:35+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
+    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
+    "feed_id": "gnews_ai_commercial",
+    "feed_name": "Google News — AI商业化",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "147eba75321146fd1ec3eea668727d52386a288c06543f2546a8a0fa6fcc6021"
+  },
+  {
+    "title": "OpenAI Completes $11 Billion Portion of Funding at $1.25 Trillion Value - Bloomberg.com",
+    "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOZUs1X0RZcHpSM0pJZVlZOHZrWEppOG5oemNaUHFVUGZYV1ZSQ2lVVVhxZENDQWVDTkVPRkN5XzRxT3JGVDExWFVVQ2VWejZ3a21tb2NCNlFrc29DVW11OC1ZRXdJX1lDNWp6Tk90STljUDdBMmltdEgyTVFJQTI5cEJFRkdHMno0Ni1CU2NFQ2M2dXRBdjFMTl8zZ1dZM1p5R2kyT2lGZmF1OGhoQm9zTDNYeWk2NG44SVlnUQ?oc=5",
+    "publisher": "Bloomberg.com",
+    "published_at": "2026-11-07T05:41:15+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
+    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
+    "feed_id": "gnews_ai_commercial",
+    "feed_name": "Google News — AI商业化",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "c17c036c66888947967f0734fbb998a54ba199543524fbbf72058f96f8fce609"
+  },
+  {
+    "title": "Investors brace for lower Anthropic valuation, calling $1.5 trillion a 'stretch' - CNBC",
+    "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPc2xnRmphZ1JWMGh1OHplODE3ek1GTHFoLXBkNkY2RVlDM2NVRHJBdzBsYlNVMFlJSWdXMVpBMkV5TFRMbUxSaGsyVmN4T0pKSGhiYnhKWkg5Q1ZkZEVmUE9RVUhXTlJWSFAtOE4yM0JCbG5PdGVIbnE4VURQam9RNWcyNHFrZUFZdkdCNzlGbzJuRzhYYjBDb0JPSk91cUhlWnRaemVR?oc=5",
+    "publisher": "CNBC",
+    "published_at": "2026-11-07T05:00:14+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
+    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
+    "feed_id": "gnews_ai_commercial",
+    "feed_name": "Google News — AI商业化",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "40680b619b3e480757b9451371f5c59c594bcb0a1bbe5813f441bedf490ba7d3"
+  },
+  {
+    "title": "Anthropic to press ahead with IPO targeting $1.5tn valuation - Financial Times",
+    "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPbjV5NWJDbm9FZ2VFTmNEWHdHVUt5ODJwdlZOQjgzZTdJdkFwN0FzQkNsVFdENVJ3MnZybWFvTXltVVFwYVUyWVY4UjRsaFlFajdwMk9QV1gyRmx2UzFpOTlzaWpZdGRrRG1HVTY1c2lMbGJ1eURCQ2E5M1ljSWZNanViUXI?oc=5",
+    "publisher": "Financial Times",
+    "published_at": "2026-11-07T05:00:09+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
+    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
+    "feed_id": "gnews_ai_commercial",
+    "feed_name": "Google News — AI商业化",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "55adffceecbac5140e990685d38da6c927c3e6937258e45ddb6e68274ca3da5e"
+  },
+  {
+    "title": "Anthropic IPO Buyers Eye $1.2T, Down From $1.5T [2026] - https://tech-insider.org/",
+    "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxONWE0aXBFWmNMODlZQ2NreF9XbDNvWmZkMTFTN3FxSkNFbkJ2eVJ3R3BqTVZ1QWFkMDZMYVl6YjhCeWRGN2loLW56SlFPMTQxOHVKc2J2dVZfZmxoYUJrdEE1eURPS0JVREktT2U5Q0RtQ09uaWkyckYxTnc2YU5GbjU5YWZ0azJ0N0JmVHVxcXFlY0V0LXJiTmJsRVRHQQ?oc=5",
+    "publisher": "https://tech-insider.org/",
+    "published_at": "2026-11-07T01:52:02+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
+    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
+    "feed_id": "gnews_ai_commercial",
+    "feed_name": "Google News — AI商业化",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "d5b11e9e12531b454ec6b7ade3c1561aca975ccc626d88b2929bb7f27240f1ae"
+  },
+  {
+    "title": "Anthropic's IPO valuation could plunge to near $1 trillion amid market turmoil - Yahoo Finance",
+    "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPVUV6dVh5WUcxemZzTXRjYmcxcVRXUHRqSjhUcjZ2VVJjbVdWMi0yMWFaaWIwZUZfTndvQ19LZl9fQk55bElVYUFyeE9pa3RmNEFBak05WEFvRkhpeG1PdFkzZkw5ZnUtczlrSS1HaU44UENxSi1ZTy1LNWZrb3BZQXRhSDZhTVpXODFvRUF2NTFoNkhNSEtYYld4LWpTaHNqSUM5WHIwWVpQNDlCelh5OFJmT0Znc1hrbGJLWDdIaUJUeExMN05KQk5DZkMtVUhiQWc?oc=5",
+    "publisher": "Yahoo Finance",
+    "published_at": "2026-11-06T23:33:32+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
+    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
+    "feed_id": "gnews_ai_commercial",
+    "feed_name": "Google News — AI商业化",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "1e6a46972de3d00e2767c47ed4a660939b5fec2de6b4acda7182e305cabec956"
+  },
+  {
+    "title": "未知机构:《热点聚焦浙商计算机刘雯蜀Anthropic 企业级AI商业化的增长逻辑261104》 - 发现报告",
+    "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE01SFJ2WTRfQnlsTkh0eHZUckw0ZzJCSjI5Q2xqZks0WUZwejNFOEg0Z2VfMjc4d2NleDVRS0JyX2xkQ2dyRmcxM29QQTMzSVNC?oc=5",
+    "publisher": "发现报告",
+    "published_at": "2026-11-06T12:40:55+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
+    "query": "(大模型 OR AI模型) (API价格 OR 融资 OR 商业化 OR ARR OR 收入)",
+    "feed_id": "gnews_cn_ai",
+    "feed_name": "Google News — 国内AI产业",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "72deaf63c954fccbc9f848f871bb409e3ae605f2842162c5869bda7e3d11afa2"
+  },
+  {
     "title": "Exclusive | Major Investors Are Skeptical Anthropic IPO Can Achieve $1.5 Trillion Valuation - WSJ",
     "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPNVlmZWpuTHFFVDktVG9OaXlnVl9xSFliZFl4YXFRemVUZDFRRFFaajdEcnQ0b01sQTNJNDVDUkRaQXpLdEY3dGhVUjloVS16UHZIQ0cwUG5wQnpxaDcyX3lvX3A0VFZTb0xjMFBObUJKR3N5cVU2WFhqNzRMcEtjN09HQ3VKcnNIcy15V3VJUTdFRkk1OXhQYlNjMFpELUV0Y2o1MnNNa2dPd3lSN3JJdGM2Z0wzdw?oc=5",
     "publisher": "WSJ",
     "published_at": "2026-11-06T12:36:00+08:00",
-    "collected_at": "2026-11-06T15:34:54+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
     "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
     "feed_id": "gnews_ai_commercial",
     "feed_name": "Google News — AI商业化",
@@ -55,7 +225,7 @@
     "url": "https://news.google.com/rss/articles/CBMiogJBVV95cUxNUjcydGw1dkVwLVRsSGlDYnhZemJsRHdCZGhQUDl1LXhZSmtNZVJqVnNDcjF4OU9tS09xcmRpRjJ2YVdKRjEzTnZaYVdOdXo0NFdXZWFGdlh0ZmZwX3o3Y2xFdkJNWVdrZHBPYnBJY1VHZHp5LWlLT0xIQWVFUU84dDBJRmZDbVlfYUZQbnF2ZTZzNFY0UDlqaklIN0NDUEdta3FnSlNXRkZpRmlmenA5MXFKNm5ZeTRDRkRsMkItS2lmMTFvaHNjUllnc1VQSDBSNUFkUjVEWVFTNzNxWTVWbzR4ZXRFOWd5aWJ1NFd2Y0F3el9CWmJaaDFibkxDdC1hU2I1X3FJYnc4bFZKX2QxaV8zMm9lcmc5alBVSXpldkdpZw?oc=5",
     "publisher": "TradingView",
     "published_at": "2026-11-06T09:00:00+08:00",
-    "collected_at": "2026-11-06T15:34:54+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
     "query": "(NVIDIA GPU OR AI data center OR cloud capex) (H100 OR H200 OR B200 OR AI investment)",
     "feed_id": "gnews_gpu_capex",
     "feed_name": "Google News — GPU/Capex",
@@ -106,7 +276,7 @@
     "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOWEMycnVBc3MxVDFJNlJrNXpCakVwWTE2WjJBekgzb2F5ejNHb3c0eGZ0bld3aG1BVkR1ejJZTk1ZNnd4d2JXdGZfNTl1VUFqeVR4ek53ODhXdEpENjdrM1NscUNIbi1YdG9IaHR5YTZmaVB3SEtHcU9UMUt2YTBJRk9NTDRGaks0bXlVdi1WUnhqanFzR0QzNGQzVDYxRlpCdlhCMWlMaG0?oc=5",
     "publisher": "Business Insider",
     "published_at": "2026-11-06T05:06:00+08:00",
-    "collected_at": "2026-11-06T15:34:54+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
     "query": "(NVIDIA GPU OR AI data center OR cloud capex) (H100 OR H200 OR B200 OR AI investment)",
     "feed_id": "gnews_gpu_capex",
     "feed_name": "Google News — GPU/Capex",
@@ -123,7 +293,7 @@
     "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1SMmxrd0hKWm56bmF0ZHhac3hEUVI1RXBFbkRDX1gzQTFNZF8wTk5VOXdzWG4xRndvUmNkVjkxX3RXajRzOEU2TkdhNzN0NjFWWi1tTFZQdnNod2RIc3VPRlhnRHVaa09yNktpY1hiWnlxNlRt?oc=5",
     "publisher": "金融界",
     "published_at": "2026-11-05T12:07:35+08:00",
-    "collected_at": "2026-11-06T15:34:54+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
     "query": "(大模型 OR AI模型) (API价格 OR 融资 OR 商业化 OR ARR OR 收入)",
     "feed_id": "gnews_cn_ai",
     "feed_name": "Google News — 国内AI产业",
@@ -191,7 +361,7 @@
     "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE4wWFJ0c3k4UHo5NjNwTUg3R2JvbWt6RGZyYzVPcXk4TFhKbjFIQnhPOEJnRnpudUJoekMxaXRNMHhydUFYcHlpQ2ZyZnZvM2VTT0VVWVdaallzVHJfMFlBbC1CUDU4TDVXcTN6QTZ4TER2UlQ4cHc?oc=5",
     "publisher": "BigGo Finance",
     "published_at": "2026-11-05T08:56:00+08:00",
-    "collected_at": "2026-11-06T15:34:54+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
     "query": "(NVIDIA GPU OR AI data center OR cloud capex) (H100 OR H200 OR B200 OR AI investment)",
     "feed_id": "gnews_gpu_capex",
     "feed_name": "Google News — GPU/Capex",
@@ -219,6 +389,23 @@
       "rss"
     ],
     "content_hash": "147671e45b176484bda67c19685b2d859510b4855bca81b68c9f177816fa98bc"
+  },
+  {
+    "title": "How Much Are AI Companies Spending on Data Centers? - The Motley Fool",
+    "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE9FRDhlT2wyczJjb2hKeUNCZG1EUTd4R3ZzM1BQRjFOOGxGMWw0Ql82WmpPS3JIMTVGejI0YWpCRndsMV82R1JSNWhFZF9TUlFkdkNDRlJqOTVkUFdIS01rT3dDcFpTSUJoMzF5alktUjdPNjJqbGUw?oc=5",
+    "publisher": "The Motley Fool",
+    "published_at": "2026-11-05T06:29:00+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
+    "query": "(NVIDIA GPU OR AI data center OR cloud capex) (H100 OR H200 OR B200 OR AI investment)",
+    "feed_id": "gnews_gpu_capex",
+    "feed_name": "Google News — GPU/Capex",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "1ee0656f44126643619301dba99b93a7c80c744ed0647ed9ecfed25a8443f40f"
   },
   {
     "title": "Latest Fundraising Efforts Show OpenAI & Anthropic on Divergent Paths - Newcomer | Substack",
@@ -259,7 +446,7 @@
     "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1XdE9rS1REaFRHal9aV0lQMklDVlNpeHVmdWxHSGZQR2RTaU1peXA3b09uRVlYU1RaMHMwLVpDSHBvd3BYYnU2dnEtdHNkNEU3?oc=5",
     "publisher": "雪球",
     "published_at": "2026-11-04T20:12:00+08:00",
-    "collected_at": "2026-11-06T15:34:54+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
     "query": "(大模型 OR AI模型) (API价格 OR 融资 OR 商业化 OR ARR OR 收入)",
     "feed_id": "gnews_cn_ai",
     "feed_name": "Google News — 国内AI产业",
@@ -293,7 +480,7 @@
     "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9CaXRXcFJUc3NXLTNnWlJUR0dRNk52T0lLZVVMYkl3MXNhMzJlQ0dzemZmR1BnZzhGWGpKZHRoRGtmTVd2ZllzdzZmSXNVQUVGSjlTOElTOVY?oc=5",
     "publisher": "36Kr",
     "published_at": "2026-11-04T18:53:00+08:00",
-    "collected_at": "2026-11-06T15:34:54+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
     "query": "(大模型 OR AI模型) (API价格 OR 融资 OR 商业化 OR ARR OR 收入)",
     "feed_id": "gnews_cn_ai",
     "feed_name": "Google News — 国内AI产业",
@@ -548,7 +735,7 @@
     "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOWmVjU1FLbHQyeG15YlphN1phLS05a2JxLTIyMU1nbVhUbm1iV1R4Y2JscDlubDJDbU40MXcxeHlqZEJJSDBvRGhQOW9rUUdQZ243Ny10cU9yM3MxS3VzZFJGMVFrNEpxRnFXdnVzYkVzeFRWb2hOOVhpUEdLSFpyeFI0aWJraWNSMDJTVGxQeDB4bnhFeXpZenktRExCNTl6Q0RBNmFB?oc=5",
     "publisher": "Google Cloud",
     "published_at": "2026-11-03T00:02:36+08:00",
-    "collected_at": "2026-11-06T15:34:54+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
     "query": "(API pricing OR token price OR token cost) (LLM OR large language model OR AI model)",
     "feed_id": "gnews_ai_token",
     "feed_name": "Google News — Token Economy",
@@ -2792,7 +2979,7 @@
     "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1BOXN1NTR1SXZlMlNGWHhkLXB1NkN1THVwQzQ2SkgxTzdHSjBOYnc1ZXZZWkNIYVM4R0lndE1XenVocTdLUmNWbExpRHlHS25nWjYw?oc=5",
     "publisher": "第一财经",
     "published_at": "2026-10-22T07:17:43+08:00",
-    "collected_at": "2026-11-06T15:34:54+08:00",
+    "collected_at": "2026-11-07T14:47:15+08:00",
     "query": "(大模型 OR AI模型) (API价格 OR 融资 OR 商业化 OR ARR OR 收入)",
     "feed_id": "gnews_cn_ai",
     "feed_name": "Google News — 国内AI产业",
@@ -3211,192 +3398,5 @@
       "rss"
     ],
     "content_hash": "3eed590bdb0e195399fc6249c54ab258a81e820da63420da5cfb390644a86877"
-  },
-  {
-    "title": "Eric Schmidt’s 1% Anthropic Stake Set to Pay Huge Windfall - Bloomberg.com",
-    "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQY3A5WUhzc052RnlDWFU5R2FOWFQtU0g0OXV4X0MzTGRoR1U2enhudDIzMU9FNFBQaHVZNFlHN2dDc2VnRzM0ZmxSVldfdmVLTnVLNjFVSG9tcGF2QkQ3VE16ZkZzV25GU3BLWTRldFphbzd4bFhjSzFmU3VtN1dmMjdYR2kwSk1VcTlKNDJVZVlSRUlWaVI3U3dBTTBFY0U4UHVqeklBOXotNFBYTlVUUQ?oc=5",
-    "publisher": "Bloomberg.com",
-    "published_at": "2026-10-20T10:51:00+08:00",
-    "collected_at": "2026-10-21T13:39:38+08:00",
-    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
-    "feed_id": "gnews_ai_commercial",
-    "feed_name": "Google News — AI商业化",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "9a4a48d2c450fcdf730d2dbe2a11d29a80c846fea2ab1eba38b8c3055880312e"
-  },
-  {
-    "title": "大模型竞逐智能体时代！MiniMax上新价格降七成 多只概念股Q3业绩“报喜”(名单) - 东方财富",
-    "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE9OWHlydndpYnVJelFVWTVhVXZBYjZ2aFZ6ZUdUSFRDd0IxQ1ZJSHJKdkdBbWdhWlZqa1FHM2ZoUWF5MERueGl0QXJFWHY2MG5iQjZEQ05oZVNxQkdpX1hqSGF0TEMxZw?oc=5",
-    "publisher": "东方财富",
-    "published_at": "2026-10-20T07:55:17+08:00",
-    "collected_at": "2026-10-26T13:42:31+08:00",
-    "query": "(大模型 OR AI模型) (API价格 OR 融资 OR 商业化 OR ARR OR 收入)",
-    "feed_id": "gnews_cn_ai",
-    "feed_name": "Google News — 国内AI产业",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "2fa6f6a73fb612d9005fb31b0f1c9d8015501ca9295cdef099594534bfecb39a"
-  },
-  {
-    "title": "大模型竞逐智能体时代！MiniMax上新价格降七成 多只概念股Q3业绩“报喜”(名单) - 东方财富",
-    "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE95S2RRVkpmVkpyYWt0aGJvQkpKN040WHlzZWxMXzdIVDFlbGFoVlZ1TjBuWU14RTY0TFRIWDRDRkRpa21QcUg3LVdGdWwtS3kzbl9YcGxpRmRGcklfR2NkNA?oc=5",
-    "publisher": "东方财富",
-    "published_at": "2026-10-20T07:55:17+08:00",
-    "collected_at": "2026-10-24T13:18:14+08:00",
-    "query": "(大模型 OR AI模型) (API价格 OR 融资 OR 商业化 OR ARR OR 收入)",
-    "feed_id": "gnews_cn_ai",
-    "feed_name": "Google News — 国内AI产业",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "2fa6f6a73fb612d9005fb31b0f1c9d8015501ca9295cdef099594534bfecb39a"
-  },
-  {
-    "title": "EXCLUSIVE: OpenAI seeks to accelerate fundraising ahead of Anthropic IPO, sources say - Reuters",
-    "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPZHQyOU05TVZ4RVNpTGdJX18zeHlMZ1pGOGdNeGFmRnFMNERObThVUTl2Ny1CVGU1Vm5IMF9aSS1qaWpOTWlFdDBLeHZIa1lkYnltX1pnU1BLbGdGM3duM1FJZDhocndUWGlUZ0pSaEV6U2RUdzgwX1FaY2s2YllieUo3cTBSWVUtRzJEczR3YXliUzB0d0dRQkRsWjlaQ0FCeXBKM1A2MjlaYzdZa0E?oc=5",
-    "publisher": "Reuters",
-    "published_at": "2026-10-20T07:23:06+08:00",
-    "collected_at": "2026-10-24T13:18:14+08:00",
-    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
-    "feed_id": "gnews_ai_commercial",
-    "feed_name": "Google News — AI商业化",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "55a7f242ab4c035f917bbaa5b0eb20b80aee18dca1882ed6d34c7abb6fd4282d"
-  },
-  {
-    "title": "Former Google CEO Schmidt owns 1% stake in Anthropic, Bloomberg reports - Reuters",
-    "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPX21NdVRPSTJNSUZiZ201OEo3U1Q0Rk9XVFJGaHVEWG1pczBSZzNpZVI2UXEwdEljb0F1UjJTUFRQOXBSTF9zQTNtRnhUcjBKRG9pVktwU1JXeWNiS0ZSZjBZaUhhakJEaU5YbEpBWG14MkUwTjhLX1RzU2NnY2ZvRER6VkVvNUVzemcwU0JzSWE4SmMzM3loLUdFR2JsMG9BbE9hS0ZrZFRGRVUtQ3BYYw?oc=5",
-    "publisher": "Reuters",
-    "published_at": "2026-10-20T06:58:19+08:00",
-    "collected_at": "2026-10-20T13:37:51+08:00",
-    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
-    "feed_id": "gnews_ai_commercial",
-    "feed_name": "Google News — AI商业化",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "aecb4bdfc6b5fdcf511d2bbd5f426098ae2c454bc10831c1e8f1739ae43d8781"
-  },
-  {
-    "title": "Eric Schmidt’s 1% Anthropic stake sets up massive windfall ahead of IPO -Bloomberg - Yahoo Finance",
-    "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPdEFBemt1YzdGS1pfdW9OeEpzZVZZS0ZqS1RTNmMwMjZIWnZtZDUxOVdfMHVOUkVsZTJYbTBkWDBmaGNyZTZnU1RGVGdoV3lrQ3Rya2hFUzdEaEtoRS1SMWIzNjJiY0kxcHJxekJoV2dYWnZQVHRST3BURWRRd2FQVnVxT3VUZDZEOUdfcE5SZ1JpT09sV01YdlRB?oc=5",
-    "publisher": "Yahoo Finance",
-    "published_at": "2026-10-20T06:26:05+08:00",
-    "collected_at": "2026-10-20T13:37:51+08:00",
-    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
-    "feed_id": "gnews_ai_commercial",
-    "feed_name": "Google News — AI商业化",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "e14708bc1a01dc4f3c3dc751c07233666698cb1f111b2269ff4c390196a35060"
-  },
-  {
-    "title": "超4亿！北京大模型芯片创企获新融资，米哈游、小米、兆易创新参投 - 智东西",
-    "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBhdk93cE9xV0c0aDF3ZUNwbnhYdFM5WGwxTUdpN200bEE4TXN6SHVzaWZKTTE5a3pfVHJFVU8wOE1KaHM5LTlDUA?oc=5",
-    "publisher": "智东西",
-    "published_at": "2026-10-19T19:19:07+08:00",
-    "collected_at": "2026-10-21T13:39:38+08:00",
-    "query": "(大模型 OR AI模型) (API价格 OR 融资 OR 商业化 OR ARR OR 收入)",
-    "feed_id": "gnews_cn_ai",
-    "feed_name": "Google News — 国内AI产业",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "563d6296318064890e9317e93f6aa98d1eac1fe07a63b7813c2d63e675291bd2"
-  },
-  {
-    "title": "超4亿！北京大模型芯片创企获新融资，米哈游、小米、兆易创新参投 - 智东西",
-    "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE52eWpUZjByMGIwSXNwck10Ym9DQzRmMUxTYV95QXp4TnJsWUppeWJqZHNCNVhpTm1qdWxVcGt0OUJCVm5OX3c?oc=5",
-    "publisher": "智东西",
-    "published_at": "2026-10-19T19:19:07+08:00",
-    "collected_at": "2026-10-22T13:40:40+08:00",
-    "query": "(大模型 OR AI模型) (API价格 OR 融资 OR 商业化 OR ARR OR 收入)",
-    "feed_id": "gnews_cn_ai",
-    "feed_name": "Google News — 国内AI产业",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "563d6296318064890e9317e93f6aa98d1eac1fe07a63b7813c2d63e675291bd2"
-  },
-  {
-    "title": "AI firm Anthropic to commit 5% of shares to fund for ‘public good’ - The Guardian",
-    "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPanFGWjJTYVg5d3hnbmlKWWVDSlV4Rklkd2xWSGQwb3pKNlVCZmR2UW9DSlQ5aXlFTVptZmZIalhEMkVLSkpZblJDOXNXS1RHdGttNGlZNjZGRTZmcUFrU2ZvOWMzV21wOEZ3TGZCejVoM3pCdVcxNXViUVFpQ2c3SThBcGwwUzhZdGh3ekZQRW9sQ1lNamttX2M4NUQ5NUQySlIyNHZGQllBdG5scUE?oc=5",
-    "publisher": "The Guardian",
-    "published_at": "2026-10-19T18:47:00+08:00",
-    "collected_at": "2026-10-20T13:37:51+08:00",
-    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
-    "feed_id": "gnews_ai_commercial",
-    "feed_name": "Google News — AI商业化",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "d853bb402eb7dc4db5a39fa8d41f31f06580deb94c792c0767669df0b9060cb9"
-  },
-  {
-    "title": "Internal meeting and documents reveal the toll of Amazon's massive AI bet - Business Insider",
-    "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNaEZnVnJtTG9xWFdXSExvcXVNQU9fS3lNQTY5RlNTMWtyR3V5MXVob3RpSXFVN3ZsMTExNnhYUUNUNHlNclhNWENaeHcwbVFEclVGX3JBWjBLU3drck4tUGcwZHRFV25lWXhidWdyNmlLQ1JRdzNtV242clJyOGZpbU9FNjdWNTE1Sl8yLThkRFM1ZWxxbEp3MFQ5SW50cFk?oc=5",
-    "publisher": "Business Insider",
-    "published_at": "2026-10-19T15:00:00+08:00",
-    "collected_at": "2026-10-30T14:43:13+08:00",
-    "query": "(NVIDIA GPU OR AI data center OR cloud capex) (H100 OR H200 OR B200 OR AI investment)",
-    "feed_id": "gnews_gpu_capex",
-    "feed_name": "Google News — GPU/Capex",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "2dc30444652efe7b21d6724d5cbee62bca10b6be0548e3f7da3c7929cdc55bbd"
-  },
-  {
-    "title": "Anthropic Valuation Plunges $3.5 Trillion: Has the AI Giant Missed Its Optimal IPO Window? - 36Kr",
-    "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9vc2R5cGRvdGJaaG40ek9DVUlFRW9Ib2NXaGpELXE5UVM0UDZweVdYdkMyZ2xlQTBWMlRPYk53cnpKM2pvc0dfSXcwbW12VzhMYWJJ?oc=5",
-    "publisher": "36Kr",
-    "published_at": "2026-10-19T13:32:42+08:00",
-    "collected_at": "2026-10-19T13:36:55+08:00",
-    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
-    "feed_id": "gnews_ai_commercial",
-    "feed_name": "Google News — AI商业化",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "7a5bacbc97ca23265e909158b139b0efbc8eaf27a0424ea7f1821a92835cd41f"
   }
 ]
