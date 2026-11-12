@@ -1,10 +1,10 @@
 {
-  "status": "ok",
-  "generated_at": "2026-11-11T15:27:33+08:00",
-  "sources_ok": 18,
+  "status": "degraded",
+  "generated_at": "2026-11-12T15:55:35+08:00",
+  "sources_ok": 17,
   "sources_total": 18,
-  "sources_failed": 0,
-  "source_success_rate": "18/18",
+  "sources_failed": 1,
+  "source_success_rate": "17/18",
   "pricing_total": 31,
   "pricing_missing": 1,
   "pricing_sample": 0,
@@ -16,6 +16,7 @@
   "market_records": 19,
   "warnings": [
     "1 pricing records have null values",
-    "2 business records have null values"
+    "2 business records have null values",
+    "1 sources are unavailable or using stale fallback"
   ]
 }
