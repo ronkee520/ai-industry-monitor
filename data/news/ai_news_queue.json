@@ -1,5 +1,56 @@
 [
   {
+    "title": "Anthropic heads into IPO week with strong demand and big questions about its future - CTech",
+    "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBjaTJsZldfVVRfSWlKRzRobUdkMVNPb09kY2pvbFlOY1hKSmk0VkF6SE9tMjczN0hJbDg5eldvS1MxX1owSTAxLV95S0FUNWYzY3JORGRObElKempNRkVoZVlXTUdzeEk?oc=5",
+    "publisher": "CTech",
+    "published_at": "2026-11-15T01:20:00+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
+    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
+    "feed_id": "gnews_ai_commercial",
+    "feed_name": "Google News — AI商业化",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "f60cb659dfed51c033e55693452fe10e3f9c893862dc6cd56c6069fe2abb05c1"
+  },
+  {
+    "title": "Hyperscalers commit billions to next-gen AI data centers - ET Datacenters",
+    "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxNT3hwVjdSaHdrTXNkdFNDMGgwVkJFSWNSTXQ5QkFjUnRNTlUwZU1aYXhNeTVTcGZNdWIwQWVQXzZVUW5NUUdVV1doNWFHSlBMWDZHVGpKWUJDek01dUNYQXJPUWhFTzhDWHhZS2RxRGZOSzZjVHRsOUNKOGRhRGQ3Mk9zTHROSFBacW5IMW1aMUVvLVMzNWtlTzRnTEpGaFVtTGtxMU1COFlSVzVRR1QyVk1fLXdlQWFSZmxaMlNRTkxKVUxnX2tsTFY0cy1sWkNMbTUxdi1oVnUtT2ZDWF9v0gHjAUFVX3lxTE51T2JCYzdWZjdPU2h5ZUFDTm4zYWRMMXJtWHkxNHdXRlQ2RFc5U1lDWXFXTVdWcGtyLTNIR0p0YjFsLXpEQ2VXbnprMXFMMUxNeldLVHdNaXQ5S0MzZnM4U3ZWZ2VxSEI4N21BM0ZUU0E1VzYtZzQxZDNFZVBmOGpFV2pRMUcxaVZwVW9yMGdYUU0yMlJkd3M1SzRHc2RjOU56NXFTbUUwRHhSQ3JTTGFBMUp5REd5cWJFZ2J3NTJlMVpwYVlFb3dWTTFjQUU1RnFYaEJnUGt6OXRldlBieWRLV3RR?oc=5",
+    "publisher": "ET Datacenters",
+    "published_at": "2026-11-14T11:44:05+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
+    "query": "(NVIDIA GPU OR AI data center OR cloud capex) (H100 OR H200 OR B200 OR AI investment)",
+    "feed_id": "gnews_gpu_capex",
+    "feed_name": "Google News — GPU/Capex",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "bf172e8bc808893988b73ff0548bbc6250debd29c0f9f05961c683bfba9febf6"
+  },
+  {
+    "title": "Gigabyte and Schneider Electric collaborate on AI factory infrastructure - ET Datacenters",
+    "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxQa21qWE9jRnZMdHlZS0dSSFdVd0VlQzJfcTNGRm5raUtMSWZLNTU1em9FZGhObzZfeXZ6NTFHWkU3Zlpna3VUbEJqMnQwU0lfN0Q1dVYtOWJxS0Z0LVNsVkc0UzZHRUxGT1dYSlBSZmFWcUp1V3RadzVaVWR3ZVo5d252cE11cDFuT0VLdmN5ZjduYTU2VUZJMFBaRWJ1MWpEdjBkQTFHdi1ucDloY1YzdWo2UnFEMVh6dENScEtwVjJNcFkxMGFtN3FnUDJKcjhwbTFfUWI4R3RqWmJTVUtCV3F4c1ZQYU1YbHhfR2hCT3lOeWI20gH4AUFVX3lxTE51OWNZc01sQ2g3SVZTcVFkZnNFZmlsLW5rNnVCZC1JeVF2MnRQUC1sNUI1OEZHdnV6VTZVWlJMclB5cWIzQzlheDVaVDEweUJyeDJZWWUzRWdCbmRKMW9RMEJmN0pOVUhreDdhd0QycTRoRHZKMS1oXzluV2JGYy12TWpORFhjZGoxUmJtbDBXNXR3bVk4QWhmMnNTVF9vWkN2Uk00UjJFN0dlRm5maThXRVBZUl90dF9JUmxfakpsdjJnd3lBWGtnRl9FM2ptRUdlcmJxYTVMMmlSNHlNdDE3V2lIVXZqZEh3eTN2ZUdjc1UybnlEVllX?oc=5",
+    "publisher": "ET Datacenters",
+    "published_at": "2026-11-14T11:44:05+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
+    "query": "(NVIDIA GPU OR AI data center OR cloud capex) (H100 OR H200 OR B200 OR AI investment)",
+    "feed_id": "gnews_gpu_capex",
+    "feed_name": "Google News — GPU/Capex",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "f7c23d758deac2d6e7e17a3fb36f49224caef6d948bdcdb6c00b32982bf1e7c1"
+  },
+  {
     "title": "EXCLUSIVE: Investors flock to Anthropic IPO but question durability of AI lead - Reuters",
     "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOckJYSDVUWDh1cTJPb3ptd2pLZmxuNXBtSEJkN0F0WWFucUZuWDgtQ0dZbzZITDBWY3dhSWZqcjcyZl9FdGpHdHJsX1dkbVowTkZ3OWRKd3pwN2NIMnBGZ1AtbDFkMkl6Vm1RZFNsZ2VDOU1nLUVmY2d4UHV2U01ER1pJTmdlSGFDdmsyM2ZhbXlXYVdEb01ERlNybGxWY0RsYlo4QlNxa0NCaUNpQjQw?oc=5",
     "publisher": "Reuters",
@@ -17,11 +68,28 @@
     "content_hash": "c7bb02be30bcbc08bd4ce3dcff7b5b1cf9cfa6ef770266da7905303e1cdf41cf"
   },
   {
+    "title": "中国大模型海外收入跟不上调用量增长，有望破解？｜慧眼中国环球论坛 - 第一财经",
+    "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1BOXN1NTR1SXZlMlNGWHhkLXB1NkN1THVwQzQ2SkgxTzdHSjBOYnc1ZXZZWkNIYVM4R0lndE1XenVocTdLUmNWbExpRHlHS25nWjYw?oc=5",
+    "publisher": "第一财经",
+    "published_at": "2026-11-14T06:47:51+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
+    "query": "(大模型 OR AI模型) (API价格 OR 融资 OR 商业化 OR ARR OR 收入)",
+    "feed_id": "gnews_cn_ai",
+    "feed_name": "Google News — 国内AI产业",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "069ce2a13056fc9869c08469e2191473294ac68251f8d46d7c86d089376dde61"
+  },
+  {
     "title": "Morgan Stanley’s Shalett ‘Incredibly’ Bullish Despite AI Turmoil - Bloomberg.com",
     "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOYm5JdmlJWkdGbUVRd0NyNG9KV1c4eEZsaXdQTTNCc3VaNXczLWNZcjZiS0JxTFVKc0RPcTNqWnBadEF0dnNfUHVUcUhBaVJneDhmaHlublo2OWlrSkpNdDQ5RHFjWWdqQU5xNFh4ZmJKUUd4MmxSWlFIY3JnV2VMeUFPTHhCQzNsYnlBZlFQVmhlMGpMRTRMSTBRZE9VVTZHc1JoY1V2RlBhMlFtX0tnRmNCMA?oc=5",
     "publisher": "Bloomberg.com",
     "published_at": "2026-11-14T06:22:59+08:00",
-    "collected_at": "2026-11-14T15:17:06+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
     "query": "(NVIDIA GPU OR AI data center OR cloud capex) (H100 OR H200 OR B200 OR AI investment)",
     "feed_id": "gnews_gpu_capex",
     "feed_name": "Google News — GPU/Capex",
@@ -38,7 +106,7 @@
     "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPUmRKOUxLaE4ycWJYZjZGc00zSmxhWnBqT1paQmtpemNCTDFoQ1ZxN041Vk5MTU8tY0ZPa1VMUzItZ2RwNFNlMXo3VnFjR1MyREVuelRqaXNxV0JhMFIxaFQzdjR0M1VZd1BfT1ZiLWZ3WTM1UDFtMmpuUXNhRmFfUkFoSGlmbEpFdEE?oc=5",
     "publisher": "ETF Database",
     "published_at": "2026-11-14T04:18:43+08:00",
-    "collected_at": "2026-11-14T15:17:06+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
     "query": "(NVIDIA GPU OR AI data center OR cloud capex) (H100 OR H200 OR B200 OR AI investment)",
     "feed_id": "gnews_gpu_capex",
     "feed_name": "Google News — GPU/Capex",
@@ -106,7 +174,7 @@
     "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPQjJCXzFPZDhMNE1EUFlsUFROeFQ2MWZ5aHdCekd1dGtiNlhPaGN4X1I2VUxmYmZ6eXJBbF9Ddldzc2I3ZkwyQ1pVTEVkX1VZcFVxWXFXbi0zWmVVSTF1ZVp0NlZKSURhYkVrR2w3NnNXQXNvVUZxOFVxSkJQQTFnbTk5cWhtRXdQeFZmZkpvTkhDZGo2bzFOVk5pNA?oc=5",
     "publisher": "Yahoo Finance",
     "published_at": "2026-11-13T03:26:22+08:00",
-    "collected_at": "2026-11-14T15:17:06+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
     "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
     "feed_id": "gnews_ai_commercial",
     "feed_name": "Google News — AI商业化",
@@ -123,7 +191,7 @@
     "url": "https://news.google.com/rss/articles/CBMijAJBVV95cUxPOXVzWE9SOGt2czA4X0NUb0VVSzJxRGk5REk2OFNraTJ3TlRaSHJ0dVloMF9JZ2s2blhTNzZkcGItQzBsZTR4VVhfUnhQcGlRdllmMUNOSlJpSkNfZEpuTzFnUXVqNlRsa19RWlpadjN2TzlHYTFGd3JRS1Y5WlRmbTFIY2ZvdHNiMUpEYVFkdkpCZjRQTklHWW1xMENoTzBGckVpTmV6alZVNUZSX05VX001eXR6NVg3dHRtcVgzRjQzRHd6b2RHR014b2U4Smw2cllUUllTS2U1WjB0NDJrTnFZZkt4ZHRCQXlKSGtnRlB2ZzRqY1JGYW1jNXZxSi01eWdDU0h1SjlyOGMz?oc=5",
     "publisher": "巴士的報",
     "published_at": "2026-11-12T22:08:00+08:00",
-    "collected_at": "2026-11-14T15:17:06+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
     "query": "(API pricing OR token price OR token cost) (LLM OR large language model OR AI model)",
     "feed_id": "gnews_ai_token",
     "feed_name": "Google News — Token Economy",
@@ -170,6 +238,23 @@
     "content_hash": "6f6336487c49529accc159e2927a071448e3ea38601bba68efff10c71027d80b"
   },
   {
+    "title": "Anthropic: We See the Stock as Undervalued in the IPO Pricing Range - Morningstar",
+    "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNTnU4YmpTb3AxQWJUZ3BmVjRuMTctbElqVWlpNWp6SlhTLUJqNGUweGo2YlJZYWpjbHdORUxDWHhnNWhQRHhCdE43SzZlZlJwQ0lZRTVsQVZzV2NRV0NrNUhHNklsa1dYWnFrSElyLVZPTTc2a3BNMFNzaW03SXF2WDIyUVF6cUpyNGQ1MzM2NkFLNWloOWNJYlhwME4?oc=5",
+    "publisher": "Morningstar",
+    "published_at": "2026-11-12T05:41:09+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
+    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
+    "feed_id": "gnews_ai_commercial",
+    "feed_name": "Google News — AI商业化",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "9c9703e5427830c4c349233ef8f1644177dc63c79eb835dcf60a2839a9b0cae9"
+  },
+  {
     "title": "Goldman Sees Anthropic Revenue Hitting $685 Billion by 2030 - PYMNTS.com",
     "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPODBhLXo1aFlyLWtBMEhyVlhEN0NHNkhLWXhla245dzlIekJ1bWlQUmZkVzRtSGpCeTVNY3k3V2VQLS1RTDU4TmZsazNJdUdyWTR0UjhPMXZsYkRudUhzVmp4Si1odTBCcmF4dXVBdDlNNU9DOExmcVR2ZDdNQno3cjZWVnZpTmEtRU5kRVBtNkgySEszdmp0eG45cmZrX1E0dHRtcU55S3dyejlWVENYdTBrZGJwQkk?oc=5",
     "publisher": "PYMNTS.com",
@@ -208,7 +293,7 @@
     "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPUFBBa3VDMlJpdmQyd3U4ejhrT3NreThBWTNVYkxtMFdVbDNFbC0xbkR2MjZ0cXBXWGtQYXNsa1JveEx6c1RSa3V2NGJMTkc5aWVnSXFNT3VETHNUbHl5blNrRDE5ZG5Vcl9VTGtTUzI5Q3BQdUZVN19ySmpUQ2xQMFVLMndJNHhKa2o3YXhkeUJOQl9FN3F0cWRLcW9BMm9sZjR6QWxic28tZHhDQVUxQkZCajJuRmlvWlpKMzdCMlBwV18yN3dDdFVLd1FrYTQ?oc=5",
     "publisher": "TradingKey",
     "published_at": "2026-11-11T21:50:33+08:00",
-    "collected_at": "2026-11-14T15:17:06+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
     "query": "(NVIDIA GPU OR AI data center OR cloud capex) (H100 OR H200 OR B200 OR AI investment)",
     "feed_id": "gnews_gpu_capex",
     "feed_name": "Google News — GPU/Capex",
@@ -242,7 +327,7 @@
     "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxQODRiTGZNcGJlRzVsZTJuajJTMUZybTNSTHRRQnFYNHpLZ3ZtNHZMOVltSnZRaUZtSmR5SkR5aFBxLTc4QlYtSFMyYkREak9tbnh6YU1pREJkSTVzZ3VTaGR6RXNlcTVpcGk1aU1iOVdkVDBUY0hqWWx3MzB4YmFXbGZ5TWMyakxaS01xcV9Nc2RhSUFBbWVwak03SkRfaUtiNXZYN1VSRThXV0ltbWptc1laQ1NNNkZZQkE0Xzd2TmwwdkZBSFB5X1dST1p3SE5FRTBxTnJPQWZJMVE?oc=5",
     "publisher": "DataDrivenInvestor",
     "published_at": "2026-11-11T19:10:55+08:00",
-    "collected_at": "2026-11-14T15:17:06+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
     "query": "(API pricing OR token price OR token cost) (LLM OR large language model OR AI model)",
     "feed_id": "gnews_ai_token",
     "feed_name": "Google News — Token Economy",
@@ -259,7 +344,7 @@
     "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOUTgtOV9zN3Ywb2UycWxaSlNwOGltSV91cjMtRWdlNnJibWhnTVgtQkZkd0ZYU0NweVB5MEhaMkd6ZVNpUXlra3JiQ2ltcU4xUUUta0pPV2dqb19uWWpLZWVkanNqTnlsVEo2YmdFeGw2M2dNcGtGVHdGb1hBMTN4MFRteXhkbUctZWIxSURUQjcxczZxbmdtbGQ0d3ZLWWJCcjFQQVpwb1pjNHNzWlE?oc=5",
     "publisher": "Bloomberg.com",
     "published_at": "2026-11-11T15:59:00+08:00",
-    "collected_at": "2026-11-14T15:17:06+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
     "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
     "feed_id": "gnews_ai_commercial",
     "feed_name": "Google News — AI商业化",
@@ -276,7 +361,7 @@
     "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOemcxaS1wZzZyUGhITkh5Unh5cnVndFpLa3cxc1ZwLUxVeDFmUVBjREdnVlU2NFJIMWxhYW5OX243TVhJRUVCeXFFY0ZrelJWVzMyLTJ2R1BVUnQySmtsck5xWWJNUU5RX21HMHF4bVNBMERHSGxQWEppbnJVay11dDFCb2c?oc=5",
     "publisher": "Financial Times",
     "published_at": "2026-11-11T08:28:11+08:00",
-    "collected_at": "2026-11-14T15:17:06+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
     "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
     "feed_id": "gnews_ai_commercial",
     "feed_name": "Google News — AI商业化",
@@ -310,7 +395,7 @@
     "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE51VG1hT2dUTmZtZ1M3THp2YTRfR0hKelZ6VldSRGxPLXA1RVNDMjEtb21IaG10Q2Nianpiek55T0lXVkNDdE1IejhoekVUeVRNVE12R1ZEN0trNmJYY05ocXpKZW5mTHRsMjdhUEpXMGVVZFZFNXpGLU5jQ0bSAYIBQVVfeXFMUC1PVWtQbTNSdE54V096Wml0TklobXVIX0NhYUt3TjNfRFNSYldfMmE4N1RpdTBxVGRmNnpYN2dOdDdENm5rbDNfcmVJYTdwZXRkYmdCVDMyd1pwdkZxc2hrMnNQbEF6QkUzRWtHUlk2dWRQWE83eGo3dUU0Vy1fOE1Rdw?oc=5",
     "publisher": "CNBC",
     "published_at": "2026-11-11T07:46:35+08:00",
-    "collected_at": "2026-11-14T15:17:06+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
     "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
     "feed_id": "gnews_ai_commercial",
     "feed_name": "Google News — AI商业化",
@@ -327,7 +412,7 @@
     "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQYnVCSTA4VERVbE9QQmhQbjNENjRrSVhqc21PTnV2bFVtdHNCWXRFLUxBWVpqemFlN21FcXhobDh2OGRXTGNqNXJaUXBpOVZjcmk3czg4Tlo3Ukp0NlloaWpTNk44OV9IZDJHUmpKb0hPdndlVjNTZEdsX3hpVUJJT2dMS2dMXzVQd2ZqXzFtSEo2YjlqeGtETDdiWXJLNUNjelQ3Ng?oc=5",
     "publisher": "Fortune",
     "published_at": "2026-11-11T07:45:00+08:00",
-    "collected_at": "2026-11-14T15:17:06+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
     "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
     "feed_id": "gnews_ai_commercial",
     "feed_name": "Google News — AI商业化",
@@ -361,7 +446,7 @@
     "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNaUtnS210c1pKNVpEZXJ1V1JpdUdyZ0h5OGh2SzVCXzJaVGRwaDZnb0NQZUxFS0ZFWmxwbU53ZlJtdlBkOWplZHdaNkloU0xwV3hvdlpjNnh0R1FISXdMOExfc09JckJqTWxjSWlZSjZpN0RWR1kyRUF6YUlXN0dqSm5XQU5TUmFmbWpFbGlzT3FZRllaMGU4cld0cDlsaFVYY0IzV2ZNYmwxYW0yd1FDaw?oc=5",
     "publisher": "Reuters",
     "published_at": "2026-11-11T03:49:05+08:00",
-    "collected_at": "2026-11-13T15:32:11+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
     "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
     "feed_id": "gnews_ai_commercial",
     "feed_name": "Google News — AI商业化",
@@ -395,7 +480,7 @@
     "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPRWZNcUt6ZldxUnNyTXZySGZacWZueTYtS0JOUVZ2S3JUWENYcThEMm9CSnVXX25QTGJYZGc3UVhKNXloQ0pPdUJpbkxZQ3Q1NEdSMzJEWjB5M3UwVDJ5UjhxdllTMEhjQm41UDg1QndqbE5KWkNBZ3RoMlhHSjM5SDkyN2tmQjZjcEpyNGMxVjF1MV9vRmpJb3d4X1NibmRYd3V5TUNxMGtacGJjXzNqRURn?oc=5",
     "publisher": "The Guardian",
     "published_at": "2026-11-11T00:13:00+08:00",
-    "collected_at": "2026-11-14T15:17:06+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
     "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
     "feed_id": "gnews_ai_commercial",
     "feed_name": "Google News — AI商业化",
@@ -463,7 +548,7 @@
     "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5qN1FZelNfa2dPRUpJejB5WXpTNXZETmFPYURjbm00N2k4UmRmWXhLOGZFUll6ZHdLOHlIUWc5U0lBTVBhbUdBcEpEelVBZw?oc=5",
     "publisher": "36Kr",
     "published_at": "2026-11-10T19:14:00+08:00",
-    "collected_at": "2026-11-14T15:17:06+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
     "query": "(大模型 OR AI模型) (API价格 OR 融资 OR 商业化 OR ARR OR 收入)",
     "feed_id": "gnews_cn_ai",
     "feed_name": "Google News — 国内AI产业",
@@ -1313,7 +1398,7 @@
     "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE9FRDhlT2wyczJjb2hKeUNCZG1EUTd4R3ZzM1BQRjFOOGxGMWw0Ql82WmpPS3JIMTVGejI0YWpCRndsMV82R1JSNWhFZF9TUlFkdkNDRlJqOTVkUFdIS01rT3dDcFpTSUJoMzF5alktUjdPNjJqbGUw?oc=5",
     "publisher": "The Motley Fool",
     "published_at": "2026-11-04T16:00:00+08:00",
-    "collected_at": "2026-11-14T15:17:06+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
     "query": "(NVIDIA GPU OR AI data center OR cloud capex) (H100 OR H200 OR B200 OR AI investment)",
     "feed_id": "gnews_gpu_capex",
     "feed_name": "Google News — GPU/Capex",
@@ -2448,23 +2533,6 @@
     "content_hash": "ee0f31c204527a16e938553c4fe7c1be6b985aa17d487fd95a98f3c5d361d49c"
   },
   {
-    "title": "The Anthropic Prospectus Arrives: My (but not the) IPO valuation! - Musings on Markets",
-    "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPNTRIbl9NcWhrdkRTcURZLUpFdHRvOExEY1U0ZDJXUXNDaGhJWGFGb3F0MVZIRjZJQjFiVnZ6T3NQMG0zaTNHMDFpN1EzWTE2Z04yZWc4ZW1WSzhTNGxEZUFveGtyUUsweEN2TWlNY3NsMGhxYy1qU3VZUjVhWFRMR3lid3pqYWFWTkJCSmVnYw?oc=5",
-    "publisher": "Musings on Markets",
-    "published_at": "2026-10-29T02:07:00+08:00",
-    "collected_at": "2026-11-02T15:06:22+08:00",
-    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
-    "feed_id": "gnews_ai_commercial",
-    "feed_name": "Google News — AI商业化",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "543bfe97a2223c0293724682132a1f57fb5efe08d3a3649836a198b934536514"
-  },
-  {
     "title": "AI giants' funding ambitions test Wall Street's appetite for risk - Reuters",
     "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNVkJOM2pFRE9nVHZubFRxVXQxa0NNTWRublIxQS1kOGt6OGd1VUFTems0QjZMWDFMbTF4dDVtTEMtbTh4VVkxLUdnMnZXa25fX0VLczRBU25feWtGNDM0MVBKMlFVWTFfQk94R0pDZVdzOXVxbXBIdzhaRlV3SFNQb0xPYjh6U2JfdE1waFBDY0FxWHpqaTdiY0paekF5OXRnT2pULXdsdURDZzhMajVqakNiWkZuUQ?oc=5",
     "publisher": "Reuters",
@@ -2565,6 +2633,23 @@
       "rss"
     ],
     "content_hash": "8c096e3b6cfe95ce9a8ce7241ee8392f46bc6751b8d8587eb4d278b7821d8ce9"
+  },
+  {
+    "title": "The Anthropic Prospectus Arrives: My (but not the) IPO valuation! - Musings on Markets",
+    "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPNTRIbl9NcWhrdkRTcURZLUpFdHRvOExEY1U0ZDJXUXNDaGhJWGFGb3F0MVZIRjZJQjFiVnZ6T3NQMG0zaTNHMDFpN1EzWTE2Z04yZWc4ZW1WSzhTNGxEZUFveGtyUUsweEN2TWlNY3NsMGhxYy1qU3VZUjVhWFRMR3lid3pqYWFWTkJCSmVnYw?oc=5",
+    "publisher": "Musings on Markets",
+    "published_at": "2026-10-28T15:00:00+08:00",
+    "collected_at": "2026-11-15T15:28:12+08:00",
+    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
+    "feed_id": "gnews_ai_commercial",
+    "feed_name": "Google News — AI商业化",
+    "feed_tier": 2,
+    "status": "pending_review",
+    "tags": [
+      "news",
+      "rss"
+    ],
+    "content_hash": "543bfe97a2223c0293724682132a1f57fb5efe08d3a3649836a198b934536514"
   },
   {
     "title": "IDC：火山引擎45%份额登顶中国大模型MaaS市场收入第一 - 凤凰网科技",
@@ -3313,90 +3398,5 @@
       "rss"
     ],
     "content_hash": "f31a4eb4a1e23199015014873c029c67099cc93a4fafa17b714f8c903b4771bc"
-  },
-  {
-    "title": "Nvidia CEO Jensen Huang Reaffirms His $4 Trillion Projection for AI Spending. Here's Why That Makes Nvidia a Screaming Buy Now. - The Globe and Mail",
-    "url": "https://news.google.com/rss/articles/CBMitgJBVV95cUxPUGtWT0o5SnlHLTNaaGhDWG9EQUlzbHJmWEJpbzNUd25ORks4Umkzb2xSTXFRejZGMlY0ekRheDVzWjV3cERPaXBpdHRNZDVsTzVQTmxfZGNXZ2pFUHpsSDhXeDFHMkN5b3dWSkY1a1NneWJSWnhVQk90TEl5QUx5a1JFY1p0aXZuTUVlVHMtVUxsYWxmNERIUnRmVVlqSXVtdC1aY2JRSzBpZExxQk5talhBZjc3eEFDMHlGeWZWMXlIS1NVbko5NHEzZVZYY2gwd3psdWVCYkpOUU5NX0xLemxPbkUteVFuanJnVDF5NVh1NGhFQjlwaTFRT3VLN3gtZWlUWHZ2cGN4WjloMGpWNDNVRnhldjNaOGpwRENUY0JsVUFzTHNrbFZWMGc4VzRoUk1mcmx3?oc=5",
-    "publisher": "The Globe and Mail",
-    "published_at": "2026-10-26T01:48:00+08:00",
-    "collected_at": "2026-10-26T13:42:31+08:00",
-    "query": "(NVIDIA GPU OR AI data center OR cloud capex) (H100 OR H200 OR B200 OR AI investment)",
-    "feed_id": "gnews_gpu_capex",
-    "feed_name": "Google News — GPU/Capex",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "18f0c1857aca8aa484d454ef8aeac6259c4a658218667a9e537f06c2d783c9c5"
-  },
-  {
-    "title": "Nvidia CEO Jensen Huang Reaffirms His $4 Trillion Projection for AI Spending. Here's Why That Makes Nvidia a Screaming Buy Now. - AOL.com",
-    "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQSFh1VHVoaTE0M2pkVzBwa3QyMjlyczBhMGctYzdzbU9FZ3BpTFNVUU9wcU9malZkamFyVGpCQWluRW9ZbnBxbWlQcFhUUkZwNm5fdnpDQ3dMQ2JkWWJCS0hMUFZzMk0wNUNXaC1GMVNPUk83UXB0WG4yUy1ZZS14UXBlUQ?oc=5",
-    "publisher": "AOL.com",
-    "published_at": "2026-10-26T01:48:00+08:00",
-    "collected_at": "2026-10-28T14:32:50+08:00",
-    "query": "(NVIDIA GPU OR AI data center OR cloud capex) (H100 OR H200 OR B200 OR AI investment)",
-    "feed_id": "gnews_gpu_capex",
-    "feed_name": "Google News — GPU/Capex",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "adc42cc2f74c667dd9dfb083097068ebbc942a926d13f7daa120f0ec6c36b41c"
-  },
-  {
-    "title": "大模型商业化迎来TaaS时刻！科大讯飞让Token交付结果 - 智源社区",
-    "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE5PRkMtbHc4OEVpWklfVDF5M1d5S29JdU15anJxWVk0ak44TVhXNHJ6ajNhVlM0aUtCREkxUmxFRHp1TTViNTZyVg?oc=5",
-    "publisher": "智源社区",
-    "published_at": "2026-10-25T20:40:00+08:00",
-    "collected_at": "2026-11-03T15:29:00+08:00",
-    "query": "(大模型 OR AI模型) (API价格 OR 融资 OR 商业化 OR ARR OR 收入)",
-    "feed_id": "gnews_cn_ai",
-    "feed_name": "Google News — 国内AI产业",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "434a4f41c8531cb3d604974ddfb7321f2a29005cb6e082c7ddac10a041940f9f"
-  },
-  {
-    "title": "红熊AI完成数亿元A+轮融资，基于AI“记忆科学”从To B服务延伸至To C应用｜36氪首发 - 36氪",
-    "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBENTZOTzVFS3pIYmg4amVKSjB1aFhFYnF1X0NyYk9TbWFjaTFkSXdmZDBIX2NBNTRQQy1JcWJqdUV6ZVlibzFzMnJRU3Zldw?oc=5",
-    "publisher": "36氪",
-    "published_at": "2026-10-25T12:53:08+08:00",
-    "collected_at": "2026-10-27T13:53:31+08:00",
-    "query": "(大模型 OR AI模型) (API价格 OR 融资 OR 商业化 OR ARR OR 收入)",
-    "feed_id": "gnews_cn_ai",
-    "feed_name": "Google News — 国内AI产业",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "3a6cc68ecfe72a181e92e1ddc76c017a902f82306c322a955b4dbe6eb80da6cb"
-  },
-  {
-    "title": "Who Is Dario Amodei? The Anthropic CEO Behind Claude - The Profile | Polina Pompliano",
-    "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1nNVRycmlWXzJTdWtVSVZMbkN2SlVsVEhpUTktdFVuX1g0RmNGNjV4WUhaTjlCMTZmVEg1dWVlSkRWUjJuWGd4bXNvU2dqOXFScG9QMnNrUmJNMmZKNXJtMmp3?oc=5",
-    "publisher": "The Profile | Polina Pompliano",
-    "published_at": "2026-10-25T04:35:29+08:00",
-    "collected_at": "2026-10-25T13:35:02+08:00",
-    "query": "(OpenAI OR Anthropic OR DeepSeek) (ARR OR revenue OR funding OR valuation)",
-    "feed_id": "gnews_ai_commercial",
-    "feed_name": "Google News — AI商业化",
-    "feed_tier": 2,
-    "status": "pending_review",
-    "tags": [
-      "news",
-      "rss"
-    ],
-    "content_hash": "aa7f5fd261769e1e65fbfc1bea39499d9d114714343fc56396f94f185376c875"
   }
 ]
