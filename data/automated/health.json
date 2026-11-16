@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "generated_at": "2026-11-15T15:28:14+08:00",
+  "generated_at": "2026-11-16T15:33:49+08:00",
   "sources_ok": 18,
   "sources_total": 18,
   "sources_failed": 0,
   "source_success_rate": "18/18",
   "pricing_total": 31,
-  "pricing_missing": 1,
+  "pricing_missing": 2,
   "pricing_sample": 0,
   "business_total": 20,
   "business_missing": 2,
@@ -15,7 +15,7 @@
   "supply_chain_records": 10,
   "market_records": 19,
   "warnings": [
-    "1 pricing records have null values",
+    "2 pricing records have null values",
     "2 business records have null values"
   ]
 }
