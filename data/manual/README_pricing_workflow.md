@@ -8,10 +8,12 @@
 
 ## 步骤详解
 
+从项目根目录运行以下命令。Windows 可将 `python3` 换成 `py -3`。
+
 ### 1. 自动抓取候选价格
 
 ```bash
-python scripts/collect_pricing_candidates.py --project-root . --verbose
+python3 scripts/collect_pricing_candidates.py --project-root . --verbose
 ```
 
 输出文件：
@@ -57,13 +59,13 @@ python scripts/collect_pricing_candidates.py --project-root . --verbose
 先预览（不写文件）：
 
 ```bash
-python scripts/update_manual_pricing.py --project-root . --template data/manual/manual_pricing_template.csv --dry-run
+python3 scripts/update_manual_pricing.py --project-root . --template data/manual/manual_pricing_template.csv --dry-run
 ```
 
 确认无误后正式导入：
 
 ```bash
-python scripts/update_manual_pricing.py --project-root . --template data/manual/manual_pricing_template.csv
+python3 scripts/update_manual_pricing.py --project-root . --template data/manual/manual_pricing_template.csv
 ```
 
 效果：
@@ -73,7 +75,7 @@ python scripts/update_manual_pricing.py --project-root . --template data/manual/
 ### 6. 重建站点
 
 ```bash
-python scripts/run_all.py --project-root . --skip-fetch
+python3 scripts/run_all.py --project-root . --skip-fetch
 ```
 
 ### 7. 提交部署

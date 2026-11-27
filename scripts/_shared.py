@@ -516,8 +516,6 @@ def normalized_metric(
 ) -> dict[str, Any]:
     """构造一条标准化的监测指标记录。
 
-    参数完全对应 DESIGN.md 中定义的 Universal Metric Schema。
-
     Args:
         metric_id: 全局唯一标识，格式 {category}::{company}::{model}::{detail}。
         metric_name: 人类可读名称。

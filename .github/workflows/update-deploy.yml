@@ -27,53 +27,50 @@ on:
       - ".github/workflows/update-deploy.yml"
 
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+  contents: read
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: write
+      pages: read
+    env:
+      PAGES_ARTIFACT_NAME: github-pages-${{ github.run_attempt }}
+    outputs:
+      artifact_name: ${{ env.PAGES_ARTIFACT_NAME }}
+      artifact_id: ${{ steps.upload.outputs.artifact_id }}
 
     steps:
-      # ── 1. Checkout ──────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      # ── 2. Setup Python ──────────────────────────────────
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.10"
 
-      # ── 3. Run tests (no network required) ───────────────
       - name: Run unit tests
         run: python -m unittest discover -s tests -v
 
-      # ── 4. Run data pipeline ─────────────────────────────
       - name: Run data pipeline
         env:
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          SKIP_FETCH: ${{ inputs.skip_fetch }}
         run: |
-          if [[ "${{ github.event.inputs.skip_fetch }}" == "true" ]]; then
-            echo "skip_fetch=true — 跳过网络采集"
-            python scripts/run_all.py --project-root . --skip-fetch --verbose
-          elif [[ "${{ github.event_name }}" == "push" ]]; then
-            echo "push 触发 — 跳过网络采集以保证 CI 稳定"
+          if [[ "$SKIP_FETCH" == "true" || "$GITHUB_EVENT_NAME" == "push" ]]; then
+            echo "使用仓库内的快照构建站点"
             python scripts/run_all.py --project-root . --skip-fetch --verbose
           else
-            echo "scheduled/manual — 尝试网络采集"
-            # 单个外部数据源失败会被采集器标记为 partial，不会阻断构建。
-            # 未处理的代码异常必须让工作流失败，避免回退构建掩盖真实 bug。
+            echo "采集公开数据并构建站点"
             python scripts/run_all.py --project-root . --verbose
           fi
 
-      # ── 5. Verify build output ───────────────────────────
       - name: Verify build output
         run: |
           echo "检查 _site/ 生成完整性..."
@@ -130,11 +127,13 @@ jobs:
 
           echo "✓ 构建校验通过"
 
-      # ── 6. Configure Pages ────────────────────────────────
-      # 定时结果写回 main：保留历史、便于审计，也防止公开仓库
-      # 因 60 天无活动被 GitHub 自动停用 schedule。
+      # 仅持久化默认分支上实际执行了采集的运行。
       - name: Persist automated data snapshot
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        if: >-
+          github.ref_name == github.event.repository.default_branch &&
+          (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.skip_fetch))
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -143,19 +142,61 @@ jobs:
             echo "无可持久化的数据变化"
           else
             git commit -m "data: refresh automated snapshot [skip ci]"
-            git push origin "HEAD:${{ github.event.repository.default_branch }}"
+            git push origin "HEAD:refs/heads/$DEFAULT_BRANCH"
           fi
 
       - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
-      # ── 7. Upload artifact ────────────────────────────────
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
+        id: upload
+        uses: actions/upload-pages-artifact@v5
         with:
+          name: ${{ env.PAGES_ARTIFACT_NAME }}
           path: _site
+          include-hidden-files: true
+          retention-days: 3
 
-      # ── 8. Deploy ─────────────────────────────────────────
+  deploy:
+    needs: build
+    if: github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      actions: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      # GitHub 可能需要几秒才能通过 API 查到刚上传的产物。
+      - name: Wait for Pages artifact metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ needs.build.outputs.artifact_id }}
+          ARTIFACT_NAME: ${{ needs.build.outputs.artifact_name }}
+        run: |
+          if [[ ! "$ARTIFACT_ID" =~ ^[0-9]+$ || -z "$ARTIFACT_NAME" ]]; then
+            echo "::error::Pages artifact outputs are missing."
+            exit 1
+          fi
+
+          for retry_delay in 0 1 2 4 8 16; do
+            sleep "$retry_delay"
+            if name=$(timeout 10s gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID" \
+              --jq 'select(.expired == false) | .name') && [[ "$name" == "$ARTIFACT_NAME" ]]; then
+              echo "Pages artifact $name ($ARTIFACT_ID) is available."
+              exit 0
+            fi
+          done
+
+          echo "::error::Pages artifact $ARTIFACT_NAME ($ARTIFACT_ID) is unavailable or expired."
+          exit 1
+
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
+        with:
+          artifact_name: ${{ needs.build.outputs.artifact_name }}

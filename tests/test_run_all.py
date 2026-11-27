@@ -4,6 +4,8 @@ import importlib.util
 import unittest
 from pathlib import Path
 
+from tests._project_fixture import temporary_project
+
 _SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 _spec = importlib.util.spec_from_file_location("run_all", _SCRIPTS / "run_all.py")
 _run = importlib.util.module_from_spec(_spec)
@@ -11,9 +13,8 @@ _spec.loader.exec_module(_run)
 
 
 class TestRunAll(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.root = Path(__file__).resolve().parents[1]
+    def setUp(self):
+        self.root = temporary_project(self.addCleanup, "config", "data", "web")
 
     def test_skip_fetch_runs_without_network(self):
         """--skip-fetch 应跳过网络采集，直接用 local 数据构建。"""

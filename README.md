@@ -22,7 +22,7 @@
 | 登录 | 需要 | 不需要 |
 | VPN | 部分功能需要 | 不需要 |
 | 数据范围 | 全金融市场 | AI 产业链 |
-| 自动更新 | ❌ (人工查询) | ✅ (Mon & Fri 09:00 BJT) |
+| 自动更新 | ❌ (人工查询) | ✅（每日 09:00 北京时间排程） |
 | 数据溯源 | ✅ | ✅ (每条数据有 source_url, source_tier, evidence_status) |
 | 可分享 | ❌ | ✅ (静态页面，可复制链接) |
 
@@ -56,38 +56,31 @@
 
 ### 环境要求
 
-- Python 3.10+
-- Git
-- 无其他依赖（项目使用 Python 标准库 + 原生 HTML/CSS/JS）
+- Python 3.10 或更新版本，以及用于同步代码的 Git。
+- 项目使用 Python 标准库和原生 HTML/CSS/JS，无需安装 `pip` 或 npm 依赖。
 
-### 本地运行
+### 本地预览
 
-```bash
-# 1. 克隆项目
-git clone https://github.com/ronkee520/ai-industry-monitor.git
-cd ai-industry-monitor
-
-# 2. 跳过网络采集，仅用本地数据构建
-python scripts/run_all.py --project-root . --skip-fetch
-
-# 3. 本地预览
-cd _site
-python -m http.server 8080
-# 浏览器打开 http://localhost:8080
-```
-
-### 在线预览（本地文件）
+在项目根目录运行。macOS 和 Linux 使用 `python3`，Windows 可将下文的 `python3` 换成 `py -3`。
 
 ```bash
-# 直接构建站点
-python scripts/build_site.py --project-root .
-# 双击 _site/index.html 即可在浏览器中查看
+python3 --version
+python3 scripts/build_site.py
+python3 -m http.server 8080 --bind 127.0.0.1 --directory _site
 ```
+
+打开 [http://127.0.0.1:8080/](http://127.0.0.1:8080/) 查看网站，按 `Ctrl+C` 停止服务器。网页会通过 HTTP 加载同站 JSON，预览时请使用该地址。
+
+修改配置或人工数据后，可用 `python3 scripts/run_all.py --skip-fetch` 重新生成仪表盘数据和网站。这个命令会写入 `data/automated/` 和 `data/history/`，直接运行 `build_site.py` 则使用现有快照。
+
+如果 macOS 上从 python.org 安装的 Python 在联网采集时报 `CERTIFICATE_VERIFY_FAILED`，运行与该版本配套的 `Install Certificates.command`。也可使用已配置证书的 Python 3.10+ 环境。 [Python 的 macOS 安装说明](https://docs.python.org/3/using/mac.html)
+
+两台电脑可以各保留一份工作副本。建议用 GitHub 同步代码和数据，开始编辑前先用 `git status` 检查本地改动，再用 `git pull --ff-only` 更新当前分支。
 
 ### 运行测试
 
 ```bash
-python -m unittest discover -s tests -v
+python3 -m unittest discover -s tests -v
 ```
 
 ---
@@ -96,9 +89,10 @@ python -m unittest discover -s tests -v
 
 ### 第一步：推送到 GitHub
 
+请先用 `git remote -v` 检查 `origin`。从 GitHub 克隆或复制完整仓库的工作副本通常已有远端地址。
+
 ```bash
-git remote add origin https://github.com/ronkee520/ai-industry-monitor.git
-git push -u origin main
+git push origin main
 ```
 
 ### 第二步：启用 GitHub Pages
@@ -126,16 +120,17 @@ https://ronkee520.github.io/ai-industry-monitor/
 
 | 触发方式 | 时间 |
 |---------|------|
-| 定时-周一 | 北京时间 **09:00** (UTC 01:00) |
-| 定时-周五 | 北京时间 **09:00** (UTC 01:00) |
+| 定时 | 每日北京时间 **09:00**（UTC 01:00，实际开始时间由 GitHub 调度） |
 | 手动触发 | 随时通过 Actions → Run workflow |
-| Push 触发 | 当 `config/` `data/manual/` `scripts/` `web/` 变更时 |
+| Push 触发 | 当 `main` 的配置、人工数据、脚本、前端、测试或部署工作流变更时 |
 
 ### 初次部署注意事项
 
-- 首次部署建议使用 `skip_fetch: true`，因为部分数据源可能需要网络访问
-- 如果自动采集失败，workflow 会自动回退到 `data/manual/` 中的数据
+- 只需发布仓库已有数据时，可对 `main` 手动运行工作流并勾选 `skip_fetch`
+- 个别数据源采集失败时，采集器可沿用已有数据并标注状态。程序异常会使工作流失败
 - 所有 sample 数据都有明确标记，真实数据需要在 `data/manual/` 中手动填入
+
+如果最新运行仅有 `deploy` 作业失败，并且上传的产物仍在保留期内（3 天），可在该运行中选择 **Re-run failed jobs**。产物过期时，从最新的 `main` 发起一次新运行。
 
 ---
 
@@ -143,14 +138,13 @@ https://ronkee520.github.io/ai-industry-monitor/
 
 ### 自动更新（推荐）
 
-GitHub Actions 每周一和周五自动运行。流程：
+GitHub Actions 每日自动运行。
 
 ```
 数据采集 → 数据校验 → 构建 dashboard JSON → 持久化快照/历史 → 部署 GitHub Pages
 ```
 
-定时运行会将 `data/automated/`、`data/history/` 和 `data/news/` 的结果写回 `main`，
-使历史可审计，同时避免公开仓库因长期无活动而被 GitHub 停用定时任务。
+定时运行和执行联网采集的 `main` 手动运行会将 `data/automated/`、`data/history/` 和 `data/news/` 的结果写回 `main`，保留可审计的历史数据。
 
 > **自动化边界**：Token 市场路由价来自 OpenRouter 公共目录（T3，不能冒充厂商直连价）；
 > CAPEX 与美股产业链财务来自 SEC Companyfacts（T1）；GPU 使用可重复解析的官方公开页；
@@ -160,13 +154,13 @@ GitHub Actions 每周一和周五自动运行。流程：
 
 ```bash
 # 只更新 Token 定价
-python scripts/collect_token_pricing.py --project-root .
+python3 scripts/collect_token_pricing.py --project-root .
 
 # 只更新商业化指标
-python scripts/collect_business_metrics.py --project-root .
+python3 scripts/collect_business_metrics.py --project-root .
 
 # 只更新 GPU 价格
-python scripts/collect_gpu_pricing.py --project-root .
+python3 scripts/collect_gpu_pricing.py --project-root .
 ```
 
 ### 手动编辑数据
@@ -179,11 +173,14 @@ python scripts/collect_gpu_pricing.py --project-root .
 
 ```
 ai-industry-monitor/
+├── .github/workflows/ # GitHub Actions 采集与部署
 ├── config/          # 公司/模型/数据源/指标体系 配置
 ├── data/
 │   ├── manual/      # 人工采集的半静态数据
 │   ├── automated/   # 脚本产出的最新快照
-│   └── history/     # 时序历史 (JSON Lines)
+│   ├── history/     # 时序历史 (JSON Lines)
+│   └── news/        # 待复核新闻及历史
+├── docs/local/      # 可选的本地设计与使用文档（Git 忽略）
 ├── scripts/         # Python 数据采集与构建脚本
 ├── web/             # 前端 HTML/CSS/JS
 ├── tests/           # 单元测试

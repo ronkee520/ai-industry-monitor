@@ -7,6 +7,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from tests._project_fixture import temporary_project
+
 _SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 _spec = importlib.util.spec_from_file_location(
     "update_manual_pricing", _SCRIPTS / "update_manual_pricing.py"
@@ -27,17 +29,9 @@ baidu,百度文心,ernie4,ERNIE 4.0,https://cloud.baidu.com/product-s/qianfan.ht
 
 
 class TestUpdateManualPricing(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.root = Path(__file__).resolve().parents[1]
-
     def setUp(self):
-        # 还原 token_pricing.json 的备份
+        self.root = temporary_project(self.addCleanup, "data/manual")
         self.pricing_path = self.root / "data" / "manual" / "token_pricing.json"
-        self.backup = self.pricing_path.read_text(encoding="utf-8")
-
-    def tearDown(self):
-        self.pricing_path.write_text(self.backup, encoding="utf-8")
 
     # ── CSV parsing ───────────────────────────────────────────
     def test_load_template_reads_csv(self):

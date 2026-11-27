@@ -5,6 +5,8 @@ import unittest
 from datetime import date, timedelta
 from pathlib import Path
 
+from tests._project_fixture import temporary_project
+
 _SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 _spec = importlib.util.spec_from_file_location("build_dashboard", _SCRIPTS / "build_dashboard.py")
 _dash = importlib.util.module_from_spec(_spec)
@@ -12,9 +14,8 @@ _spec.loader.exec_module(_dash)
 
 
 class TestBuildDashboard(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.root = Path(__file__).resolve().parents[1]
+    def setUp(self):
+        self.root = temporary_project(self.addCleanup, "config", "data")
 
     def test_generates_valid_payload(self):
         payload = _dash.build_dashboard(self.root)

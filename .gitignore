@@ -27,9 +27,8 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
+._*
 
-# 参考项目 (开发阶段保留，上线前删除)
-llm-token-economy-monitor-main/
-
-# 设计文档 (开发阶段保留)
-DESIGN.md
+# 本地文档与参考资料
+/docs/local/
+/llm-token-economy-monitor-main/

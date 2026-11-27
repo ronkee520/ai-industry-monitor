@@ -5,6 +5,8 @@ import re
 import unittest
 from pathlib import Path
 
+from tests._project_fixture import PROJECT_ROOT, temporary_project
+
 _SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 _spec = importlib.util.spec_from_file_location("build_site", _SCRIPTS / "build_site.py")
 _site_mod = importlib.util.module_from_spec(_spec)
@@ -18,7 +20,7 @@ _shared_spec.loader.exec_module(_shared)
 class TestBuildSite(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.root = Path(__file__).resolve().parents[1]
+        cls.root = temporary_project(cls.addClassCleanup, "config", "data", "web")
         # 确保 dashboard.json 存在
         dash_spec = importlib.util.spec_from_file_location(
             "build_dashboard", _SCRIPTS / "build_dashboard.py")
@@ -92,8 +94,8 @@ class TestBuildSite(unittest.TestCase):
         self.assertIn("cycle-methodology", styles)
 
     def test_price_history_uses_daily_schedule_and_extended_retention(self):
-        dashboard_builder = (self.root / "scripts" / "build_dashboard.py").read_text(encoding="utf-8")
-        workflow = (self.root / ".github" / "workflows" / "update-deploy.yml").read_text(encoding="utf-8")
+        dashboard_builder = (PROJECT_ROOT / "scripts" / "build_dashboard.py").read_text(encoding="utf-8")
+        workflow = (PROJECT_ROOT / ".github" / "workflows" / "update-deploy.yml").read_text(encoding="utf-8")
         self.assertIn('price_history[-20000:]', dashboard_builder)
         self.assertIn('cron: "0 1 * * *"', workflow)
 
