@@ -161,8 +161,10 @@
     const state = h.status || "unknown";
     const stateLabel = { ok: "LIVE", degraded: "PARTIAL", error: "REVIEW", unknown: "UNKNOWN" }[state] || state.toUpperCase();
     const stateTitle = state === "degraded" ? "部分外部来源暂不可用或使用最近一次成功快照；已发布数据仍保留来源与新鲜度标记。" : "数据管线运行状态";
+    const lastCollection = D.history?.runs?.at(-1)?.generated_at;
+    const timeLabel = lastCollection ? "最近采集" : "构建时间";
     el.innerHTML = `<span class="snapshot-status status-${esc(state)}" title="${esc(stateTitle)}"><i></i>${esc(stateLabel)}</span>
-      <span class="snapshot-copy"><b>最新快照 ${esc(fmtDate(m.generated_at))}</b>
+      <span class="snapshot-copy"><b>${timeLabel} ${esc(fmtDate(lastCollection || m.generated_at))}</b>
       ${esc(m.schedule || "")}</span>`;
     document.title = m.title || "AI Industry Monitor";
   }
@@ -204,7 +206,7 @@
         </article>
       </section>
 
-      ${renderCycleTrend(c, D.history?.cycle_scores || [])}
+      ${renderCycleTrend(D.history?.cycle_scores || [])}
 
       <!-- Factor Scores -->
       <section class="section">
@@ -340,8 +342,8 @@
     </section>`;
   }
 
-  function renderCycleTrend(current, history) {
-    const rows=[...(history||[]),current].filter(x=>x&&x.industry_development_score!=null&&!x.sample_based&&x.generated_at);
+  function renderCycleTrend(history) {
+    const rows=history.filter(x=>x&&x.industry_development_score!=null&&!x.sample_based&&x.generated_at);
     const byDate=new Map(rows.map(x=>[String(x.generated_at).slice(0,10),x]));
     const points=[...byDate.entries()].map(([date,row])=>({date,value:Number(row.industry_development_score),stage:row.stage_label||"—",method:row.score_method||"legacy"})).filter(x=>Number.isFinite(x.value)).sort((a,b)=>a.date.localeCompare(b.date)).slice(-12);
     if(!points.length) return "";
@@ -521,17 +523,22 @@
           : `最高 ${fmtUSD(max)} · 最低 ${fmtUSD(min)} · ${points.length} 个日值 · 覆盖 ${coverageDays} 天`;
 
       host.innerHTML=`<svg viewBox="0 0 800 225" role="img" aria-label="${esc(summary)}">${grid}<text class="history-summary" x="${left}" y="24">${esc(summary)}</text><polyline class="history-line" points="${coords}"/>${dots}${dateLabels}</svg>`;
-      const officialAnchor=points.find(p=>p.event_type==="official_price_effective"||p.event_type==="official_price_reference");
+      const hasOfficialInterval=points.some(p=>p.event_type==="official_price_effective"||p.event_type==="official_price_interval");
+      const hasVerification=points.some(p=>p.event_type==="official_price_reference");
       const hasArchive=points.some(p=>String(p.event_type||"").startsWith("archived_price_"));
-      note.textContent=officialAnchor
-        ? hasArchive
-          ? `历史包含 ${officialAnchor.date} 起的官方生效价格，并衔接公开路由市场逐日变更档案；无变更日延续最近一次已观测价格。`
-          : `历史起点为 ${officialAnchor.date} 的官方价格生效事件；在下一次已核验调价前按有效价格区间连续展示。`
-        : hasArchive
-          ? `该曲线由公开路由市场的逐日价格变更档案重建；无变更日延续最近一次已观测价格，不代表虚构交易波动。`
-        : points.length===1
-          ? `该指标尚无可核验的更早价格，当前展示首次真实收录；系统将每日追加快照。`
-          : `该曲线来自每日真实快照；价格未调整时保持水平。`;
+      if (hasOfficialInterval && hasArchive) {
+        note.textContent = "历史包含官方生效价格区间和公开路由市场变更档案。档案中的无变更日沿用最近一次观测价格。";
+      } else if (hasOfficialInterval) {
+        note.textContent = "官方定价按有据可查的生效区间连续展示。";
+      } else if (hasArchive) {
+        note.textContent = "该曲线由公开路由市场的逐日变更档案重建。无变更日沿用最近一次观测价格。";
+      } else if (hasVerification) {
+        note.textContent = "已核验的官方价格按核验日期显示，后续有新观测时增加记录。";
+      } else {
+        note.textContent = points.length === 1
+          ? "当前展示首次真实收录。"
+          : "该曲线来自每日真实快照。价格未调整时保持水平。";
+      }
     };
     select.addEventListener("change",draw);
     rangeSelect.addEventListener("change",draw);
@@ -873,8 +880,9 @@
           </article>
           <article class="method-card">
             <h3>时间序列与更新</h3>
-            <p>每次成功构建按date+metric_id去重写入历史快照；价格未变化也保留当日真实快照，以支持水平线。</p>
-            <p>自动抓取失败时保留上一成功快照并标记stale_fallback；动态官网使用人工核验回退。全站当前快照截止：<strong>${esc(fmtDate(m.generated_at))}</strong>。</p>
+            <p>采集运行按日期和指标去重保存历史。定价曲线使用实际观测、人工核验或有出处的官方生效区间。</p>
+            <p>抓取失败时沿用最近有效快照并标记回退。动态官网可使用人工核验数据。</p>
+            <p>最近采集 <strong>${esc(fmtDate(runs[0]?.generated_at))}</strong>。各项数据的时效以对应的来源记录为准。</p>
           </article>
         </div>
       </section>
@@ -914,7 +922,7 @@
           <div class="grid-3">
             <div>${kpiCard("系统状态", h.status)}</div>
             <div>${kpiCard("数据源成功率", h.source_success_rate || "—")}</div>
-            <div>${kpiCard("最新快照", fmtDate(h.generated_at))}</div>
+            <div>${kpiCard("快照生成时间", fmtDate(h.generated_at))}</div>
             <div>${kpiCard("定价记录", h.pricing_total)}</div>
             <div>${kpiCard("商业指标", h.business_total)}</div>
             <div>${kpiCard("GPU价格", h.gpu_records)}</div>

@@ -2,8 +2,9 @@
 
 import importlib.util
 import unittest
-from datetime import date, timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
+from unittest import mock
 
 from tests._project_fixture import temporary_project
 
@@ -66,25 +67,41 @@ class TestBuildDashboard(unittest.TestCase):
         self.assertEqual(min(row["date"] for row in sonnet), "2026-02-17")
         self.assertTrue(any(row.get("event_type") == "official_price_effective" for row in sonnet))
 
-    def test_available_price_options_have_truthful_history(self):
+    def test_priced_models_have_a_sourced_history_point(self):
         payload = _dash.build_dashboard(self.root)
         history = payload.get("history", {}).get("token_pricing", [])
-        counts = {}
-        for row in history:
-            counts.setdefault(row.get("metric_id"), set()).add(row.get("date"))
-        today = date.today()
-        missing = {}
-        for row in payload.get("token_pricing", {}).get("records", []):
-            if row.get("blended_cost_usd") is None:
-                continue
-            metric_id = row["metric_id"]
-            observed_days = len(counts.get(metric_id, set()))
-            first_verified = date.fromisoformat(row.get("as_of_date") or today.isoformat())
-            # 新增官方型号不能拿今天价格倒填未知历史；首次核验不足3天时至少应有当日快照。
-            required_days = 1 if first_verified > today - timedelta(days=2) else 3
-            if observed_days < required_days:
-                missing[metric_id] = {"observed": observed_days, "required": required_days}
-        self.assertEqual(missing, {})
+        sourced_models = {row["metric_id"] for row in history
+                          if row.get("date") and row.get("source_url") and row.get("blended_cost_usd") is not None}
+        models_with_price = {row["metric_id"] for row in payload["token_pricing"]["records"]
+                             if row.get("blended_cost_usd") is not None and row.get("confidence") != "sample"}
+        self.assertEqual(models_with_price - sourced_models, set())
+
+    def test_collection_records_same_day_observations_and_publishes_cycle_history(self):
+        history_dir = self.root / "data" / "history"
+        last_run = _dash._shared.read_jsonl(history_dir / "runs.jsonl")[-1]["generated_at"]
+        observed_at = datetime.fromisoformat(last_run) + timedelta(days=2)
+        today = observed_at.date().isoformat()
+        market_path = self.root / "data" / "automated" / "model_market_pricing.json"
+        market = _dash._shared.load_json(market_path)
+        example = market["records"][0]
+        fresh_id = "token_blended_cost::test::observed_model::market_route"
+        stale_id = "token_blended_cost::test::unobserved_model::market_route"
+        market["records"].extend([
+            {**example, "metric_id": fresh_id, "model_id": "observed_model", "as_of_date": today},
+            {**example, "metric_id": stale_id, "model_id": "unobserved_model"},
+        ])
+        _dash._shared.atomic_write(market_path, market)
+
+        with mock.patch.object(_dash._shared, "now_shanghai", return_value=observed_at):
+            payload = _dash.build_dashboard(self.root, record_history=True)
+
+        daily_prices = [row for row in _dash._shared.read_jsonl(history_dir / "token_pricing.jsonl")
+                        if row["date"] == today]
+        self.assertIn(fresh_id, {row["metric_id"] for row in daily_prices})
+        self.assertNotIn(stale_id, {row["metric_id"] for row in daily_prices})
+        saved_quote = next(row for row in daily_prices if row["metric_id"] == fresh_id)
+        self.assertIn(saved_quote, payload["history"]["token_pricing"])
+        self.assertEqual(payload["history"]["cycle_scores"][-1]["date"], today)
 
     def test_sample_records_not_mislabeled_as_verified(self):
         """⚠️ sample 数据绝对不能标记为 verified。"""

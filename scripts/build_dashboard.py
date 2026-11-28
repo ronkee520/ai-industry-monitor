@@ -8,10 +8,11 @@
     data/automated/health.json        — 系统健康报告
     data/automated/cycle_scores.json  — AI Cycle 评分
 
-历史追加:
+采集运行完成后追加历史:
     data/history/token_pricing.jsonl
     data/history/business.jsonl
     data/history/gpu_pricing.jsonl
+    data/history/capex.jsonl
     data/history/cycle_scores.jsonl
 
 单独运行:
@@ -77,11 +78,15 @@ def parse_args() -> argparse.Namespace:
 
 # ── 主入口 ────────────────────────────────────────────────────────
 
-def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
-    """读取所有数据源，合并为统一快照。"""
+def build_dashboard(
+    root: Path, *, verbose: bool = False, record_history: bool = False,
+) -> dict[str, Any]:
+    """合并现有数据，按需记录采集运行的历史。"""
     now = _shared.now_shanghai()
     generated_at = now.isoformat(timespec="seconds")
     today = now.date()
+    snapshot_date = today.isoformat()
+    history_dir = root / "data" / "history"
 
     # 加载配置
     companies_cfg = _shared.load_json(root / "config" / "companies.json", {})
@@ -114,7 +119,7 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
         root / "data" / "manual" / "token_price_events.json", {}
     ).get("records", [])
     price_events = _expand_official_price_events(raw_price_events, today)
-    price_snapshots = _shared.read_jsonl(root / "data" / "history" / "token_pricing.jsonl")
+    price_snapshots = _shared.read_jsonl(history_dir / "token_pricing.jsonl")
     price_history_by_key: dict[tuple[str, str], dict[str, Any]] = {}
     for row in [*price_events, *market_price_history, *price_snapshots]:
         if row.get("date") and row.get("metric_id"):
@@ -123,8 +128,7 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
         price_history_by_key.values(),
         key=lambda row: (row.get("date", ""), row.get("metric_id", "")),
     )
-    business_history = _shared.read_jsonl(root / "data" / "history" / "business.jsonl")
-    gpu_history = _shared.read_jsonl(root / "data" / "history" / "gpu_pricing.jsonl")
+    gpu_history = _shared.read_jsonl(history_dir / "gpu_pricing.jsonl")
 
     # ── 1. Token 定价模块 ──
     pricing_records = _build_pricing(
@@ -135,12 +139,22 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
         price_history,
         today,
     )
-    # 当前构建日也必须出现在本次返回的 history 中。历史文件在函数末尾才落盘，
-    # 若只依赖落盘后的下一次构建，新加入型号首次部署时会出现“有现价、无曲线点”。
-    snapshot_date = today.isoformat()
+    # 价格点使用观测或核验日期。没有新行情的构建仍可展示刚核验的官方价格。
+    daily_price_snapshots: list[dict[str, Any]] = []
     for rec in pricing_records:
-        current_snapshot = {
-            "date": snapshot_date,
+        observed_on = rec.get("as_of_date")
+        if rec["freshness"]["age_days"] is None or not observed_on or observed_on > snapshot_date:
+            continue
+        if rec.get("blended_cost_usd") is None or not rec.get("source_url"):
+            continue
+        is_official = (rec.get("source_tier") == 1 and rec.get("confidence") == "verified"
+                       and rec.get("evidence_status") == "official_pricing")
+        is_market_quote = rec.get("evidence_status") == "aggregator_snapshot"
+        if not is_official and not is_market_quote:
+            continue
+        record_today = record_history and observed_on == snapshot_date
+        price_point = {
+            "date": observed_on,
             "metric_id": rec["metric_id"],
             "value": rec.get("value"),
             "currency": rec.get("currency"),
@@ -150,9 +164,16 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
             "source_url": rec.get("source_url"),
             "source_tier": rec.get("source_tier"),
             "evidence_status": rec.get("evidence_status"),
-            "event_type": "daily_snapshot",
+            "event_type": "official_price_reference" if is_official and not record_today else "daily_snapshot",
         }
-        price_history_by_key[(snapshot_date, rec["metric_id"])] = current_snapshot
+        key = (observed_on, rec["metric_id"])
+        if record_today:
+            daily_price_snapshots.append(price_point)
+            price_history_by_key[key] = price_point
+        else:
+            saved = price_history_by_key.get(key, {})
+            if saved.get("blended_cost_usd") is None and saved.get("value") is None:
+                price_history_by_key[key] = price_point
     price_history = sorted(
         price_history_by_key.values(),
         key=lambda row: (row.get("date", ""), row.get("metric_id", "")),
@@ -213,6 +234,23 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
             "tags": item.get("tags", []),
         })
 
+    if record_history:
+        for row in daily_price_snapshots:
+            _shared.append_jsonl(history_dir / "token_pricing.jsonl", row, dedupe_keys=["date", "metric_id"])
+        for filename, records, extra_fields in (
+            ("business.jsonl", business_records, ("unit",)),
+            ("gpu_pricing.jsonl", gpu_records, ()),
+            ("capex.jsonl", capex_records, ("company_id", "period")),
+        ):
+            for rec in records:
+                row = {"date": snapshot_date, "metric_id": rec.get("metric_id"), "value": rec.get("value")}
+                row.update({field: rec.get(field) for field in extra_fields})
+                _shared.append_jsonl(history_dir / filename, row, dedupe_keys=["date", "metric_id"])
+        _shared.append_jsonl(
+            history_dir / "cycle_scores.jsonl", {"date": snapshot_date, **cycle_scores}, dedupe_keys=["date"],
+        )
+        gpu_history = _shared.read_jsonl(history_dir / "gpu_pricing.jsonl")
+
     # ── 组装 Payload ──
     company_count = len(companies_list)
     models_with_pricing = len([r for r in pricing_records if r.get("value") is not None])
@@ -272,11 +310,11 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
         "history": {
             # 约可保留 30 个模型每日快照 22 个月，避免长期曲线被全局截断。
             "token_pricing": price_history[-20000:],
-            "business": business_history[-500:],
+            "business": _shared.read_jsonl(history_dir / "business.jsonl")[-500:],
             "gpu_pricing": gpu_history[-500:],
-            "cycle_scores": _shared.read_jsonl(root / "data" / "history" / "cycle_scores.jsonl")[-200:],
-            "capex": _shared.read_jsonl(root / "data" / "history" / "capex.jsonl")[-300:],
-            "runs": _shared.read_jsonl(root / "data" / "history" / "runs.jsonl")[-100:],
+            "cycle_scores": _shared.read_jsonl(history_dir / "cycle_scores.jsonl")[-200:],
+            "capex": _shared.read_jsonl(history_dir / "capex.jsonl")[-300:],
+            "runs": _shared.read_jsonl(history_dir / "runs.jsonl")[-100:],
         },
         "sources": source_status,
         "news": news_preview,
@@ -294,47 +332,6 @@ def build_dashboard(root: Path, *, verbose: bool = False) -> dict[str, Any]:
     _shared.atomic_write(root / "data" / "automated" / "dashboard.json", payload)
     _shared.atomic_write(root / "data" / "automated" / "health.json", health)
     _shared.atomic_write(root / "data" / "automated" / "cycle_scores.json", cycle_scores)
-
-    # ── 追加历史 ──
-    snapshot_date = generated_at[:10]
-    for rec in pricing_records:
-        _shared.append_jsonl(
-            root / "data" / "history" / "token_pricing.jsonl",
-            {"date": snapshot_date, "metric_id": rec["metric_id"],
-             "value": rec.get("value"), "currency": rec.get("currency"),
-             "blended_cost_usd": rec.get("blended_cost_usd"),
-             "provider_model_id": rec.get("provider_model_id"),
-             "source_name": rec.get("source_name"), "source_url": rec.get("source_url"),
-             "source_tier": rec.get("source_tier"),
-             "evidence_status": rec.get("evidence_status")},
-            dedupe_keys=["date", "metric_id"],
-        )
-    for rec in business_records:
-        _shared.append_jsonl(
-            root / "data" / "history" / "business.jsonl",
-            {"date": snapshot_date, "metric_id": rec["metric_id"],
-             "value": rec.get("value"), "unit": rec.get("unit")},
-            dedupe_keys=["date", "metric_id"],
-        )
-    for rec in gpu_records:
-        _shared.append_jsonl(
-            root / "data" / "history" / "gpu_pricing.jsonl",
-            {"date": snapshot_date, "metric_id": rec.get("metric_id"),
-             "value": rec.get("value")},
-            dedupe_keys=["date", "metric_id"],
-        )
-    for rec in capex_records:
-        _shared.append_jsonl(
-            root / "data" / "history" / "capex.jsonl",
-            {"date": snapshot_date, "metric_id": rec.get("metric_id"), "value": rec.get("value"),
-             "company_id": rec.get("company_id"), "period": rec.get("period")},
-            dedupe_keys=["date", "metric_id"],
-        )
-    _shared.append_jsonl(
-        root / "data" / "history" / "cycle_scores.jsonl",
-        {"date": snapshot_date, **cycle_scores},
-        dedupe_keys=["date"],
-    )
 
     if verbose:
         print(f"[build_dashboard] dashboard.json 已生成 ({len(pricing_records)} pricing + "

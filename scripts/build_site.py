@@ -202,7 +202,10 @@ def _prerendered_content(page_id: str, dashboard: dict[str, Any], health: dict[s
     """Emit a crawlable build-time snapshot; app.js hydrates it with the full UI."""
     meta = dashboard.get("meta", {})
     cycle = dashboard.get("overview", {}).get("cycle", {})
-    generated = html.escape(str(meta.get("generated_at") or health.get("generated_at") or "—"))
+    runs = dashboard.get("history", {}).get("runs", [])
+    last_collection = runs[-1].get("generated_at") if runs else None
+    time_label = "最近采集" if last_collection else "构建时间"
+    snapshot_time = html.escape(str(last_collection or meta.get("generated_at") or health.get("generated_at") or "—"))
     page_titles = {
         "overview": "AI产业景气与风险总览",
         "token": "Token经济与模型定价",
@@ -242,7 +245,7 @@ def _prerendered_content(page_id: str, dashboard: dict[str, Any], health: dict[s
     return (
         f'<section class="loading-state prerendered-snapshot" data-prerendered="true">'
         f'<p class="page-kicker">BUILD-TIME SNAPSHOT</p><h1>{title}</h1>{body}'
-        f'<p>数据截止：<time>{generated}</time>。正在加载交互视图…</p></section>'
+        f'<p>{time_label} <time>{snapshot_time}</time>。正在加载交互视图…</p></section>'
     )
 
 

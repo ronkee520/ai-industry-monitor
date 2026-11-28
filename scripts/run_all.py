@@ -81,10 +81,17 @@ def run_all(
                 results["phases"][label] = {"status": "error", "error": str(exc)}
                 print(f"  {label}: ERROR — {exc}", file=sys.stderr)
 
+    if dry_run:
+        print("[run_all] 试运行：跳过 Dashboard 和静态站点构建")
+        results["phases"]["build_dashboard"] = {"status": "skipped"}
+        results["phases"]["build_site"] = {"status": "skipped"}
+        results["elapsed_seconds"] = round(time.time() - started, 1)
+        return results
+
     # ── Phase 2: 构建 Dashboard ──
     print("[run_all] Phase 2: 构建 Dashboard 数据")
     try:
-        payload = _dashboard.build_dashboard(root, verbose=verbose)
+        payload = _dashboard.build_dashboard(root, verbose=verbose, record_history=not skip_fetch)
         results["phases"]["build_dashboard"] = {"status": "ok",
             "pricing_count": len(payload.get("token_pricing", {}).get("records", [])),
             "business_count": len(payload.get("business", {}).get("records", []))}
@@ -108,7 +115,7 @@ def run_all(
     results["elapsed_seconds"] = elapsed
 
     # 仅为真实采集运行保留审计日志；push/测试中的 --skip-fetch 不制造伪运行记录。
-    if not dry_run and not skip_fetch:
+    if not skip_fetch:
         generated_at = _shared.now_shanghai().isoformat(timespec="seconds")
         phase_statuses = [
             v.get("status", "ok") for v in results["phases"].values()

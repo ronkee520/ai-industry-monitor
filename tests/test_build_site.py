@@ -110,7 +110,7 @@ class TestBuildSite(unittest.TestCase):
         self.assertNotIn("{{ASSET_VERSION}}", content)
         self.assertNotIn("{{PRERENDERED_CONTENT}}", content)
         self.assertIn("BUILD-TIME SNAPSHOT", content)
-        self.assertIn("数据截止", content)
+        self.assertIn("最近采集", content)
 
     def test_no_template_vars_in_any_page(self):
         for html_file in self.site_dir.rglob("*.html"):

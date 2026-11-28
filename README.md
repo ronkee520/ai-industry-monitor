@@ -71,7 +71,9 @@ python3 -m http.server 8080 --bind 127.0.0.1 --directory _site
 
 打开 [http://127.0.0.1:8080/](http://127.0.0.1:8080/) 查看网站，按 `Ctrl+C` 停止服务器。网页会通过 HTTP 加载同站 JSON，预览时请使用该地址。
 
-修改配置或人工数据后，可用 `python3 scripts/run_all.py --skip-fetch` 重新生成仪表盘数据和网站。这个命令会写入 `data/automated/` 和 `data/history/`，直接运行 `build_site.py` 则使用现有快照。
+修改配置或人工数据后，可用 `python3 scripts/run_all.py --skip-fetch` 重新生成 `data/automated/` 中的仪表盘数据和网站。直接运行 `build_site.py` 则使用现有快照。历史采集记录随联网采集运行写入。
+
+用 `python3 scripts/run_all.py --dry-run` 可查看采集器读取到的配置和数据概况。试运行只读，不联网。
 
 如果 macOS 上从 python.org 安装的 Python 在联网采集时报 `CERTIFICATE_VERIFY_FAILED`，运行与该版本配套的 `Install Certificates.command`。也可使用已配置证书的 Python 3.10+ 环境。 [Python 的 macOS 安装说明](https://docs.python.org/3/using/mac.html)
 
@@ -145,6 +147,7 @@ GitHub Actions 每日自动运行。
 ```
 
 定时运行和执行联网采集的 `main` 手动运行会将 `data/automated/`、`data/history/` 和 `data/news/` 的结果写回 `main`，保留可审计的历史数据。
+页面的最近采集时间取自运行日志。API 的 `meta.generated_at` 记录仪表盘生成时间，单项数据的核验日期以 `as_of_date` 为准。
 
 > **自动化边界**：Token 市场路由价来自 OpenRouter 公共目录（T3，不能冒充厂商直连价）；
 > CAPEX 与美股产业链财务来自 SEC Companyfacts（T1）；GPU 使用可重复解析的官方公开页；
